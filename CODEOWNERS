@@ -1,0 +1,105 @@
+# CODEOWNERS - Define team members responsible for different parts of the codebase
+# This file automatically assigns reviewers based on code changes
+# Documentation: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default - requires review from project lead
+* @project-lead
+
+# Root configuration files
+/.gitignore @project-lead
+/composer.json @project-lead
+/composer.lock @project-lead
+/.github/ @project-lead
+
+# Documentation files
+/README.md @project-lead
+/CONTRIBUTING.md @project-lead
+/TEAM_WORKFLOW.md @project-lead
+/FRONTEND_GUIDE.md @frontend-lead
+/docs/ @project-lead
+
+# Backend - Core Framework
+/app/Core/ @backend-lead @senior-backend
+
+# Backend - Controllers (Assign based on feature)
+/app/Controllers/HomeController.php @backend-lead
+/app/Controllers/ProductController.php @backend-team
+/app/Controllers/CartController.php @backend-team
+/app/Controllers/AuthController.php @backend-team
+/app/Controllers/AdminController.php @admin-team
+
+# Backend - Models
+/app/Models/ @backend-lead @database-admin
+
+# Backend - Services
+/app/Services/ @backend-lead
+
+# Backend - Middleware
+/app/Middleware/ @security-lead
+
+# Database
+/database/ @database-admin @backend-lead
+
+# Frontend - Assets
+/public/assets/css/ @frontend-lead
+/public/assets/js/ @frontend-lead
+/public/assets/images/ @frontend-lead
+
+# Frontend - Templates
+/templates/layouts/ @frontend-lead
+/templates/home/ @frontend-team
+/templates/products/ @frontend-team
+/templates/cart/ @frontend-team
+/templates/auth/ @security-lead
+/templates/admin/ @admin-team
+/templates/errors/ @frontend-lead
+
+# Tests
+/tests/ @qa-lead @backend-lead
+
+# Configuration
+/config/ @project-lead @devops-lead
+
+# Storage directories (rarely changed)
+/storage/ @devops-lead
+
+# CI/CD and Deployment
+/.github/workflows/ @devops-lead @project-lead
+
+# Environment and security
+.env.example @security-lead
+.env @security-lead
+
+# Changelog and releases
+/CHANGELOG.md @project-lead
+/VERSION @project-lead
+
+# Helper functions
+/app/helpers.php @backend-lead
+
+# Public entry point
+/public/index.php @backend-lead
+
+# =============================================================================
+# TEAM MAPPING
+# =============================================================================
+# Replace @username with actual GitHub usernames
+# 
+# @project-lead          - Person with overall project responsibility
+# @backend-lead          - Lead backend developer
+# @backend-team          - Backend developers
+# @frontend-lead         - Lead frontend developer
+# @frontend-team         - Frontend developers
+# @database-admin        - Database specialist
+# @security-lead         - Security specialist
+# @admin-team            - Admin panel developers
+# @devops-lead           - DevOps/Infrastructure lead
+# @qa-lead               - Quality assurance lead
+# @senior-backend        - Senior backend developer (optional)
+#
+# Usage:
+# 1. Replace placeholder usernames with real GitHub usernames
+# 2. Add @username to assign multiple reviewers to same path
+# 3. Most specific rules take precedence
+# 4. At least one reviewer is required for merge
+# =============================================================================

@@ -1,9 +1,6 @@
 # Setup & Installation Files
 SETUP_GUIDE.md
-QUICKSTART.md
-install-dependencies.ps1
-quick-start.bat
-FRONTEND_SETUP.md
+FRONTEND_GUIDE.md
 
 # Composer
 vendor/
