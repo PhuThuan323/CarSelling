@@ -1,0 +1,44 @@
+# Setup & Installation Files
+SETUP_GUIDE.md
+QUICKSTART.md
+install-dependencies.ps1
+quick-start.bat
+FRONTEND_SETUP.md
+
+# Composer
+vendor/
+composer.lock
+
+# Environment
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Storage
+storage/cache/*
+storage/templates_c/*
+!storage/cache/.gitkeep
+!storage/templates_c/.gitkeep
+
+# Logs
+*.log
+logs/
+
+# Database
+*.sql
+!database/schema.sql
+!database/seed.sql
+
+# Temporary files
+tmp/
+temp/
