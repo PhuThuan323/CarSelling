@@ -1,45 +1,28 @@
 <?php
 
 namespace App\Core;
-
+use PDO;
+use PDOException;
 /**
  * Database Connection Handler
  */
+
 class Database {
-    private $connection;
-    private $host;
-    private $user;
-    private $password;
-    private $database;
+    private static ?PDO $connection = null;
+    public static function connection(): PDO{
+        if(self::$connection === null){
+            $host = $_ENV['DB_HOST'] ?? 'localhost';
+            $db = $_ENV['DB_NAME'] ?? '';
+            $user = $_ENV['DB_USER'] ?? 'root';
+            $pass = $_ENV['DB_PASS'] ?? '';
 
-    public function __construct($host = 'localhost', $user = 'root', $password = '', $database = 'car_sales') {
-        $this->host = $host;
-        $this->user = $user;
-        $this->password = $password;
-        $this->database = $database;
-    }
-
-    public function connect() {
-        try {
-            $this->connection = new \PDO(
-                "mysql:host={$this->host};dbname={$this->database}",
-                $this->user,
-                $this->password
-            );
-            $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-            return $this->connection;
-        } catch (\PDOException $e) {
-            die("Database Connection Error: " . $e->getMessage());
+            try {
+                self::$connection = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
+                self::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+                throw new PDOException($e->getMessage(), (int)$e->getCode());
+            }
         }
-    }
-
-    public function query($sql, $params = []) {
-        $stmt = $this->connection->prepare($sql);
-        $stmt->execute($params);
-        return $stmt;
-    }
-
-    public function getConnection() {
-        return $this->connection;
+        return self::$connection;
     }
 }

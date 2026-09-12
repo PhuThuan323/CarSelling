@@ -1,0 +1,592 @@
+/* ============================================
+   LOGIN / REGISTER — GLASSMORPHISM FLIP CARD
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+    --primary-color: #519bff;
+    --primary-hover: #3f82e0;
+    --accent-2: #7cc4ff;
+    --text-light: #f4f3f8;
+    --text-muted: rgba(244, 243, 248, 0.68);
+    --glass-bg: rgba(255, 255, 255, 0.10);
+    --glass-border: rgba(255, 255, 255, 0.24);
+    --danger: #e74c3c;
+    --success: #27ae60;
+    --warning: #f39c12;
+    --shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+    --transition: all 0.25s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Nền: đặt ảnh/video tĩnh của bạn thẳng vào body, không còn lớp phủ đen nữa */
+body.auth-page {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    background-image: url('../img/login.png'); /* đổi thành ảnh của bạn */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* ===== Layout ===== */
+
+.login-container {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+/* ===== Auth Card (container 2 mặt) ===== */
+
+.auth-card {
+    position: relative;
+    width: 100%;
+    max-width: 920px;
+    min-height: 560px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(26px) saturate(160%);
+    -webkit-backdrop-filter: blur(26px) saturate(160%);
+    box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    animation: slideUp 0.6s ease-out;
+    transition: height 0.6s ease-in-out;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Form panels (Sign in / Sign up) ===== */
+
+.form-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    padding: 46px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
+}
+
+.sign-in-panel {
+    z-index: 2;
+    opacity: 1;
+}
+
+.sign-up-panel {
+    z-index: 1;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.auth-card.right-active .sign-in-panel {
+    transform: translateX(100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.auth-card.right-active .sign-up-panel {
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+    pointer-events: auto;
+    animation: show 0.6s;
+}
+
+@keyframes show {
+    0%, 49.99% { opacity: 0; z-index: 1; }
+    50%, 100% { opacity: 1; z-index: 5; }
+}
+
+/* ===== Toggle overlay (mặt kính chuyển động) ===== */
+
+.toggle-overlay {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 10;
+    transition: transform 0.6s ease-in-out;
+}
+
+.auth-card.right-active .toggle-overlay {
+    transform: translateX(-100%);
+}
+
+.toggle-overlay-inner {
+    position: relative;
+    width: 200%;
+    height: 100%;
+    left: -100%;
+    display: flex;
+    background: linear-gradient(135deg, rgba(81, 155, 255, 0.35), rgba(124, 196, 255, 0.35));
+    transition: transform 0.6s ease-in-out;
+}
+
+.auth-card.right-active .toggle-overlay-inner {
+    transform: translateX(50%);
+}
+
+.toggle-panel {
+    width: 50%;
+    height: 100%;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 40px;
+    color: var(--text-light);
+}
+
+.toggle-panel h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    margin-bottom: 12px;
+}
+
+.toggle-panel p {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 22px;
+}
+
+.btn-ghost {
+    padding: 11px 30px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background: transparent;
+    color: var(--text-light);
+    font-weight: 600;
+    font-size: 13.5px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+/* ===== Header ===== */
+
+.login-header {
+    margin-bottom: 22px;
+}
+
+.login-header h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    color: var(--text-light);
+    letter-spacing: -0.5px;
+}
+
+.login-header p {
+    color: var(--accent-2);
+    font-size: 13px;
+    margin-top: 6px;
+    font-weight: 500;
+}
+
+/* ===== Alert Messages ===== */
+
+.alert {
+    padding: 12px 15px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.alert-error {
+    background-color: rgba(231, 76, 60, 0.15);
+    color: #ff8a7a;
+    border-left: 4px solid var(--danger);
+}
+
+/* ===== Form ===== */
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    color: var(--text-muted);
+    font-size: 12.5px;
+    font-weight: 500;
+}
+
+.form-input {
+    padding: 11px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    font-size: 13.5px;
+    transition: var(--transition);
+    font-family: inherit;
+    background: rgba(255, 255, 255, 0.07);
+    color: var(--text-light);
+    width: 100%;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(81, 155, 255, 0.18);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.form-input::placeholder {
+    color: rgba(244, 243, 248, 0.4);
+}
+
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper .form-input {
+    padding-right: 42px;
+}
+
+.btn-toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: color 0.25s ease;
+}
+
+.btn-toggle-password:hover {
+    color: var(--primary-color);
+}
+
+/* ===== Password strength meter ===== */
+
+.password-strength {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.strength-bar {
+    flex: 1;
+    height: 5px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.15);
+    overflow: hidden;
+}
+
+.strength-fill {
+    display: block;
+    height: 100%;
+    width: 0%;
+    border-radius: 3px;
+    background: var(--danger);
+    transition: width 0.3s ease, background 0.3s ease;
+}
+
+.strength-fill.weak { background: #e74c3c; }
+.strength-fill.medium { background: #f39c12; }
+.strength-fill.strong { background: #27ae60; }
+
+.strength-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    min-width: 60px;
+    text-align: right;
+}
+
+/* ===== Error Message ===== */
+
+.error-message {
+    color: #ff8a7a;
+    font-size: 11.5px;
+    display: none;
+}
+
+/* ===== Checkbox ===== */
+
+.form-group.checkbox {
+    flex-direction: row;
+    align-items: center;
+    margin: 2px 0 4px;
+    gap: 8px;
+}
+
+.checkbox-input {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    accent-color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.checkbox-label {
+    margin: 0;
+    font-weight: normal;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 12.5px;
+}
+
+/* ===== Buttons ===== */
+
+.btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-2));
+    color: #0c0a16;
+    width: 100%;
+    margin-top: 6px;
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(81, 155, 255, 0.42);
+}
+
+.btn-login {
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(81, 155, 255, 0.28);
+}
+
+.btn-loader {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(12, 10, 22, 0.3);
+    border-top-color: #0c0a16;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ===== Social Buttons (chỉ còn Google) ===== */
+
+.btn-social {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: var(--transition);
+    color: var(--text-light);
+}
+
+.btn-social:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: var(--primary-color);
+}
+
+.social-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* ===== Links ===== */
+
+.login-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 14px 0 0;
+    font-size: 12.5px;
+    color: var(--text-muted);
+}
+
+.link {
+    color: var(--accent-2);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color var(--transition);
+    cursor: pointer;
+}
+
+.link:hover {
+    color: #fff;
+}
+
+.divider {
+    color: rgba(244, 243, 248, 0.35);
+}
+
+/* ===== Social Login Section ===== */
+
+.social-login {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.social-login p {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 11.5px;
+    margin: 0 0 11px 0;
+}
+
+/* ===== Security Notice ===== */
+
+.security-notice {
+    text-align: center;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    font-size: 10.5px;
+}
+
+/* ===== Responsive Design ===== */
+/* Dưới 768px: bỏ hiệu ứng trượt, chỉ chuyển hiện/ẩn 2 form bằng JS */
+
+@media (max-width: 768px) {
+    .auth-card {
+        max-width: 440px;
+        min-height: auto;
+    }
+
+    .form-panel {
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 34px 26px;
+        transform: none !important;
+        transition: none;
+        display: none;
+    }
+
+    .sign-in-panel {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        display: flex;
+    }
+
+    .sign-up-panel {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+    }
+
+    .auth-card.right-active .sign-in-panel { display: none; }
+    .auth-card.right-active .sign-up-panel { display: flex; }
+
+    .toggle-overlay { display: none; }
+
+    .login-header h1 { font-size: 24px; }
+}
+
+@media (max-width: 480px) {
+    .form-panel { padding: 28px 18px; }
+    .login-header h1 { font-size: 22px; }
+    .form-input { font-size: 16px; } /* Prevents zoom on iOS */
+    .btn { font-size: 13px; padding: 11px; }
+}
+
+/* ===== Accessibility - Reduced Motion ===== */
+
+@media (prefers-reduced-motion: reduce) {
+    .auth-card,
+    .form-panel,
+    .toggle-overlay,
+    .toggle-overlay-inner,
+    .form-input,
+    .btn-primary,
+    .link,
+    .alert {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* ===== Focus Visible (Keyboard Navigation) ===== */
+
+.form-input:focus-visible,
+.btn:focus-visible,
+.link:focus-visible,
+.checkbox-input:focus-visible,
+.btn-ghost:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* ===== Performance Optimization ===== */
+
+.login-container,
+.auth-card {
+    contain: layout style paint;
+}

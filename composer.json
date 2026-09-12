@@ -4,7 +4,9 @@
   "type": "project",
   "require": {
     "php": ">=7.4",
-    "smarty/smarty": "^3.1 || ^4.0"
+    "smarty/smarty": "^3.1 || ^4.0",
+    "vlucas/phpdotenv": "^5.7",
+    "phpmailer/phpmailer": "^7.1"
   },
   "require-dev": {
     "phpstan/phpstan": "^1.0"

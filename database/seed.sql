@@ -1,10 +1,27 @@
--- Sample Products
-INSERT INTO products (name, description, price, stock) VALUES
-('Laptop', 'High-performance laptop with 16GB RAM', 999.99, 10),
-('Mouse', 'Wireless ergonomic mouse', 29.99, 50),
-('Keyboard', 'Mechanical keyboard with RGB lighting', 129.99, 25),
-('Monitor', '27-inch 4K display monitor', 399.99, 15),
-('USB Cable', 'High-speed USB-C cable', 14.99, 100),
-('Headphones', 'Noise-cancelling wireless headphones', 199.99, 20),
-('Webcam', '1080p HD webcam', 59.99, 30),
-('Mouse Pad', 'Large gaming mouse pad', 24.99, 60);
+--Add User Table
+USE car_sales;
+USE car_sales;
+
+CREATE TABLE users (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+
+    name VARCHAR(100) NOT NULL,
+
+    email VARCHAR(191) NOT NULL UNIQUE,
+
+    password_hash VARCHAR(255) NULL,
+
+    phone VARCHAR(20) NULL,
+
+    avatar VARCHAR(500) NULL,
+
+    google_id VARCHAR(255) NULL UNIQUE,
+
+    status ENUM('active', 'inactive', 'blocked')
+        NOT NULL DEFAULT 'active',
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
+);

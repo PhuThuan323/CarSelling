@@ -1,7 +1,7 @@
 # Setup & Installation Files
 SETUP_GUIDE.md
 FRONTEND_GUIDE.md
-
+docs/
 # Composer
 vendor/
 composer.lock

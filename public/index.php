@@ -1,50 +1,53 @@
 <?php
 
-// Start session
 session_start();
 
-// Error reporting
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Define base path
 define('BASE_PATH', dirname(__DIR__));
 
-// Autoloader
 require_once BASE_PATH . '/vendor/autoload.php';
 
-// Import core classes
+if (file_exists(BASE_PATH . '/.env')) {
+    $dotenv = Dotenv\Dotenv::createImmutable(BASE_PATH);
+    $dotenv->load();
+}
+
 use App\Core\Router;
-use App\Controllers\HomeController;
-use App\Controllers\ProductController;
-use App\Controllers\CartController;
+use App\Controllers\AuthController;
 
-// Create router
 $router = new Router();
+$router->get('/',AuthController::class,'login');
+// Authentication SSR
+$router->get('/auth/login', AuthController::class, 'login'); 
+$router->post('/auth/login', AuthController::Class, 'loginPost');
+$router->get('/auth/success',AuthController::Class,'success'); 
+$router->get('/auth/logout', AuthController::Class,"logout");
 
-// Define routes
-$router->get('/', HomeController::class, 'index');
-$router->get('/about', HomeController::class, 'about');
-$router->get('/contact', HomeController::class, 'contact');
 
-$router->get('/products', ProductController::class, 'index');
-$router->get('/products/api', ProductController::class, 'api');
-$router->get('/products/search', ProductController::class, 'search');
+//Password
+$router->post('/auth/forgot-password', AuthController::Class, "forgotPasswordPost");
+$router->get('/auth/forgot-password',AuthController::Class,'forgotPassword');
+$router->get('/auth/verify-reset-code', AuthController::Class,'verifyResetCode');
+$router->post('/auth/verify-reset-code', AuthController::Class, 'verifyResetCodePost');
+$router->get('/auth/reset-password',AuthController::Class,'resetPassword');
+$router->post('/auth/reset-password',AuthController::Class,'resetPasswordPost');
 
-$router->get('/cart', CartController::class, 'index');
-$router->post('/cart/add', CartController::class, 'add');
-$router->post('/cart/remove', CartController::class, 'remove');
-$router->get('/cart/checkout', CartController::class, 'checkout');
+$router->post('/auth/register',AuthController::Class, "register");
+
+//Authentication API 
+$router->post('/api/auth/login', AuthController::class, 'userLogin'); 
+
 
 // Parse URL
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $path = str_replace('/index.php', '', $path);
 $method = $_SERVER['REQUEST_METHOD'];
 
-// Dispatch request
 try {
     $router->dispatch($path, $method);
-} catch (Exception $e) {
+} catch (\Throwable $e) {
     http_response_code(500);
     echo "Error: " . $e->getMessage();
 }

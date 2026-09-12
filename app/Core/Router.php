@@ -2,9 +2,6 @@
 
 namespace App\Core;
 
-/**
- * Simple Router
- */
 class Router {
     private $routes = [];
     private $currentRoute;
