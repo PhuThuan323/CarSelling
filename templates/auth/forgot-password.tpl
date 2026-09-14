@@ -3,18 +3,13 @@
 {block name="content"}
 
 <div class="login-container">
-
     <div class="login-box">
-
         <div class="login-header">
-
             <h1>Forgot Password</h1>
-
             <p>
                 Enter your email address and
                 we will send you a verification code.
             </p>
-
         </div>
 
         {if isset($error)}
@@ -33,24 +28,13 @@
 
         {/if}
 
-        <form
-            method="POST"
-            action="/auth/forgot-password"
-            class="login-form"
-        >
-
-            <input
-                type="hidden"
-                name="csrf_token"
-                value="{$csrf_token}"
-            >
+        <form method="POST" action="/auth/forgot-password" class="login-form">
+            <input type="hidden" name="csrf_token" value="{$csrf_token}">
 
             <div class="form-group">
-
                 <label for="email">
                     Email Address
                 </label>
-
                 <input
                     type="email"
                     id="email"
@@ -59,31 +43,18 @@
                     value="{$email|default:''|escape}"
                     required
                 >
-
             </div>
-
-            <button
-                type="submit"
-                class="btn btn-primary"
-            >
+            <button type="submit" class="btn btn-primary">
                 Send Reset Code
             </button>
-
         </form>
 
         <div class="login-links">
-
-            <a
-                href="/auth/login"
-                class="link"
-            >
+            <a href="/auth/login" class="link">
                 Back to Login
             </a>
-
         </div>
-
     </div>
-
 </div>
 
 {/block}

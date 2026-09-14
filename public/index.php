@@ -15,30 +15,34 @@ if (file_exists(BASE_PATH . '/.env')) {
 }
 
 use App\Core\Router;
-use App\Controllers\AuthController;
+use App\Controllers\Authentication\Login;
+use App\Controllers\Authentication\Logout;
+use App\Controllers\Authentication\Register;
+use App\Controllers\Authentication\ResetPassword;
 
 $router = new Router();
-$router->get('/',AuthController::class,'login');
-// Authentication SSR
-$router->get('/auth/login', AuthController::class, 'login'); 
-$router->post('/auth/login', AuthController::Class, 'loginPost');
-$router->get('/auth/success',AuthController::Class,'success'); 
-$router->get('/auth/logout', AuthController::Class,"logout");
+$router->get('/',Login::class,'login');
+
+// Đăng nhập    
+$router->get('/auth/login', Login::class, 'login'); 
+$router->post('/auth/login', Login::Class, 'loginPost');
+$router->get('/auth/success', Login::Class,'success'); 
+$router->post('/api/auth/login', Login::Class, 'userLogin'); 
+
+//Đăng xuất
+$router->get('/auth/logout', Logout::Class,"logout");
 
 
-//Password
-$router->post('/auth/forgot-password', AuthController::Class, "forgotPasswordPost");
-$router->get('/auth/forgot-password',AuthController::Class,'forgotPassword');
-$router->get('/auth/verify-reset-code', AuthController::Class,'verifyResetCode');
-$router->post('/auth/verify-reset-code', AuthController::Class, 'verifyResetCodePost');
-$router->get('/auth/reset-password',AuthController::Class,'resetPassword');
-$router->post('/auth/reset-password',AuthController::Class,'resetPasswordPost');
+//Quên mật khẩu - Xác nhận mã OTP - Thay đổi mật khẩu
+$router->post('/auth/forgot-password', ResetPassword::Class, "forgotPasswordPost");
+$router->get('/auth/forgot-password',ResetPassword::Class,'forgotPassword');
+$router->get('/auth/verify-reset-code', ResetPassword::Class,'verifyResetCode');
+$router->post('/auth/verify-reset-code', ResetPassword::Class, 'verifyResetCodePost');
+$router->get('/auth/reset-password',ResetPassword::Class,'resetPassword');
+$router->post('/auth/reset-password',ResetPassword::Class,'resetPasswordPost');
 
-$router->post('/auth/register',AuthController::Class, "register");
-
-//Authentication API 
-$router->post('/api/auth/login', AuthController::class, 'userLogin'); 
-
+//Đăng ký tài khoản
+$router->post('/auth/register',Register::Class, "register");
 
 // Parse URL
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -49,5 +53,11 @@ try {
     $router->dispatch($path, $method);
 } catch (\Throwable $e) {
     http_response_code(500);
-    echo "Error: " . $e->getMessage();
+    echo '<pre>';
+    echo 'Error: ' . htmlspecialchars($e->getMessage());
+    echo "\n\n";
+    echo 'File: ' . htmlspecialchars($e->getFile());
+    echo "\n";
+    echo 'Line: ' . $e->getLine();
+    echo '</pre>';
 }

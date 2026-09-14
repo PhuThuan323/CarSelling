@@ -1,5 +1,5 @@
 <?php
-namespace App\Models;
+namespace App\Models\UserManagement;
 use App\Core\Database;
 use PDO;
 
@@ -21,8 +21,8 @@ class User {
         return $user ?: null;
     }
     public function create(array $data): bool {
-        $stmt = $this->db->prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :password)");
-        $stmt->execute([':name' => $data['name'], ':email' => $data['email'], ':password' => $data['password']]);
+        $stmt = $this->db->prepare("INSERT INTO users (name, email, password, role, status) VALUES (:name, :email, :password, :role, :status)");
+        $stmt->execute([':name' => $data['name'], ':email' => $data['email'], ':password' => $data['password'], ':role'=>$role??'customer', ':status' => $status??'active']);
         return (int) $this->db->lastInsertId();
     }
     public function update(int $id, array $data): bool {

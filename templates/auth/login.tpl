@@ -12,7 +12,6 @@
                 <h1>FastCar</h1>
                 <p>Thanks for being our valued customer.</p>
             </div>
-
             {if isset($error)}
                 <div class="alert alert-error">
                     {$error|escape}
