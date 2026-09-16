@@ -19,9 +19,10 @@ use App\Controllers\Authentication\Login;
 use App\Controllers\Authentication\Logout;
 use App\Controllers\Authentication\Register;
 use App\Controllers\Authentication\ResetPassword;
+use App\Controllers\WebRender\Homepage;
 
 $router = new Router();
-$router->get('/',Login::class,'login');
+$router->get('/',Homepage::class,'index');
 
 // Đăng nhập    
 $router->get('/auth/login', Login::class, 'login'); 
