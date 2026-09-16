@@ -7,20 +7,8 @@ class AdminCatalogPage {
     public function __construct(){ 
         $this->view=new View(); 
     } 
-    private function requireAdmin():void{
-        if(empty($_SESSION['user_id'])){
-            header('Location: /auth/login');
-            exit;
-        }
-        $role=$_SESSION['user']['role'] ?? $_SESSION['user_role'] ?? null;
-        if($role!=='admin'){
-            http_response_code(403);
-            echo '403 - Forbidden';
-            exit;
-        }
-    } 
     public function index():void{
-        $this->requireAdmin();
+        \App\Core\Auth::requireAdmin(false);
         $this->view->assign('page_title','Catalog Management - CarSelling');
         $this->view->display('admin/product/catalog');
     } 

@@ -4,6 +4,19 @@
 <link rel="stylesheet" href="../../assets/css/homepage.css">
 
 <main class="home-page">
+    <section class="topbar-section">
+        <div class="topbar-overlay"></div>
+        <div class="logo"></div>
+        <div class="redirect-url">
+            <href>Cách Thức Hoạt Động</href>
+            <href>Mua Xe</href>
+            <href>Tài Khoản</href>
+        </div>
+        <div class="user-management">
+            <a class="user-management-btn" href="/auth/login">Đăng nhập</a>
+            <a class="user-management-btn user-management-btn-primary" href="/auth/register">Đăng ký</a>
+        </div>
+    </section>
     <section class="hero-section">
         <div class="hero-overlay"></div>
         <div class="hero-content">
@@ -47,5 +60,5 @@
     </section>
 </main>
 
-<script src="/assets/js/home.js"></script>
+<script src="/assets/js/homepage.js"></script>
 {/block}

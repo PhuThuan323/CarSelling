@@ -5,48 +5,32 @@ use App\Core\JsonResponse;
 use App\Models\Product\VehicleModel;
 use App\Models\Product\VehicleVersion;
 class AdminVehicleVersionApi {
-    private VehicleVersion $versions; 
-    private VehicleModel $models; 
-    public function __construct(){ 
+    use CatalogAdminSupport;
+    private VehicleVersion $versions;
+    private VehicleModel $models;
+    public function __construct(){
         $this->versions=new VehicleVersion();
-        $this->models=new VehicleModel(); 
-    }
-
-    private function requireAdmin(): void {
-        if(empty($_SESSION['user_id'])) JsonResponse::error('Unauthenticated',401);
-        $role=$_SESSION['user']['role']??$_SESSION['user_role']??null;
-        if($role!=='admin') JsonResponse::error('Forbidden',403);
-    }
-    private function requestData(): array {
-        $ct=$_SERVER['CONTENT_TYPE']??'';
-        if(str_contains($ct,'application/json')){ $d=json_decode(file_get_contents('php://input'),true); return is_array($d)?$d:[]; }
-        if(($_SERVER['REQUEST_METHOD']??'')==='POST') return $_POST;
-        $raw=file_get_contents('php://input');$d=[];parse_str($raw,$d);return $d;
-    }
-    private function slugify(string $v): string {
-        $v=trim(mb_strtolower($v,'UTF-8'));
-        if(function_exists('iconv')){ $x=iconv('UTF-8','ASCII//TRANSLIT//IGNORE',$v); if($x!==false)$v=$x; }
-        $v=preg_replace('/[^a-z0-9]+/','-',$v)??'';return trim($v,'-');
+        $this->models=new VehicleModel();
     }
 
     public function index():void{
-        $this->requireAdmin();
+        $this->requireAdminApi();
         JsonResponse::success(['versions'=>$this->versions->all(true)],'Vehicle versions retrieved successfully',200);
     }
     public function show(string $id):void{
-        $this->requireAdmin();
+        $this->requireAdminApi();
         $x=$this->versions->findById((int)$id,true);
         if(!$x) JsonResponse::error('Vehicle version not found',404);
         JsonResponse::success(['version'=>$x],'Vehicle version retrieved successfully',200);
     }
     public function byModel(string $modelId):void{
-        $this->requireAdmin();
-        if(!$this->models->findById((int)$modelId,true)) 
+        $this->requireAdminApi();
+        if(!$this->models->findById((int)$modelId,true))
             JsonResponse::error('Model not found',404);
         JsonResponse::success(['versions'=>$this->versions->byModel((int)$modelId,true)],'Vehicle versions retrieved successfully',200);
     }
     public function store():void{
-        $this->requireAdmin();
+        $this->requireAdminApi();
         $d=$this->requestData();
         $modelId=(int)($d['model_id']??0);
         $name=trim((string)($d['name']??''));
@@ -63,24 +47,26 @@ class AdminVehicleVersionApi {
     }
 
     public function update(string $id):void{
-        $this->requireAdmin();
+        $this->requireAdminApi();
         $id=(int)$id;
         if(!$this->versions->findById($id,true))
             JsonResponse::error('Vehicle version not found',404);
         $d=$this->requestData();
         if(isset($d['model_id']) && !$this->models->findById((int)$d['model_id'],true))
             JsonResponse::error('Model not found',422);
-        if(isset($d['name']) && empty($d['slug'])) 
+        if(isset($d['name']) && empty($d['slug']))
             $d['slug']=$this->slugify((string)$d['name']);
         $this->versions->update($id,$d);
         JsonResponse::success(['version'=>$this->versions->findById($id,true)],'Vehicle version updated successfully',200);
     }
     public function destroy(string $id):void{
-        $this->requireAdmin();
+        $this->requireAdminApi();
         $id=(int)$id;
-        if(!$this->versions->findById($id,true)) 
+        if(!$this->versions->findById($id,true))
             JsonResponse::error('Vehicle version not found',404);
-        this->versions->softDelete($id);
+        if($this->versions->hasVehicles((int)$id))
+            JsonResponse::error('Cannot delete vehicle version because it still contains vehicles',409);
+        $this->versions->softDelete((int)$id);
         JsonResponse::success([],'Vehicle version deleted successfully',200);
     }
 }

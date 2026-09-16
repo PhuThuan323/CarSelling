@@ -12,7 +12,7 @@ class VehicleVersion {
         $sql="SELECT vv.*,vm.name 
         AS model_name,b.id 
         AS brand_id,b.name 
-        AS brand_name 
+        AS brand_name ,vm.status AS model_status,b.status AS brand_status
         FROM vehicle_versions vv 
         JOIN vehicle_models vm ON vm.id=vv.model_id 
         JOIN brands b ON b.id=vm.brand_id 
@@ -153,5 +153,12 @@ class VehicleVersion {
         return $this->db->prepare("UPDATE vehicle_versions 
         SET status='inactive',deleted_at=NOW() 
         WHERE id=:id AND deleted_at IS NULL")->execute(['id'=>$id]); 
+    }
+
+    // A version can only be removed while no vehicle of that version exists.
+    public function hasVehicles(int $id): bool {
+        $s=$this->db->prepare("SELECT COUNT(*) FROM vehicles WHERE vehicle_version_id=:id");
+        $s->execute(['id'=>$id]);
+        return (int)$s->fetchColumn()>0;
     }
 }

@@ -15,22 +15,22 @@ class PublicCatalog {
         $this->model = new VehicleModel();
         $this->version = new VehicleVersion();
     }
-    public function brand():void{
+    public function brands():void{
         JsonResponse::success([
-            'brands'=>$this->brand->all(false), "Brands Retrieved Successfully", 200
-        ]);
+            'brands'=>$this->brand->all(false)
+        ], "Brands Retrieved Successfully", 200);
     }
-    public function brands(string $id):void{
-        $d = $this->brand->findbyId((int)$id,false);
+    public function brand(string $id):void{
+        $d = $this->brand->findById((int)$id,false);
         if(!$d){
             JsonResponse::error('Brand not found', 404);
-        } 
+        }
         else{
             JsonResponse::success(['brand'=>$d], 'Brand Retrieved Sucessfully', 200);
         }
     }
     public function modelsByBrand(string $brandId):void{
-        if(!$this->brand->findbyId((int)$brandId,false)){
+        if(!$this->brand->findById((int)$brandId,false)){
             JsonResponse::error('Brand not found',404);
         }
         else{
@@ -48,16 +48,15 @@ class PublicCatalog {
         }
     }
     public function versionsByModel(string $modelId):void{
-        $x = !$this->models->findById((int)$modelId,false);
-        if(!$x){
+        if(!$this->model->findById((int)$modelId,false)){
             JsonResponse::error('Model not found',404);
         }
         else{
-            JsonResponse::success(['versions'=>$this->versions->byModel((int)$modelId,false)],'Vehicle versions retrieved successfully',200);
+            JsonResponse::success(['versions'=>$this->version->byModel((int)$modelId,false)],'Vehicle versions retrieved successfully',200);
         }
     }
     public function version(string $id):void{
-        $x=$this->versions->findById((int)$id,false);
+        $x=$this->version->findById((int)$id,false);
         if(!$x){
             JsonResponse::error('Vehicle version not found',404);
         }

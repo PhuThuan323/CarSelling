@@ -4,7 +4,7 @@ CREATE TABLE brands(
     id bigint UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) not NULL,
     slug VARCHAR(120) not null, 
-    country VARCHAR(100) not null,
+    country VARCHAR(100) null,
     logo varchar(500) null,
     description text null,
     status enum('active','inactive') not null default 'active',

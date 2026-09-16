@@ -5,6 +5,7 @@ namespace App\Controllers\Authentication;
 use App\Models\UserManagement\User;
 use App\Core\JsonResponse;
 use App\Core\View;
+use App\Core\Auth;
 
 class Login
 {
@@ -72,7 +73,7 @@ class Login
         $this->view->display('auth/login');
     }
 
-    //Hàm hiển thị trang đăng nhập 
+    //Hàm hiển thị trang đăng nhập
     // GET /auth/login
     public function login(): void
     {
@@ -165,13 +166,15 @@ class Login
             'id' => (int) $user['id'],
             'name' => $user['name'],
             'email' => $user['email'],
+            'role' => $user['role'] ?? 'customer',
         ];
 
         if ($remember) {
             $_SESSION['remember_requested'] = true;
         }
 
-        header('Location: /auth/success');
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        header('Location: ' . (($user['role'] ?? '') === 'admin' ? '/admin' : '/'));
         exit;
     }
 
@@ -224,53 +227,36 @@ class Login
             'id' => (int) $user['id'],
             'name' => $user['name'],
             'email' => $user['email'],
+            'role' => $user['role'] ?? 'customer',
         ];
+
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 
         $safeUser = [
             'id' => (int) $user['id'],
             'name' => $user['name'],
             'email' => $user['email'],
+            'role' => $user['role'] ?? 'customer',
             'status' => $user['status'],
         ];
 
         JsonResponse::success(
             [
                 'user' => $safeUser,
+                'redirect' => ($user['role'] ?? '') === 'admin' ? '/admin' : '/',
+                'csrf_token' => Auth::csrfToken(),
             ],
             'Login Successful',
             200
         );
     }
 
-    // Hàm chuyển đến trang sau khi đăng nhập thành công 
+    // Hàm chuyển đến trang sau khi đăng nhập thành công
     // GET /auth/success
     public function success(): void
     {
-        if (!isset($_SESSION['user_id'])) {
-            header('Location: /auth/login');
-            exit;
-        }
-
-        $user = $_SESSION['user'] ?? [];
-
-        echo '<h1>Login Successful ✅</h1>';
-
-        echo '<p>Welcome '
-            . htmlspecialchars(
-                $user['name'] ?? 'User',
-                ENT_QUOTES,
-                'UTF-8'
-            )
-            . '</p>';
-
-        echo '<p>Email: '
-            . htmlspecialchars(
-                $user['email'] ?? '',
-                ENT_QUOTES,
-                'UTF-8'
-            )
-            . '</p>';
-
-        echo '<p><a href="/auth/logout">Logout</a></p>';
+        $user = Auth::user();
+        header('Location: ' . (!$user ? '/auth/login' : ($user['role'] === 'admin' ? '/admin' : '/')));
+        exit;
     }
 }

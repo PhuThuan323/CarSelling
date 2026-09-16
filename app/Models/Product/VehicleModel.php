@@ -15,19 +15,21 @@ class VehicleModel {
         WHERE vm.deleted_at IS NULL 
         AND b.deleted_at IS NULL";
         if(!$admin){
-            $sql.=" AND status='active'";
+            $sql.=" AND vm.status='active' AND b.status='active'";
         }
-        $sql.=" ORDER BY name ASC";
+        $sql.=" ORDER BY brand_name ASC, vm.name ASC";
         return $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
     public function byBrand(int $brandId,bool $admin=false): array {
         $sql="
-        SELECT * FROM vehicle_models 
-        WHERE brand_id=:brand_id AND deleted_at IS NULL";
+        SELECT vm.*,b.name AS brand_name
+        FROM vehicle_models vm
+        JOIN brands b ON b.id=vm.brand_id
+        WHERE vm.brand_id=:brand_id AND vm.deleted_at IS NULL AND b.deleted_at IS NULL";
         if(!$admin){
-            $sql.=" AND status='active'";
+            $sql.=" AND vm.status='active' AND b.status='active'";
         }
-        $sql.=" ORDER BY name";
+        $sql.=" ORDER BY vm.name";
         $s=$this->db->prepare($sql);
         $s->execute(['brand_id'=>$brandId]);
         return $s->fetchAll(PDO::FETCH_ASSOC);

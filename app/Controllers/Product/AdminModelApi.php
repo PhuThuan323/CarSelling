@@ -1,55 +1,39 @@
 <?php
 declare(strict_types=1);
-namespace App\Controllers\Product\Api;
+namespace App\Controllers\Product;
 use App\Core\JsonResponse;
 use App\Models\Product\Brand;
 use App\Models\Product\VehicleModel;
 class AdminModelApi {
-    private VehicleModel $models; 
-    private Brand $brand; 
-    public function __construct(){ 
+    use CatalogAdminSupport;
+    private VehicleModel $models;
+    private Brand $brand;
+    public function __construct(){
         $this->models=new VehicleModel();
-        $this->brand=new Brand(); 
-    }
-
-    private function requireAdmin(): void {
-        if(empty($_SESSION['user_id'])) JsonResponse::error('Unauthenticated',401);
-        $role=$_SESSION['user']['role']??$_SESSION['user_role']??null;
-        if($role!=='admin') JsonResponse::error('Forbidden',403);
-    }
-    private function requestData(): array {
-        $ct=$_SERVER['CONTENT_TYPE']??'';
-        if(str_contains($ct,'application/json')){ $d=json_decode(file_get_contents('php://input'),true); return is_array($d)?$d:[]; }
-        if(($_SERVER['REQUEST_METHOD']??'')==='POST') return $_POST;
-        $raw=file_get_contents('php://input');$d=[];parse_str($raw,$d);return $d;
-    }
-    private function slugify(string $v): string {
-        $v=trim(mb_strtolower($v,'UTF-8'));
-        if(function_exists('iconv')){ $x=iconv('UTF-8','ASCII//TRANSLIT//IGNORE',$v); if($x!==false)$v=$x; }
-        $v=preg_replace('/[^a-z0-9]+/','-',$v)??'';return trim($v,'-');
+        $this->brand=new Brand();
     }
 
     public function index():void{
-        $this->requireAdmin();
+        $this->requireAdminApi();
         JsonResponse::success(['models'=>$this->models->all(true)],'Models retrieved successfully',200);
     }
 
     public function show(string $id):void{
-        $this->requireAdmin();
+        $this->requireAdminApi();
         $x=$this->models->findById((int)$id,true);
         if(!$x)JsonResponse::error('Model not found',404);
         JsonResponse::success(['model'=>$x],'Model retrieved successfully',200);
     }
 
     public function byBrand(string $brandId):void{
-        $this->requireAdmin();
+        $this->requireAdminApi();
         if(!$this->brand->findById((int)$brandId,true))
             JsonResponse::error('Brand not found',404);
         JsonResponse::success(['models'=>$this->models->byBrand((int)$brandId,true)],'Models retrieved successfully',200);
     }
 
     public function store():void{
-        $this->requireAdmin();
+        $this->requireAdminApi();
         $d=$this->requestData();
         $brandId=(int)($d['brand_id']??0);
         $name=trim((string)($d['name']??''));
@@ -60,12 +44,12 @@ class AdminModelApi {
         $d['name']=$name;
         $d['slug']=trim((string)($d['slug']??''))?:$this->slugify($name);
         $id=$this->models->create($d);
-        if(!$id) 
+        if(!$id)
             JsonResponse::error('Unable to create model',500);
         JsonResponse::success(['model'=>$this->models->findById((int)$id,true)],'Model created successfully',201);
     }
     public function update(string $id):void{
-        $this->requireAdmin();
+        $this->requireAdminApi();
         $id=(int)$id;
         if(!$this->models->findById($id,true))
             JsonResponse::error('Model not found',404);
@@ -78,7 +62,7 @@ class AdminModelApi {
     }
 
     public function destroy(string $id):void{
-        $this->requireAdmin();
+        $this->requireAdminApi();
         $id=(int)$id;
         if(!$this->models->findById($id,true))
             JsonResponse::error('Model not found',404);

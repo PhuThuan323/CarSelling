@@ -39,7 +39,7 @@ class Register
     public function signup(): void
     {
         if (isset($_SESSION['user_id'])) {
-            header('Location: /auth/success');
+            header('Location: /');
             exit;
         }
 
@@ -54,7 +54,7 @@ class Register
         $this->view->display('auth/login');
     }
 
-    // Hàm gửi thông tin đăng ký 
+    // Hàm gửi thông tin đăng ký
     // POST /auth/register
     public function register(): void
     {
@@ -181,9 +181,10 @@ class Register
             'id' => (int) $userId,
             'name' => $name,
             'email' => $email,
+            'role' => 'customer',
         ];
 
-        header('Location: /auth/success');
+        header('Location: /');
         exit;
     }
     // Hàm reder lỗi đăng ký

@@ -1,4 +1,4 @@
-(function ($) {
+(function () {
     'use strict';
 
     var API = {
@@ -23,7 +23,27 @@
     ];
 
     function escapeHtml(value) {
-        return $('<div>').text(value == null ? '' : String(value)).html();
+        return String(value == null ? '' : value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function $(selector) {
+        return document.querySelector(selector);
+    }
+
+    function $$(selector) {
+        return Array.prototype.slice.call(document.querySelectorAll(selector));
+    }
+
+    function getJSON(url) {
+        return fetch(url, { headers: { Accept: 'application/json' } }).then(function (res) {
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.json();
+        });
     }
 
     function formatMoney(value) {
@@ -39,73 +59,78 @@
     }
 
     function renderBrands(brands) {
-        var $picker = $('#brandPicker');
-        $picker.empty();
+        var picker = $('#brandPicker');
+        picker.innerHTML = '';
 
         if (!brands.length) {
-            $picker.html('<div class="brand-loading">Chưa có hãng xe.</div>');
-            $('#brandCountText').text('0 hãng xe');
+            picker.innerHTML = '<div class="brand-loading">Chưa có hãng xe.</div>';
+            $('#brandCountText').textContent = '0 hãng xe';
             return;
         }
 
         brands.slice(0, 10).forEach(function (brand, index) {
-            var $button = $('<button type="button" class="brand-chip">');
-            $button.attr('data-brand-id', brand.id);
-            if (index === 0) $button.addClass('is-active');
+            var button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'brand-chip' + (index === 0 ? ' is-active' : '');
+            button.setAttribute('data-brand-id', brand.id);
 
-            $button.html(
+            button.innerHTML =
                 '<span class="brand-chip-logo">' + brandLogo(brand) + '</span>' +
-                '<span class="brand-chip-name">' + escapeHtml(brand.name) + '</span>'
-            );
+                '<span class="brand-chip-name">' + escapeHtml(brand.name) + '</span>';
 
-            $button.on('click', function () {
-                $('.brand-chip').removeClass('is-active');
-                $(this).addClass('is-active');
+            button.addEventListener('click', function () {
+                $$('.brand-chip').forEach(function (el) {
+                    el.classList.remove('is-active');
+                });
+                button.classList.add('is-active');
                 loadModels(brand.id);
             });
 
-            $picker.append($button);
+            picker.appendChild(button);
         });
 
-        $('#brandCountText').text('Xem tất cả ' + brands.length + ' hãng xe');
+        $('#brandCountText').textContent = 'Xem tất cả ' + brands.length + ' hãng xe';
         loadModels(brands[0].id);
     }
 
     function loadBrands() {
-        $.getJSON(API.brands)
-            .done(function (response) {
+        getJSON(API.brands)
+            .then(function (response) {
                 var brands = response && response.data && Array.isArray(response.data.brands)
                     ? response.data.brands
                     : [];
                 renderBrands(brands);
             })
-            .fail(function () {
-                $('#brandPicker').html('<div class="brand-loading">Không tải được danh sách hãng xe.</div>');
-                $('#brandCountText').text('Vui lòng thử lại sau');
+            .catch(function () {
+                $('#brandPicker').innerHTML = '<div class="brand-loading">Không tải được danh sách hãng xe.</div>';
+                $('#brandCountText').textContent = 'Vui lòng thử lại sau';
             });
     }
 
     function loadModels(brandId) {
-        var $list = $('#modelQuickList');
-        $list.html('<span class="model-quick-item">Đang tải dòng xe...</span>');
+        var list = $('#modelQuickList');
+        list.innerHTML = '<span class="model-quick-item">Đang tải dòng xe...</span>';
 
-        $.getJSON(API.modelsByBrand(brandId))
-            .done(function (response) {
+        getJSON(API.modelsByBrand(brandId))
+            .then(function (response) {
                 var models = response && response.data && Array.isArray(response.data.models)
                     ? response.data.models
                     : [];
 
-                $list.empty();
+                list.innerHTML = '';
                 models.slice(0, 7).forEach(function (model) {
-                    $list.append($('<span>').addClass('model-quick-item').text(model.name));
+                    var span = document.createElement('span');
+                    span.className = 'model-quick-item';
+                    span.textContent = model.name;
+                    list.appendChild(span);
                 });
 
                 if (!models.length) {
-                    $list.html('<span class="model-quick-item">Chưa có dòng xe</span>');
+                    list.innerHTML = '<span class="model-quick-item">Chưa có dòng xe</span>';
                 }
             })
-            .fail(function () {
-                $list.empty();
+            .catch(function () {
+                list.innerHTML = '';
             });
     }
 
@@ -144,10 +169,16 @@
         '</article>';
     }
 
-    $(function () {
+    function init() {
         loadBrands();
-        $('#featuredVehicleGrid').html(demoVehicles.map(vehicleCard).join(''));
-        $('#reviewGrid').html(demoReviews.map(reviewCard).join(''));
-    });
+        $('#featuredVehicleGrid').innerHTML = demoVehicles.map(vehicleCard).join('');
+        $('#reviewGrid').innerHTML = demoReviews.map(reviewCard).join('');
+    }
 
-})(jQuery);
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+})();

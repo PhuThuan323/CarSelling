@@ -1,5 +1,15 @@
 :root{--blue:#2f80ed;--text:#1c2736;--muted:#7d8998;--bg:#f5f8fc;--card:#fff;--border:#e6edf5;--shadow:0 12px 30px rgba(40,77,119,.10)}
 .home-page{background:var(--bg);color:var(--text)}
+.topbar-section{position:relative;z-index:4;display:flex;align-items:center;gap:24px;width:100%;padding:12px max(20px,calc((100% - 1180px)/2));background:#fff;border-bottom:1px solid var(--border)}
+.topbar-section .logo{flex:0 0 auto;width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#2f80ed,#76b6ff)}
+.redirect-url{display:flex;align-items:center;gap:26px}
+.redirect-url href{color:var(--text);font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap}
+.redirect-url href:hover{color:var(--blue)}
+.user-management{display:flex;align-items:center;gap:10px;margin-left:auto}
+.user-management-btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 20px;border:1px solid #cfdcea;border-radius:10px;background:#fff;color:var(--text);font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap;cursor:pointer;transition:.18s}
+.user-management-btn:hover{background:#f2f7fd;border-color:#9dc0e8;color:var(--blue)}
+.user-management-btn-primary{background:#2f80ed;border-color:#2f80ed;color:#fff}
+.user-management-btn-primary:hover{background:#1d6fdd;border-color:#1d6fdd;color:#fff}
 .section-container{width:min(1180px,calc(100% - 40px));margin:0 auto}
 .hero-section{position:relative;min-height:500px;overflow:hidden;background:linear-gradient(110deg,rgba(45,92,144,.90) 0%,rgba(83,128,178,.60) 43%,rgba(210,225,240,.20) 75%),url('../../assets/img/homepage.png') center/cover no-repeat}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,32,56,.05),rgba(11,32,56,.10))}
