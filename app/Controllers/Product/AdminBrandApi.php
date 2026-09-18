@@ -10,7 +10,13 @@ class AdminBrandApi {
     public function __construct(){
         $this->brands = new Brand();
     }
-
+    public function brands()
+    {
+        return $this->view->render('admin/brands', [
+            'page_title' => 'Quản lý hãng xe',
+            'admin_section' => 'brands',
+        ]);
+    }
     public function index():void{
         $this->requireAdminApi();
         JsonResponse::success([

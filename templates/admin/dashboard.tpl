@@ -180,8 +180,74 @@
                     </select>
                 </div>
                 <div class="admin-field admin-field-full">
-                    <label for="brandLogo">Logo URL</label>
-                    <input type="text" class="admin-input" id="brandLogo" name="logo" placeholder="https://...">
+                    <label>Logo hãng xe</label>
+
+                    <input
+                        type="file"
+                        id="brandLogoFile"
+                        accept="image/png,image/jpeg,image/webp"
+                        hidden
+                    >
+                    <input type="hidden" id="brandLogo" name="logo" value="">
+                    <input type="hidden" id="brandLogoPublicId" name="logo_public_id" value="">
+                    <input type="hidden" id="brandLogoRemove" name="logo_remove" value="0">
+
+                    {* Khu vực upload ẩn mặc định, chỉ mở khi bấm nút "Thêm logo". *}
+                    <button
+                        type="button"
+                        class="admin-btn admin-btn-ghost"
+                        id="brandLogoOpen"
+                    >
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        Thêm logo
+                    </button>
+
+                    <div class="brand-logo-upload is-hidden" id="brandLogoDropzone">
+                        <div class="brand-logo-empty" id="brandLogoEmpty">
+                            <div class="brand-logo-empty-icon">
+                                <i class="fa-regular fa-image"></i>
+                            </div>
+                            <strong>Chọn logo hoặc kéo ảnh vào đây</strong>
+                            <span>PNG, JPG hoặc WebP · tối đa 5 MB</span>
+                            <button
+                                type="button"
+                                class="admin-btn admin-btn-ghost"
+                                id="brandLogoChoose"
+                            >
+                                <i class="fa-solid fa-upload"></i>
+                                Chọn ảnh
+                            </button>
+                        </div>
+
+                        <div class="brand-logo-result" id="brandLogoResult" hidden>
+                            <div class="brand-logo-preview-box">
+                                <img id="logoPreview" src="" alt="Logo preview">
+                            </div>
+
+                            <div class="brand-logo-result-info">
+                                <strong>Logo đã sẵn sàng</strong>
+                                <span id="brandLogoStatus">Đã tải lên Cloudinary</span>
+
+                                <div class="brand-logo-actions">
+                                    <button
+                                        type="button"
+                                        class="admin-btn admin-btn-ghost"
+                                        id="brandLogoChange"
+                                    >
+                                        Đổi / căn chỉnh
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="admin-btn admin-btn-danger-soft"
+                                        id="brandLogoClear"
+                                    >
+                                        Xóa logo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="admin-field admin-field-full">
                     <label for="brandDescription">Mô tả</label>
@@ -327,5 +393,81 @@
             </div>
         </div>
     </div>
+
+
+    {* ====================== CROP LOGO MODAL ====================== *}
+    <div class="logo-crop-modal" id="logoCropModal" hidden>
+        <div class="logo-crop-dialog">
+            <div class="logo-crop-head">
+                <div>
+                    <h3>Căn chỉnh logo</h3>
+                    <p>Kéo, phóng to, xoay và cắt logo trước khi lưu.</p>
+                </div>
+                <button type="button" class="admin-modal-close" id="logoCropClose" aria-label="Đóng">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="logo-crop-body">
+                <div class="logo-crop-stage">
+                    <img id="logoCropImage" src="" alt="Ảnh đang căn chỉnh">
+                </div>
+
+                <div class="logo-crop-toolbar">
+                    <div class="logo-crop-group">
+                        <span>Tỉ lệ</span>
+                        <button type="button" class="logo-tool-btn is-active" data-crop-ratio="free">Tự do</button>
+                        <button type="button" class="logo-tool-btn" data-crop-ratio="1">1:1</button>
+                        <button type="button" class="logo-tool-btn" data-crop-ratio="1.3333333333">4:3</button>
+                    </div>
+
+                    <div class="logo-crop-group">
+                        <span>Điều chỉnh</span>
+                        <button type="button" class="logo-tool-btn" data-crop-action="zoom-in" title="Phóng to">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                        </button>
+                        <button type="button" class="logo-tool-btn" data-crop-action="zoom-out" title="Thu nhỏ">
+                            <i class="fa-solid fa-magnifying-glass-minus"></i>
+                        </button>
+                        <button type="button" class="logo-tool-btn" data-crop-action="rotate-left" title="Xoay trái">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                        <button type="button" class="logo-tool-btn" data-crop-action="rotate-right" title="Xoay phải">
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                        <button type="button" class="logo-tool-btn" data-crop-action="reset" title="Đặt lại">
+                            <i class="fa-solid fa-arrow-rotate-left"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="logo-crop-foot">
+                <span class="logo-upload-progress" id="logoUploadProgress"></span>
+
+                <div>
+                    <button type="button" class="admin-btn admin-btn-ghost" id="logoCropCancel">
+                        Hủy
+                    </button>
+                    <button type="button" class="admin-btn admin-btn-primary" id="logoCropUpload">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        Cắt ảnh &amp; tải lên
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css"
+    >
+    <link
+        rel="stylesheet"
+        href="/assets/css/brand-logo-uploader.css"
+    >
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+    <script src="/assets/js/brand-logo-uploader.js"></script>
 
 {/block}

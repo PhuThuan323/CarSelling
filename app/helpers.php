@@ -31,7 +31,7 @@ function escape($string) {
  */
 function baseUrl($path = '') {
     $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
-    $host = $_SERVER['HTTP_HOST'];
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
     $url = $protocol . '://' . $host . '/';
     return $url . ltrim($path, '/');
 }

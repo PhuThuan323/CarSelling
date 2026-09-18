@@ -93,6 +93,8 @@
 }
 .admin-panel + .admin-panel{margin-top:18px}
 .admin-panel.is-hidden{display:none}
+.admin-btn.is-hidden{display:none}
+.brand-logo-upload.is-hidden{display:none}
 .admin-panel-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px}
 .admin-panel-head h2{font-size:17px}
 .admin-panel-head p{margin-top:3px;color:var(--admin-muted);font-size:12px}

@@ -1,0 +1,159 @@
+.brand-logo-upload{
+    border:1px dashed #cbd7e5;
+    border-radius:12px;
+    background:#f8fbff;
+    padding:16px;
+    transition:.18s ease;
+}
+.brand-logo-upload.is-dragging{
+    border-color:#2f80ed;
+    background:#eef6ff;
+    box-shadow:0 0 0 3px rgba(47,128,237,.08);
+}
+.brand-logo-empty{
+    min-height:170px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    text-align:center;
+}
+.brand-logo-empty-icon{
+    width:48px;
+    height:48px;
+    border-radius:14px;
+    display:grid;
+    place-items:center;
+    background:#e8f2ff;
+    color:#2f80ed;
+    font-size:20px;
+}
+.brand-logo-empty strong{font-size:13px;color:#26384a}
+.brand-logo-empty span{margin-bottom:5px;color:#8290a0;font-size:11px}
+.brand-logo-result{
+    display:flex;
+    align-items:center;
+    gap:16px;
+}
+.brand-logo-preview-box{
+    width:132px;
+    height:132px;
+    flex:0 0 132px;
+    display:grid;
+    place-items:center;
+    overflow:hidden;
+    border:1px solid #dce5ef;
+    border-radius:12px;
+    background:
+        linear-gradient(45deg,#f2f4f7 25%,transparent 25%),
+        linear-gradient(-45deg,#f2f4f7 25%,transparent 25%),
+        linear-gradient(45deg,transparent 75%,#f2f4f7 75%),
+        linear-gradient(-45deg,transparent 75%,#f2f4f7 75%);
+    background-size:16px 16px;
+    background-position:0 0,0 8px,8px -8px,-8px 0;
+}
+.brand-logo-preview-box img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
+}
+.brand-logo-result-info strong{display:block;margin-bottom:4px;color:#243447;font-size:13px}
+.brand-logo-result-info > span{display:block;color:#738397;font-size:11px}
+.brand-logo-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.admin-btn-danger-soft{
+    color:#c8473d;
+    border:1px solid #f0c6c2;
+    background:#fff6f5;
+}
+.logo-crop-modal{
+    position:fixed;
+    inset:0;
+    z-index:1200;
+    padding:24px;
+    display:grid;
+    place-items:center;
+    background:rgba(15,26,40,.68);
+    backdrop-filter:blur(4px);
+}
+.logo-crop-modal[hidden]{display:none}
+.logo-crop-dialog{
+    width:min(920px,100%);
+    max-height:calc(100vh - 48px);
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    border-radius:16px;
+    background:#fff;
+    box-shadow:0 24px 80px rgba(0,0,0,.30);
+}
+.logo-crop-head{
+    min-height:72px;
+    padding:14px 18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    border-bottom:1px solid #e7edf4;
+}
+.logo-crop-head h3{margin:0;font-size:16px}
+.logo-crop-head p{margin:4px 0 0;color:#7d8a9a;font-size:11px}
+.logo-crop-body{padding:16px;overflow:auto}
+.logo-crop-stage{
+    height:min(58vh,520px);
+    min-height:320px;
+    overflow:hidden;
+    border-radius:12px;
+    background:#182230;
+}
+.logo-crop-stage img{display:block;max-width:100%}
+.logo-crop-toolbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:12px;
+}
+.logo-crop-group{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+.logo-crop-group > span{
+    margin-right:4px;
+    color:#7d8a9a;
+    font-size:10px;
+    font-weight:700;
+    text-transform:uppercase;
+}
+.logo-tool-btn{
+    min-width:34px;
+    height:34px;
+    padding:0 10px;
+    border:1px solid #dbe4ee;
+    border-radius:8px;
+    background:#fff;
+    color:#526276;
+    cursor:pointer;
+    font-size:11px;
+}
+.logo-tool-btn:hover,.logo-tool-btn.is-active{
+    border-color:#9cc4f7;
+    background:#edf5ff;
+    color:#2f80ed;
+}
+.logo-crop-foot{
+    min-height:68px;
+    padding:12px 18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    border-top:1px solid #e7edf4;
+}
+.logo-upload-progress{color:#6d7c8e;font-size:11px}
+@media(max-width:640px){
+    .logo-crop-modal{padding:8px}
+    .logo-crop-dialog{max-height:calc(100vh - 16px)}
+    .logo-crop-stage{height:46vh;min-height:240px}
+    .brand-logo-result{align-items:flex-start;flex-direction:column}
+    .logo-crop-foot{align-items:flex-start;flex-direction:column}
+}

@@ -12,7 +12,13 @@ class AdminModelApi {
         $this->models=new VehicleModel();
         $this->brand=new Brand();
     }
-
+    public function models()
+    {
+        return $this->view->render('admin/models', [
+            'page_title' => 'Quản lý dòng xe',
+            'admin_section' => 'models',
+        ]);
+    }
     public function index():void{
         $this->requireAdminApi();
         JsonResponse::success(['models'=>$this->models->all(true)],'Models retrieved successfully',200);

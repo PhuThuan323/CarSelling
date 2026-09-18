@@ -5,7 +5,7 @@
 
 <main class="home-page">
     <section class="topbar-section">
-        <div class="topbar-overlay"></div>
+        <div class="topbar-inner">
         <div class="logo"></div>
         <div class="redirect-url">
             <href>Cách Thức Hoạt Động</href>
@@ -13,8 +13,27 @@
             <href>Tài Khoản</href>
         </div>
         <div class="user-management">
-            <a class="user-management-btn" href="/auth/login">Đăng nhập</a>
-            <a class="user-management-btn user-management-btn-primary" href="/auth/register">Đăng ký</a>
+            {if isset($current_user) && $current_user}
+                <a class="admin-entry-link" href="{if $current_user.role eq 'admin'}/admin{else}/{/if}">
+                    Xin chào, {$current_user.name|escape}
+                </a>
+                <div class="user-settings" id="userSettings">
+                    <button type="button" class="user-settings-btn" id="userSettingsToggle" aria-label="Cài đặt tài khoản" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa-solid fa-gear"></i>
+                    </button>
+                    <div class="user-settings-menu" id="userSettingsMenu">
+                        {if $current_user.role eq 'admin'}
+                            <a href="/admin"><i class="fa-solid fa-gauge"></i> Trang quản trị</a>
+                        {/if}
+                        <a href="/"><i class="fa-solid fa-user"></i> Tài khoản của tôi</a>
+                        <a href="/auth/logout"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a>
+                    </div>
+                </div>
+            {else}
+                <a class="user-management-btn" href="/auth/login">Đăng nhập</a>
+                <a class="user-management-btn user-management-btn-primary" href="/auth/register">Đăng ký</a>
+            {/if}
+        </div>
         </div>
     </section>
     <section class="hero-section">
@@ -61,4 +80,36 @@
 </main>
 
 <script src="/assets/js/homepage.js"></script>
+<script>
+(function () {
+    var toggle = document.getElementById('userSettingsToggle');
+    var menu = document.getElementById('userSettingsMenu');
+    var wrap = document.getElementById('userSettings');
+
+    if (!toggle || !menu || !wrap) return;
+
+    function setOpen(open) {
+        wrap.classList.toggle('is-open', open);
+        toggle.classList.toggle('is-open', open);
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    toggle.addEventListener('click', function (event) {
+        event.stopPropagation();
+        setOpen(!wrap.classList.contains('is-open'));
+    });
+
+    document.addEventListener('click', function (event) {
+        if (!wrap.contains(event.target)) {
+            setOpen(false);
+        }
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+            setOpen(false);
+        }
+    });
+})();
+</script>
 {/block}

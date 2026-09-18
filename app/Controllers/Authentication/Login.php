@@ -40,23 +40,15 @@ class Login
 
         return $data;
     }
-    //Hàm tạo token cho người dùng
+    //Hàm tạo token cho người dùng (dùng chung Auth)
     private function generateCsrfToken(): string
     {
-        if (empty($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-        }
-
-        return $_SESSION['csrf_token'];
+        return Auth::csrfToken();
     }
-    //Hàm xác nhận token của người dùng
+    //Hàm xác nhận token của người dùng (dùng chung Auth)
     private function validateCsrfToken(string $token): bool
     {
-        if (empty($token) || empty($_SESSION['csrf_token'])) {
-            return false;
-        }
-
-        return hash_equals($_SESSION['csrf_token'], $token);
+        return Auth::validateCsrfToken($token);
     }
     //Hàm xử lý đăng nhập sai
     private function handleLoginError(
@@ -99,66 +91,42 @@ class Login
         $this->view->display('auth/login');
     }
 
-    // Hàm gọi api đăng nhập
-    // POST /auth/login
-    public function loginPost(): void
-    {
-        $csrfToken = $_POST['csrf_token'] ?? '';
-
-        if (!$this->validateCsrfToken($csrfToken)) {
-            $this->handleLoginError(
-                'Invalid security token. Please try again.',
-                trim($_POST['email'] ?? ''),
-                isset($_POST['remember'])
-            );
-            return;
-        }
-
-        $email = strtolower(trim($_POST['email'] ?? ''));
-        $password = $_POST['password'] ?? '';
-        $remember = isset($_POST['remember']);
+    // Shared credential check: returns the active user, or null plus a reason.
+    private function verifyCredentials(
+        string $email,
+        string $password,
+        string &$error = null
+    ): ?array {
+        $email = strtolower(trim($email));
 
         if ($email === '' || $password === '') {
-            $this->handleLoginError(
-                'Please enter both email and password.',
-                $email,
-                $remember
-            );
-            return;
+            $error = 'missing';
+            return null;
         }
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $this->handleLoginError(
-                'Please enter a valid email address.',
-                $email,
-                $remember
-            );
-            return;
+            $error = 'invalid_email';
+            return null;
         }
 
         $user = $this->userModel->findByEmail($email);
 
-        if (
-            !$user ||
-            !password_verify($password, $user['password'])
-        ) {
-            $this->handleLoginError(
-                'Email or password is incorrect.',
-                $email,
-                $remember
-            );
-            return;
+        if (!$user || !password_verify($password, $user['password'])) {
+            $error = 'bad_credentials';
+            return null;
         }
 
         if (($user['status'] ?? '') !== 'active') {
-            $this->handleLoginError(
-                'Your account is not active.',
-                $email,
-                $remember
-            );
-            return;
+            $error = 'inactive';
+            return null;
         }
 
+        return $user;
+    }
+
+    // Shared session hydration for every successful login path.
+    private function establishSession(array $user): array
+    {
         session_regenerate_id(true);
 
         $_SESSION['user_id'] = (int) $user['id'];
@@ -169,13 +137,70 @@ class Login
             'role' => $user['role'] ?? 'customer',
         ];
 
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+
+        return $_SESSION['user'];
+    }
+
+    private function redirectPathFor(array $user): string
+    {
+        return ($user['role'] ?? '') === 'admin' ? '/admin' : '/';
+    }
+
+    // Hàm gọi api đăng nhập
+    // POST /auth/login
+    public function loginPost(): void
+    {
+        $remember = isset($_POST['remember']);
+
+        $csrfToken = $_POST['csrf_token'] ?? '';
+
+        if (!$this->validateCsrfToken($csrfToken)) {
+            $this->handleLoginError(
+                'Invalid security token. Please try again.',
+                trim($_POST['email'] ?? ''),
+                $remember
+            );
+            return;
+        }
+
+        $email = strtolower(trim($_POST['email'] ?? ''));
+        $password = $_POST['password'] ?? '';
+
+        $user = $this->verifyCredentials($email, $password, $error);
+
+        if (!$user) {
+            $this->handleLoginError(
+                $this->errorMessageFor($error),
+                $email,
+                $remember
+            );
+            return;
+        }
+
+        $this->establishSession($user);
+
         if ($remember) {
             $_SESSION['remember_requested'] = true;
         }
 
-        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-        header('Location: ' . (($user['role'] ?? '') === 'admin' ? '/admin' : '/'));
+        header('Location: ' . $this->redirectPathFor($user));
         exit;
+    }
+
+    // Maps a credential failure reason to the user-facing message.
+    private function errorMessageFor(?string $reason): string
+    {
+        switch ($reason) {
+            case 'missing':
+                return 'Please enter both email and password.';
+            case 'invalid_email':
+                return 'Please enter a valid email address.';
+            case 'inactive':
+                return 'Your account is not active.';
+            default:
+                return 'Email or password is incorrect.';
+        }
     }
 
     // POST /api/auth/login
@@ -186,69 +211,57 @@ class Login
         $email = strtolower(trim($data['email'] ?? ''));
         $password = $data['password'] ?? '';
 
-        if ($email === '' || $password === '') {
+        $user = $this->verifyCredentials($email, $password, $error);
+
+        if (!$user) {
             JsonResponse::error(
-                'Email and password are required',
-                400
+                $this->apiMessageFor($error),
+                $this->apiStatusFor($error)
             );
         }
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            JsonResponse::error(
-                'Invalid email address',
-                422
-            );
-        }
-
-        $user = $this->userModel->findByEmail($email);
-
-        if (
-            !$user ||
-            !password_verify($password, $user['password'])
-        ) {
-            JsonResponse::error(
-                'Email or Password is not correct.',
-                401
-            );
-        }
-
-        if (($user['status'] ?? '') !== 'active') {
-            JsonResponse::error(
-                'Your account is not active',
-                403
-            );
-        }
-
-        session_regenerate_id(true);
-
-        $_SESSION['user_id'] = (int) $user['id'];
-
-        $_SESSION['user'] = [
-            'id' => (int) $user['id'],
-            'name' => $user['name'],
-            'email' => $user['email'],
-            'role' => $user['role'] ?? 'customer',
-        ];
-
-        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-
-        $safeUser = [
-            'id' => (int) $user['id'],
-            'name' => $user['name'],
-            'email' => $user['email'],
-            'role' => $user['role'] ?? 'customer',
-            'status' => $user['status'],
-        ];
+        $safeUser = $this->establishSession($user);
+        $safeUser['status'] = $user['status'];
 
         JsonResponse::success(
             [
                 'user' => $safeUser,
-                'redirect' => ($user['role'] ?? '') === 'admin' ? '/admin' : '/',
+                'redirect' => $this->redirectPathFor($user),
                 'csrf_token' => Auth::csrfToken(),
             ],
             'Login Successful',
             200
         );
+    }
+
+    // Maps a credential failure reason to the API message.
+    private function apiMessageFor(?string $reason): string
+    {
+        switch ($reason) {
+            case 'missing':
+                return 'Email and password are required';
+            case 'invalid_email':
+                return 'Invalid email address';
+            case 'inactive':
+                return 'Your account is not active';
+            default:
+                return 'Email or Password is not correct.';
+        }
+    }
+
+    // Maps a credential failure reason to the API status code.
+    private function apiStatusFor(?string $reason): int
+    {
+        switch ($reason) {
+            case 'missing':
+                return 400;
+            case 'invalid_email':
+                return 422;
+            case 'inactive':
+                return 403;
+            default:
+                return 401;
+        }
     }
 
     // Hàm chuyển đến trang sau khi đăng nhập thành công

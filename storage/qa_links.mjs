@@ -3,7 +3,7 @@ export default async function run(page, ui) {
 
   // 1. Load the homepage and inspect the two buttons
   await page.goto('http://127.0.0.1:8877/')
-  await page.waitForLoadState('networkidle').catch(() => {})
+  await page.waitForLoadState('networkidle').catch(() => { })
   await page.waitForTimeout(1200)
 
   out.homeLinks = await page.evaluate(() => {
@@ -24,7 +24,7 @@ export default async function run(page, ui) {
     )
     a && a.click()
   })
-  await page.waitForLoadState('networkidle').catch(() => {})
+  await page.waitForLoadState('networkidle').catch(() => { })
   await page.waitForTimeout(1200)
   out.afterLoginClick = {
     url: page.url(),
@@ -34,7 +34,7 @@ export default async function run(page, ui) {
 
   // 3. Back home, click "Đăng ký" -> should land on /auth/register with the sign-up panel
   await page.goto('http://127.0.0.1:8877/')
-  await page.waitForLoadState('networkidle').catch(() => {})
+  await page.waitForLoadState('networkidle').catch(() => { })
   await page.waitForTimeout(1000)
 
   await page.evaluate(() => {
@@ -43,7 +43,7 @@ export default async function run(page, ui) {
     )
     a && a.click()
   })
-  await page.waitForLoadState('networkidle').catch(() => {})
+  await page.waitForLoadState('networkidle').catch(() => { })
   await page.waitForTimeout(1200)
 
   out.afterRegisterClick = {

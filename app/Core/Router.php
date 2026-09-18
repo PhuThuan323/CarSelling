@@ -30,12 +30,16 @@ class Router {
 
         $match = $this->match($path, $method);
         if ($match === null) {
-            http_response_code(404);
-            die("Route not found: $method $path");
+            $this->renderNotFound($path);
         }
 
         $controllerName = $match['route']['controller'];
         $methodName = $match['route']['method'];
+
+        if (!class_exists($controllerName)) {
+            http_response_code(500);
+            die("Controller $controllerName not found");
+        }
 
         $controller = new $controllerName();
         if (!method_exists($controller, $methodName)) {
@@ -44,6 +48,19 @@ class Router {
         }
 
         return $controller->$methodName(...$match['params']);
+    }
+
+    // Renders the shared 404 template with the requested path escaped in the fallback message.
+    private function renderNotFound(string $path): void {
+        http_response_code(404);
+        $safePath = htmlspecialchars($path, ENT_QUOTES, 'UTF-8');
+        try {
+            (new View())->display('errors/404');
+        } catch (\Throwable $e) {
+            error_log('404 render error: ' . $e->getMessage() . ' for path: ' . $safePath);
+            echo '404 - Page Not Found';
+        }
+        exit;
     }
 
     // Static routes win; otherwise compare segment by segment, {id} captures a value.

@@ -24,6 +24,12 @@ class Auth
         return $_SESSION['csrf_token'];
     }
 
+    public static function validateCsrfToken(string $token): bool
+    {
+        if (empty($token) || empty($_SESSION['csrf_token'])) return false;
+        return hash_equals($_SESSION['csrf_token'], $token);
+    }
+
     public static function requireAdmin(bool $api = true): array
     {
         $user = self::user();

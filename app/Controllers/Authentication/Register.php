@@ -3,6 +3,7 @@
 namespace App\Controllers\Authentication;
 
 use App\Models\UserManagement\User;
+use App\Core\Auth;
 use App\Core\View;
 
 class Register
@@ -15,24 +16,17 @@ class Register
         $this->userModel = new User();
         $this->view = new View();
     }
-    //Hàm tạo token cho người dùng 
+    //Hàm tạo token cho người dùng (dùng chung Auth)
     private function generateCsrfToken(): string
     {
-        if (empty($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-        }
-
-        return $_SESSION['csrf_token'];
+        return Auth::csrfToken();
     }
-    //Hàm xác nhận token cho người dùng 
+    //Hàm xác nhận token cho người dùng (dùng chung Auth)
     private function validateCsrfToken(string $token): bool
     {
-        if (empty($token) || empty($_SESSION['csrf_token'])) {
-            return false;
-        }
-
-        return hash_equals($_SESSION['csrf_token'], $token);
+        return Auth::validateCsrfToken($token);
     }
+
 
     // Tùy chọn: GET /auth/signup - hàm render giao diện 
     // Vẫn dùng giao diện auth/login hiện tại nhưng mở panel Sign Up.

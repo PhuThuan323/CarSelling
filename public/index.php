@@ -25,6 +25,7 @@ use App\Controllers\Product\AdminBrandApi;
 use App\Controllers\Product\AdminModelApi;
 use App\Controllers\Product\AdminVehicleVersionApi;
 use App\Controllers\Product\PublicCatalog;
+use App\Controllers\Product\AdminMedia;
 
 $router = new Router();
 $router->get('/',Homepage::class,'index');
@@ -69,6 +70,7 @@ $router->post('/api/v1/admin/brands', AdminBrandApi::class, 'store');
 $router->get('/api/v1/admin/brands/{id}', AdminBrandApi::class, 'show');
 $router->put('/api/v1/admin/brands/{id}', AdminBrandApi::class, 'update');
 $router->delete('/api/v1/admin/brands/{id}', AdminBrandApi::class, 'destroy');
+$router->post('/api/v1/admin/uploads/brand-logo',AdminMedia::class,'uploadBrandLogo');
 
 $router->get('/api/v1/admin/models', AdminModelApi::class, 'index');
 $router->post('/api/v1/admin/models', AdminModelApi::class, 'store');

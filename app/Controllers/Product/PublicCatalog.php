@@ -24,45 +24,40 @@ class PublicCatalog {
         $d = $this->brand->findById((int)$id,false);
         if(!$d){
             JsonResponse::error('Brand not found', 404);
+            return;
         }
-        else{
-            JsonResponse::success(['brand'=>$d], 'Brand Retrieved Sucessfully', 200);
-        }
+        JsonResponse::success(['brand'=>$d], 'Brand Retrieved Sucessfully', 200);
     }
     public function modelsByBrand(string $brandId):void{
         if(!$this->brand->findById((int)$brandId,false)){
             JsonResponse::error('Brand not found',404);
+            return;
         }
-        else{
-            JsonResponse::success(['models'=>$this->model->byBrand((int)$brandId,false)],
-            'Models retrieved successfully',200);
-        }
+        JsonResponse::success(['models'=>$this->model->byBrand((int)$brandId,false)],
+        'Models retrieved successfully',200);
     }
     public function model(string $id):void{
         $x=$this->model->findById((int)$id,false);
         if(!$x){
             JsonResponse::error('Model not found',404);
+            return;
         }
-        else{
-            JsonResponse::success(['model'=>$x],'Model retrieved successfully',200);
-        }
+        JsonResponse::success(['model'=>$x],'Model retrieved successfully',200);
     }
     public function versionsByModel(string $modelId):void{
         if(!$this->model->findById((int)$modelId,false)){
             JsonResponse::error('Model not found',404);
+            return;
         }
-        else{
-            JsonResponse::success(['versions'=>$this->version->byModel((int)$modelId,false)],'Vehicle versions retrieved successfully',200);
-        }
+        JsonResponse::success(['versions'=>$this->version->byModel((int)$modelId,false)],'Vehicle versions retrieved successfully',200);
     }
     public function version(string $id):void{
         $x=$this->version->findById((int)$id,false);
         if(!$x){
             JsonResponse::error('Vehicle version not found',404);
+            return;
         }
-        else{
-            JsonResponse::success(['version'=>$x],'Vehicle version retrieved successfully',200);
-        }
+        JsonResponse::success(['version'=>$x],'Vehicle version retrieved successfully',200);
     }
 
 }

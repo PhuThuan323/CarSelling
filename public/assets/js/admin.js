@@ -253,6 +253,10 @@
             document.getElementById(id).reset();
             document.getElementById(id).querySelector('input[name="id"]').value = '';
         });
+        // Thu gọn lại khu vực upload logo để lần mở sau bắt đầu ở trạng thái gọn.
+        if (window.BrandLogoUploader) {
+            window.BrandLogoUploader.reset();
+        }
     }
 
     function numberOrNull(form, name) {

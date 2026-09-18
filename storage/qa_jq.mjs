@@ -2,7 +2,7 @@ export default async function run(page, ui) {
   const out = {}
 
   await page.goto('http://127.0.0.1:8877/')
-  await page.waitForLoadState('networkidle').catch(() => {})
+  await page.waitForLoadState('networkidle').catch(() => { })
   await page.waitForTimeout(2000)
 
   // Is jQuery present at all?
