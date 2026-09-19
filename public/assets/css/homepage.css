@@ -1,42 +1,1412 @@
-:root{--blue:#2f80ed;--text:#1c2736;--muted:#7d8998;--bg:#f5f8fc;--card:#fff;--border:#e6edf5;--shadow:0 12px 30px rgba(40,77,119,.10)}
-.home-page{background:var(--bg);color:var(--text)}
-.topbar-section{position:relative;z-index:4;width:100%;background:#fff;border-bottom:1px solid var(--border)}
-.topbar-inner{display:flex;align-items:center;gap:24px;width:min(1180px,calc(100% - 40px));min-height:68px;margin:0 auto}
-.topbar-section .logo{flex:0 0 auto;width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#2f80ed,#76b6ff)}
-.redirect-url{display:flex;align-items:center;gap:26px}
-.redirect-url href{color:var(--text);font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap}
-.redirect-url href:hover{color:var(--blue)}
-.user-management{display:flex;align-items:center;gap:10px;margin-left:auto;flex:0 0 auto}
-.user-management-btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 20px;border:1px solid #cfdcea;border-radius:10px;background:#fff;color:var(--text);font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap;cursor:pointer;transition:.18s}
-.user-management-btn:hover{background:#f2f7fd;border-color:#9dc0e8;color:var(--blue)}
-.user-management-btn-primary{background:#2f80ed;border-color:#2f80ed;color:#fff}
-.user-management-btn-primary:hover{background:#1d6fdd;border-color:#1d6fdd;color:#fff}
-.admin-entry-link{display:inline-flex;align-items:center;color:var(--text);font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap;transition:.18s}
-.admin-entry-link:hover{color:var(--blue)}
-.user-settings{position:relative}
-.user-settings-btn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border:1px solid #cfdcea;border-radius:10px;background:#fff;color:var(--text);font-size:16px;cursor:pointer;transition:.18s}
-.user-settings-btn:hover{background:#f2f7fd;border-color:#9dc0e8;color:var(--blue)}
-.user-settings-btn.is-open{background:#f2f7fd;border-color:#9dc0e8;color:var(--blue)}
-.user-settings-btn i{transition:transform .25s ease}
-.user-settings-btn.is-open i{transform:rotate(60deg)}
-.user-settings-menu{position:absolute;top:calc(100% + 10px);right:0;z-index:20;display:flex;flex-direction:column;min-width:210px;padding:8px;border:1px solid var(--border);border-radius:14px;background:#fff;box-shadow:0 18px 40px rgba(40,77,119,.18);transform-origin:top right;transform:translateY(-8px) scale(.96);opacity:0;visibility:hidden;pointer-events:none;transition:transform .22s cubic-bezier(.34,1.4,.64,1),opacity .18s ease,visibility .18s}
-.user-settings.is-open .user-settings-menu{transform:translateY(0) scale(1);opacity:1;visibility:visible;pointer-events:auto}
-.user-settings-menu[hidden]{display:none}
-.user-settings-menu a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:9px;color:var(--text);font-size:14px;font-weight:600;text-decoration:none;transition:.15s}
-.user-settings-menu a:hover{background:#f2f7fd;color:var(--blue);transform:translateX(2px)}
-.user-settings-menu a i{width:16px;text-align:center;color:var(--muted)}
-.section-container{width:min(1180px,calc(100% - 40px));margin:0 auto}
-.hero-section{position:relative;min-height:500px;overflow:hidden;background:linear-gradient(110deg,rgba(45,92,144,.90) 0%,rgba(83,128,178,.60) 43%,rgba(210,225,240,.20) 75%),url('../../assets/img/homepage.png') center/cover no-repeat}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,32,56,.05),rgba(11,32,56,.10))}
-.hero-content{position:relative;z-index:2;width:min(1180px,calc(100% - 40px));min-height:500px;margin:0 auto;display:grid;grid-template-columns:1.08fr .92fr;align-items:center;gap:34px}
-.hero-copy{padding:52px 0}.hero-kicker{display:inline-block;margin-bottom:10px;font-size:12px;font-weight:500;letter-spacing:.16em;color:rgba(255,255,255,.78)}
-.hero-copy h1{margin:0;max-width:720px;color:#fff;font-size:clamp(38px,5vw,66px);line-height:1.02;font-weight:800;letter-spacing:-.045em;text-shadow:0 6px 20px rgba(0,0,0,.16)}
-.hero-copy>p{max-width:580px;margin:18px 0 28px;color:rgba(255,255,255,.92);font-size:15px;line-height:1.65}
-.hero-glow{position:absolute;width:78%;height:36%;bottom:30px;border-radius:50%;background:rgba(215,235,255,.55);filter:blur(34px)}
-.brand-picker-card{width:min(640px,100%);padding:17px 18px 13px;border:1px solid rgba(255,255,255,.22);border-radius:16px;background:rgba(8,35,65,.62);backdrop-filter:blur(16px);box-shadow:0 18px 36px rgba(4,24,46,.18)}
-.brand-picker-title{margin-bottom:14px;color:#fff;font-size:14px;font-weight:700}.brand-picker{display:flex;gap:12px;overflow-x:auto;padding-bottom:4px}.brand-chip{flex:0 0 auto;min-width:66px;border:0;padding:0;background:transparent;cursor:pointer}.brand-chip-logo{width:54px;height:54px;margin:0 auto 7px;display:grid;place-items:center;overflow:hidden;border:2px solid transparent;border-radius:50%;background:#fff;color:#1d65bd;font-size:15px;font-weight:800;transition:.18s}.brand-chip-logo img{width:70%;height:70%;object-fit:contain}.brand-chip-name{display:block;max-width:74px;color:rgba(255,255,255,.82);font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.brand-chip:hover .brand-chip-logo,.brand-chip.is-active .brand-chip-logo{transform:translateY(-2px);border-color:#76b6ff;box-shadow:0 0 0 4px rgba(60,150,255,.18)}.brand-chip.is-active .brand-chip-name{color:#fff;font-weight:700}.brand-loading{color:rgba(255,255,255,.72);font-size:12px}.brand-picker-footer{margin-top:8px;color:rgba(255,255,255,.62);font-size:11px}.model-quick-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.model-quick-item{display:inline-flex;align-items:center;min-height:27px;padding:5px 9px;border:1px solid rgba(255,255,255,.16);border-radius:999px;color:rgba(255,255,255,.88);background:rgba(255,255,255,.08);font-size:11px}
-.featured-section{padding:28px 0 34px}.section-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}.section-heading h2{margin:0;color:#2d80ef;font-size:25px;font-weight:800;letter-spacing:-.03em}.section-link{color:#76aef2;font-size:12px;font-weight:600;text-decoration:none}
-.vehicle-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.vehicle-card{overflow:hidden;border:1px solid var(--border);border-radius:15px;background:var(--card);box-shadow:var(--shadow);transition:.18s}.vehicle-card:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(40,77,119,.16)}.vehicle-image-wrap{position:relative;aspect-ratio:1.55/1;overflow:hidden;background:#eaf0f6}.vehicle-image{width:100%;height:100%;object-fit:cover}.vehicle-favorite{position:absolute;top:9px;right:9px;width:30px;height:30px;border:1px solid rgba(255,255,255,.78);border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.90);color:#8291a2}.vehicle-body{padding:13px}.vehicle-name{min-height:36px;margin:0 0 5px;font-size:13px;font-weight:800;line-height:1.35}.vehicle-meta{color:#3a8bea;font-size:10px;font-weight:600}.vehicle-price{margin-top:9px;color:#1f3144;font-size:18px;font-weight:800}.vehicle-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}.vehicle-tag{padding:4px 7px;border-radius:5px;background:#f1f5f9;color:#6a7785;font-size:9px}.vehicle-actions{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #edf1f5}.vehicle-action{padding:10px 6px;border:0;background:#fff;color:#5a98df;font-size:10px;cursor:pointer}.vehicle-action+.vehicle-action{border-left:1px solid #edf1f5}
-.reviews-section{padding:6px 0 34px}.reviews-title-wrap{padding:8px 0 22px;text-align:center}.reviews-title-wrap h2{margin:0;color:#64a2ff;font-size:clamp(30px,4vw,48px);font-weight:800;letter-spacing:-.04em}.reviews-title-wrap p{margin:8px 0 0;color:var(--muted);font-size:13px}.review-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;padding:14px;background:#eaf5ff;border-radius:6px}.review-card{overflow:hidden;border:1px solid #dfe9f3;border-radius:10px;background:#fff;box-shadow:0 5px 14px rgba(58,95,135,.07)}.review-image{width:100%;aspect-ratio:1.2/1;object-fit:cover;display:block}.review-body{padding:10px}.review-badge{display:inline-flex;padding:4px 7px;border-radius:999px;background:#e9f4ff;color:#3d8ee9;font-size:9px;font-weight:700}.review-title{margin:8px 0 6px;color:#276ebd;font-size:10px;font-weight:700;line-height:1.45}.review-text{min-height:58px;margin:0;color:#667483;font-size:10px;line-height:1.55}.review-link{display:inline-block;margin-top:8px;color:#4f96e7;font-size:9px;font-weight:700;text-decoration:none}
-@media(max-width:992px){.hero-content{grid-template-columns:1fr;padding:20px 0 38px}.hero-car-wrap{min-height:auto}.vehicle-grid,.review-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:640px){.section-container,.hero-content{width:min(100% - 24px,1180px)}.hero-copy{padding-top:30px;padding-bottom:10px}.hero-copy h1{font-size:38px}.vehicle-grid,.review-grid{grid-template-columns:1fr}.reviews-title-wrap h2{font-size:34px}}
+/* =========================================================
+   HOME PAGE - VUCAR INSPIRED LAYOUT
+   Giữ nguyên HTML/class hiện tại
+   ========================================================= */
+
+:root {
+    --blue: #0798e8;
+    --blue-dark: #0863b8;
+    --blue-deep: #0757a2;
+
+    --text: #17263a;
+    --muted: #6f7d8e;
+
+    --bg: #ffffff;
+    --soft-bg: #f6f9fc;
+
+    --card: #ffffff;
+    --border: #dfe7f0;
+
+    --shadow-sm: 0 4px 12px rgba(25, 55, 90, .08);
+    --shadow-md: 0 12px 32px rgba(25, 55, 90, .12);
+    --shadow-lg: 0 22px 55px rgba(20, 50, 90, .18);
+
+    --container: 1470px;
+}
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+}
+
+.home-page {
+    width: 100%;
+    min-height: 100vh;
+
+    background: var(--bg);
+    color: var(--text);
+
+    font-family:
+        Inter,
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+.section-container {
+    width: min(
+        var(--container),
+        calc(100% - 64px)
+    );
+
+    margin: 0 auto;
+}
+
+
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero-section {
+    position: relative;
+
+    width: 100%;
+    min-height: 748px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            90deg,
+            #0861ad 0%,
+            #067bc8 46%,
+            #079ce8 100%
+        );
+}
+
+
+/*
+    Nếu homepage.png là hình người:
+    đặt người bên phải giống ảnh mẫu.
+*/
+
+.hero-section::after {
+    content: "";
+
+    position: absolute;
+
+    z-index: 1;
+
+    top: 0;
+    bottom: 0;
+    right: max(
+        0px,
+        calc((100vw - var(--container)) / 3)
+    );
+
+    width: min(620px, 43vw);
+
+    background:
+        url("../img/nhanvien1.png")
+        center bottom / contain
+        no-repeat;
+
+    pointer-events: none;
+}
+
+
+/* Overlay */
+
+.hero-overlay {
+    position: absolute;
+
+    z-index: 0;
+
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at 78% 22%,
+            rgba(24, 184, 255, .38),
+            transparent 36%
+        );
+}
+
+
+/* Hero container */
+
+.hero-content {
+    position: relative;
+
+    z-index: 1;
+
+    width: min(
+        var(--container),
+        calc(100% - 64px)
+    );
+
+    min-height: 748px;
+
+    margin: 0 auto;
+
+    display: block;
+}
+
+
+/* =========================================================
+   HERO COPY
+   ========================================================= */
+
+.hero-copy {
+    position: relative;
+
+    z-index: 4;
+    width: 900px;
+    max-width: 70%;
+
+    padding-top: 74px;
+}
+
+
+/* badge */
+
+.hero-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 35px;
+    margin-bottom: 10px;
+    padding: 0 17px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .16);
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0;
+    backdrop-filter: blur(8px);
+}
+
+
+/* Heading */
+.hero-copy h1 {
+    width: 1500px;
+    max-width: 100%;
+    margin: 0;
+    color: #ffffff;
+    font-size: clamp(
+        48px,
+        4.05vw,
+        64px
+    );
+    font-weight: 800;
+    line-height: 1.01;
+    letter-spacing: -.045em;
+    text-shadow: none;
+}
+
+
+
+.hero-copy h1 span {
+    color: #9fd5f7;
+    margin-bottom: 30px;
+}
+
+
+/* Description */
+
+.hero-copy > p {
+    width: 690px;
+    max-width: 100%;
+    margin: 21px 0;
+    margin-bottom: 0px;
+    color: rgba(255, 255, 255, .96);
+
+    font-size: 20px;
+    font-weight: 400;
+
+    line-height: 1.65;
+}
+
+
+/* Không dùng glow cũ */
+
+.hero-glow {
+    display: none;
+}
+
+
+/* =========================================================
+   BRAND PICKER CARD
+   ========================================================= */
+
+.brand-picker-card {
+    position: absolute;
+    z-index: 6;
+    left: 0;
+    right: 0;
+    top: 420px;
+    width: min(
+    1540px,
+    calc(100vw - 240px)
+    );
+    min-height: 232px;
+    padding: 29px 20px 18px;
+    border: none;
+    border-radius: 19px;
+    background: #ffffff;
+    box-shadow:
+        0 10px 28px rgba(0, 51, 95, .12);
+
+    backdrop-filter: none;
+}
+
+
+/* Title */
+.brand-picker-title {
+    margin: 0 0 23px;
+    padding: 0;
+    color: #162536;
+    font-size: 18px;
+    font-weight: 750;
+    line-height: 1.3;
+}
+
+
+/* =========================================================
+   BRAND PICKER ROW
+   ========================================================= */
+
+.brand-picker {
+    width: 100%;
+    display: grid;
+    grid-template-columns:
+        repeat(10, minmax(0, 1fr));
+    gap: 10px;
+    overflow: invisible;
+    padding: 0;
+}
+
+
+/* Brand button */
+
+.brand-chip {
+    width: 100%;
+    min-width: 0;
+
+    height: 136px;
+
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #dce5ee;
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    cursor: pointer;
+
+    transition:
+        border-color .18s ease,
+        box-shadow .18s ease,
+        transform .18s ease,
+        background .18s ease;
+}
+
+.brand-chip:hover {
+    border-color: #8acbf2;
+
+    background: #f8fcff;
+
+    box-shadow:
+        0 5px 16px rgba(8, 135, 210, .10);
+
+    transform: translateY(-2px);
+}
+
+.brand-chip.is-active {
+    border-color: var(--blue);
+
+    background: #f3faff;
+
+    box-shadow:
+        0 0 0 2px rgba(0, 151, 232, .10);
+}
+
+
+/* Logo holder */
+
+.brand-chip-logo {
+    width: 90px;
+    height: 72px;
+
+    margin: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: visible;
+
+    border: none;
+    border-radius: 0;
+
+    background: transparent;
+
+    color: var(--blue);
+
+    font-size: 15px;
+    font-weight: 800;
+
+    transition: transform .18s ease;
+}
+
+.brand-chip-logo img {
+    width: 76px;
+    height: 54px;
+
+    object-fit: contain;
+}
+
+.brand-chip:hover .brand-chip-logo,
+.brand-chip.is-active .brand-chip-logo {
+    border: none;
+    box-shadow: none;
+
+    transform: scale(1.06);
+}
+
+
+/*
+    Trong ảnh mẫu không hiện tên hãng dưới logo
+    Nếu muốn hiện thì bỏ display:none
+*/
+
+.brand-chip-name {
+    display: none;
+}
+
+
+
+/* Model quick list */
+
+.model-quick-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    margin-top: 10px;
+}
+
+.model-quick-item {
+    min-height: 30px;
+
+    padding: 5px 10px;
+
+    display: inline-flex;
+    align-items: center;
+
+    border: 1px solid #dce6ef;
+    border-radius: 999px;
+
+    background: #f5f9fc;
+
+    color: #44556a;
+
+    font-size: 11px;
+}
+
+
+/* Loading */
+
+.brand-loading {
+    grid-column: 1 / -1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 110px;
+
+    color: #7b8795;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   BUTTON ĐỊNH GIÁ TRONG BRAND CARD
+   Nếu HTML có button class admin / CTA riêng thì dùng thêm
+   ========================================================= */
+
+.brand-picker-card .hero-cta,
+.brand-picker-card .valuation-button,
+.brand-picker-card .brand-picker-action {
+    position: absolute;
+
+    top: 20px;
+    right: 20px;
+
+    min-height: 43px;
+
+    padding: 0 23px;
+
+    border: 0;
+    border-radius: 999px;
+
+    background: var(--blue);
+
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 750;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 5px 13px rgba(0, 147, 230, .20);
+
+    transition: .18s ease;
+}
+
+.brand-picker-card .hero-cta:hover,
+.brand-picker-card .valuation-button:hover,
+.brand-picker-card .brand-picker-action:hover {
+    background: #088bd5;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   HERO STATS
+   Nếu HTML hiện tại có nhóm thống kê
+   ========================================================= */
+
+.hero-stats {
+    position: absolute;
+
+    z-index: 5;
+
+    left: 0;
+
+    top: 653px;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 72px;
+}
+
+.hero-stat {
+    min-width: 135px;
+}
+
+.hero-stat strong {
+    display: block;
+
+    color: #ffffff;
+
+    font-size: 37px;
+    font-weight: 800;
+
+    line-height: 1;
+}
+
+.hero-stat span {
+    display: block;
+
+    margin-top: 5px;
+
+    color: rgba(255, 255, 255, .92);
+
+    font-size: 13px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   FEATURED VEHICLES
+   ========================================================= */
+
+.featured-section {
+    padding: 54px 0 64px;
+
+    background: #ffffff;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    margin-bottom: 24px;
+}
+
+.section-heading h2 {
+    margin: 0;
+
+    color: #1b2b3d;
+
+    font-size: 30px;
+    font-weight: 800;
+
+    letter-spacing: -.025em;
+}
+
+.section-link {
+    color: var(--blue);
+
+    font-size: 14px;
+    font-weight: 650;
+
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   VEHICLE GRID
+   ========================================================= */
+
+.vehicle-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 22px;
+}
+
+.vehicle-card {
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    background: var(--card);
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.vehicle-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow: var(--shadow-md);
+}
+
+.vehicle-image-wrap {
+    position: relative;
+
+    aspect-ratio: 1.55 / 1;
+
+    overflow: hidden;
+
+    background: #edf2f7;
+}
+
+.vehicle-image {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+.vehicle-favorite {
+    position: absolute;
+
+    top: 11px;
+    right: 11px;
+
+    width: 34px;
+    height: 34px;
+
+    display: grid;
+    place-items: center;
+
+    border: 1px solid rgba(255,255,255,.8);
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.94);
+
+    color: #7c8a99;
+
+    cursor: pointer;
+}
+
+.vehicle-body {
+    padding: 15px;
+}
+
+.vehicle-name {
+    min-height: 40px;
+
+    margin: 0 0 7px;
+
+    color: #1d2c3c;
+
+    font-size: 15px;
+    font-weight: 750;
+
+    line-height: 1.4;
+}
+
+.vehicle-meta {
+    color: #4f8fd7;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.vehicle-price {
+    margin-top: 10px;
+
+    color: #1a2b3d;
+
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.vehicle-tags {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 6px;
+
+    margin-top: 11px;
+}
+
+.vehicle-tag {
+    padding: 5px 8px;
+
+    border-radius: 6px;
+
+    background: #f1f5f8;
+
+    color: #687789;
+
+    font-size: 10px;
+}
+
+.vehicle-actions {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    border-top: 1px solid #edf1f5;
+}
+
+.vehicle-action {
+    padding: 11px 7px;
+
+    border: 0;
+
+    background: #ffffff;
+
+    color: #428ddf;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.vehicle-action + .vehicle-action {
+    border-left: 1px solid #edf1f5;
+}
+
+
+/* =========================================================
+   REVIEWS
+   ========================================================= */
+
+.reviews-section {
+    padding: 52px 0 64px;
+
+    background: #f7fbff;
+}
+
+.reviews-title-wrap {
+    padding: 0 0 30px;
+
+    text-align: center;
+}
+
+.reviews-title-wrap h2 {
+    margin: 0;
+
+    color: #168fe0;
+
+    font-size: clamp(
+        34px,
+        4vw,
+        50px
+    );
+
+    font-weight: 800;
+
+    letter-spacing: -.04em;
+}
+
+.reviews-title-wrap p {
+    margin: 10px 0 0;
+
+    color: var(--muted);
+
+    font-size: 14px;
+}
+
+.review-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+.review-card {
+    overflow: hidden;
+
+    border: 1px solid #dfe9f2;
+    border-radius: 14px;
+
+    background: #ffffff;
+
+    box-shadow: var(--shadow-sm);
+}
+
+.review-image {
+    width: 100%;
+
+    aspect-ratio: 1.35 / 1;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+.review-body {
+    padding: 15px;
+}
+
+.review-badge {
+    display: inline-flex;
+
+    padding: 5px 8px;
+
+    border-radius: 999px;
+
+    background: #eaf6ff;
+
+    color: #268ad1;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.review-title {
+    margin: 10px 0 7px;
+
+    color: #2366a7;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    line-height: 1.45;
+}
+
+.review-text {
+    margin: 0;
+
+    color: #687789;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+.review-link {
+    display: inline-block;
+
+    margin-top: 10px;
+
+    color: #328ddd;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   LARGE DESKTOP
+   ========================================================= */
+
+@media (min-width: 1600px) {
+
+    :root {
+        --container: 1470px;
+    }
+
+    .hero-section,
+    .hero-content {
+        min-height: 748px;
+    }
+}
+
+
+/* =========================================================
+   LAPTOP
+   ========================================================= */
+
+@media (max-width: 1280px) {
+
+    :root {
+        --container: 1180px;
+    }
+
+    .topbar-inner {
+        gap: 26px;
+    }
+
+    .redirect-url {
+        gap: 24px;
+    }
+
+    .redirect-url a,
+    .redirect-url href {
+        font-size: 14px;
+    }
+
+    .topbar-section .logo {
+        width: 170px;
+    }
+
+    .hero-copy {
+        max-width: 58%;
+    }
+
+    .hero-copy h1 {
+        font-size: 50px;
+    }
+
+    .hero-copy > p {
+        font-size: 17px;
+    }
+
+    .brand-picker {
+        grid-template-columns:
+            repeat(8, minmax(0, 1fr));
+    }
+
+    .brand-chip:nth-child(n + 9) {
+        display: none;
+    }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 992px) {
+
+    .topbar-section {
+        height: auto;
+    }
+
+    .topbar-inner {
+        min-height: 72px;
+
+        flex-wrap: wrap;
+
+        padding: 10px 0;
+    }
+
+    .redirect-url {
+        display: none;
+    }
+
+    .user-management {
+        margin-left: auto;
+    }
+
+
+    /* Hero */
+
+    .hero-section {
+        min-height: 780px;
+    }
+
+    .hero-content {
+        min-height: 780px;
+    }
+
+    .hero-section::after {
+        width: 47vw;
+
+        right: -30px;
+
+        opacity: .72;
+    }
+
+    .hero-copy {
+        max-width: 68%;
+
+        padding-top: 56px;
+    }
+
+    .hero-copy h1 {
+        font-size: 46px;
+    }
+
+    .hero-copy > p {
+        font-size: 16px;
+    }
+
+    .brand-picker-card {
+        top: 370px;
+    }
+
+    .brand-picker {
+        grid-template-columns:
+            repeat(5, minmax(0, 1fr));
+    }
+
+    .brand-chip:nth-child(n + 6) {
+        display: flex;
+    }
+
+    .hero-stats {
+        top: 650px;
+
+        gap: 34px;
+    }
+
+    .hero-stat strong {
+        font-size: 29px;
+    }
+
+
+    /* Main */
+
+    .vehicle-grid,
+    .review-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 640px) {
+
+    :root {
+        --container: 100%;
+    }
+
+    .section-container,
+    .hero-content,
+    .topbar-inner {
+        width: calc(100% - 28px);
+    }
+
+
+    /* Header */
+
+    .topbar-section .logo {
+        width: 145px;
+    }
+
+    .topbar-section .logo img {
+        height: 40px;
+    }
+
+    .user-management-btn {
+        padding: 0 14px;
+
+        font-size: 13px;
+    }
+
+    .user-management-btn-primary {
+        display: none;
+    }
+
+
+    /* Hero */
+
+    .hero-section {
+        min-height: auto;
+
+        padding-bottom: 30px;
+    }
+
+    .hero-content {
+        min-height: auto;
+
+        padding-bottom: 20px;
+    }
+
+    .hero-section::after {
+        display: none;
+    }
+
+    .hero-copy {
+        width: 100%;
+        max-width: 100%;
+
+        padding-top: 36px;
+    }
+
+    .hero-kicker {
+        margin-bottom: 16px;
+
+        font-size: 12px;
+    }
+
+    .hero-copy h1 {
+        width: 100%;
+
+        font-size: 40px;
+
+        line-height: 1.05;
+    }
+
+    .hero-copy > p {
+        width: 100%;
+
+        margin-top: 16px;
+
+        font-size: 15px;
+
+        line-height: 1.55;
+    }
+
+
+    /* Brand picker mobile */
+
+    .brand-picker-card {
+        position: relative;
+
+        top: auto;
+        left: auto;
+        right: auto;
+
+        width: 100%;
+
+        margin-top: 30px;
+
+        padding: 18px 15px;
+
+        border-radius: 15px;
+    }
+
+    .brand-picker-title {
+        padding-right: 0;
+
+        font-size: 16px;
+    }
+
+    .brand-picker {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 9px;
+    }
+
+    .brand-chip {
+        height: 102px;
+    }
+
+    .brand-chip:nth-child(n) {
+        display: flex;
+    }
+
+    .brand-chip-logo {
+        width: 76px;
+        height: 56px;
+    }
+
+    .brand-chip-logo img {
+        width: 66px;
+        height: 46px;
+    }
+
+
+    /* Stats */
+
+    .hero-stats {
+        position: relative;
+
+        top: auto;
+
+        margin-top: 26px;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 22px;
+    }
+
+    .hero-stat {
+        min-width: 0;
+    }
+
+    .hero-stat strong {
+        font-size: 28px;
+    }
+
+
+    /* Sections */
+
+    .featured-section,
+    .reviews-section {
+        padding: 38px 0;
+    }
+
+    .section-heading h2 {
+        font-size: 25px;
+    }
+
+    .vehicle-grid,
+    .review-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* =========================================================
+   HERO LAYOUT PATCH - DESKTOP
+   ========================================================= */
+
+@media (min-width: 993px) {
+
+    /* -----------------------------------------
+       HERO CAO HƠN ĐỂ CÓ CHỖ CHO 4 THÔNG SỐ
+       ----------------------------------------- */
+
+    .hero-section {
+        min-height: 830px;
+    }
+
+    .hero-content {
+        min-height: 830px;
+    }
+
+
+    /* -----------------------------------------
+       NỘI DUNG HERO
+       ----------------------------------------- */
+
+    .hero-copy {
+        width: 900px;
+        max-width: 70%;
+
+        /* Có khoảng cách rõ ràng với topbar */
+        padding-top: 62px;
+    }
+
+
+    /* -----------------------------------------
+       KHỐI CHỌN HÃNG XE
+       KÉO LÊN CAO HƠN
+       ----------------------------------------- */
+
+    .brand-picker-card {
+        top: 365px;
+
+        left: 0;
+        right: auto;
+
+        width: min(
+            1540px,
+            calc(100vw - 240px)
+        );
+
+        min-height: 225px;
+
+        padding:
+            28px
+            20px
+            20px;
+
+        border-radius: 19px;
+
+        background: #ffffff;
+
+        box-shadow:
+            0 12px 30px
+            rgba(0, 45, 90, .13);
+    }
+
+
+    /* -----------------------------------------
+       LOGO HÃNG XE
+       ----------------------------------------- */
+
+    .brand-picker {
+        display: grid;
+
+        grid-template-columns:
+            repeat(10, minmax(0, 1fr));
+
+        gap: 10px;
+
+        width: 100%;
+
+        overflow: visible;
+    }
+
+    .brand-chip {
+        height: 128px;
+    }
+
+
+    /* -----------------------------------------
+       4 THÔNG SỐ DƯỚI KHỐI CHỌN HÃNG
+       ----------------------------------------- */
+
+    .hero-stats {
+        position: absolute;
+
+        z-index: 7;
+
+        top: 635px;
+        left: 0;
+
+        width: min(
+            920px,
+            66%
+        );
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(4, minmax(0, 1fr));
+
+        gap: 0;
+
+        align-items: start;
+    }
+
+
+    .hero-stat {
+        min-width: 0;
+
+        padding:
+            3px
+            28px
+            3px
+            0;
+
+        margin-right: 28px;
+
+        border-right:
+            1px solid
+            rgba(255,255,255,.20);
+    }
+
+
+    .hero-stat:last-child {
+        padding-right: 0;
+        margin-right: 0;
+
+        border-right: 0;
+    }
+
+
+    .hero-stat strong {
+        display: block;
+
+        margin: 0;
+
+        color: #ffffff;
+
+        font-size: 37px;
+        font-weight: 800;
+
+        line-height: 1;
+
+        letter-spacing: -.025em;
+
+        white-space: nowrap;
+    }
+
+
+    .hero-stat span {
+        display: block;
+
+        margin-top: 7px;
+
+        color:
+            rgba(255,255,255,.94);
+
+        font-size: 13px;
+        font-weight: 500;
+
+        line-height: 1.35;
+
+        white-space: nowrap;
+    }
+
+
+    /* -----------------------------------------
+       HÌNH NGƯỜI BÊN PHẢI
+       PHÓNG TO NHẸ
+       ----------------------------------------- */
+
+    .hero-section::after {
+
+        top: 0;
+        bottom: -12px;
+
+        width: min(
+            720px,
+            47vw
+        );
+
+        right: max(
+            -20px,
+            calc(
+                (100vw - var(--container)) / 3
+                - 20px
+            )
+        );
+
+        background-position:
+            center bottom;
+
+        background-size:
+            contain;
+
+        transform:
+            scale(1.08);
+
+        transform-origin:
+            right bottom;
+    }
+
+}

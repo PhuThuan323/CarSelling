@@ -1,0 +1,36 @@
+1. Mục Đích và Phạm Vi Thu Thập Thông Tin
+    1.1. Mục đích thu thập thông tin
+        Điều chỉnh nội dung thông tin hàng hóa phù hợp với bố cục và nội dung của sàn giao dịch.
+        Hỗ trợ khách hàng trong các giao dịch, giải đáp thắc mắc và cung cấp thông tin về sản phẩm, ưu đãi.
+    1.2. Phạm vi thu thập
+        Người bán: Họ tên, Email, Số điện thoại, Thông tin và hình ảnh xe.
+        Người mua: Họ tên, Email, Số điện thoại.
+
+2. Phạm Vi Sử Dụng Thông Tin
+Hỗ trợ khách hàng giải đáp thắc mắc và cung cấp thông tin sản phẩm, ưu đãi.
+Ngăn ngừa các hoạt động giả mạo, phá hoại tài khoản người dùng.
+Liên lạc và giải quyết các vấn đề phát sinh.
+Quản lý và chăm sóc khách hàng.
+Hợp tác cung cấp thông tin cho cơ quan tư pháp khi có yêu cầu hợp pháp.
+
+3. Các Bên Thứ Ba Được Quyền Tiếp Cận Thông Tin
+Đối tác hợp đồng: Chỉ tiếp cận thông tin cần thiết để cung cấp dịch vụ hỗ trợ (vận chuyển, kỹ thuật...).
+Cơ quan nhà nước: Khi có yêu cầu từ cơ quan tư pháp để phục vụ điều tra.
+
+4. Cam Kết Bảo Mật Thông Tin Cá Nhân Khách Hàng
+Không sử dụng, chuyển giao hay tiết lộ thông tin cá nhân của người dùng khi chưa có sự đồng ý, trừ trường hợp pháp luật quy định.
+Trong trường hợp bị tấn công mạng dẫn đến mất mát dữ liệu, Vinateks cam kết:
+Thông báo kịp thời cho cơ quan chức năng và khách hàng.
+Phối hợp điều tra và khắc phục hậu quả.
+Yêu cầu người dùng cung cấp thông tin chính xác và chịu trách nhiệm về tính pháp lý, cập nhật của thông tin.
+
+5. Cơ Chế Tiếp Nhận và Giải Quyết Khiếu Nại
+Khi phát hiện thông tin cá nhân bị sử dụng sai mục đích, người tiêu dùng có thể khiếu nại qua:
+
+6. Thông tin liên hệ:
+Hotline: (84+) 812 930 689
+Email: phuthuan323@gmail.com
+Địa chỉ: Vinhomes Grandpark, Long Binh, Thu Duc, Ho Chi Minh. 
+Thời hạn xử lý khiếu nại: 07 ngày làm việc kể từ ngày tiếp nhận.
+
+Biện pháp giải quyết ưu tiên thương lượng, hòa giải. Nếu không đạt được thỏa thuận, vụ việc sẽ được giải quyết tại tòa án có thẩm quyền theo quy định pháp luật.

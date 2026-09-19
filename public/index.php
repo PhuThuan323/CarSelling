@@ -86,6 +86,8 @@ $router->put('/api/v1/admin/versions/{id}', AdminVehicleVersionApi::class, 'upda
 $router->delete('/api/v1/admin/versions/{id}', AdminVehicleVersionApi::class, 'destroy');
 $router->get('/api/v1/admin/models/{id}/versions', AdminVehicleVersionApi::class, 'byModel');
 
+$router->get('/policy',App\Controllers\PolicyController::class,'show');
+
 // Parse URL
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $path = str_replace('/index.php', '', $path);

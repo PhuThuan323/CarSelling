@@ -82,4 +82,5 @@
         <p>&copy; 2024 PHP Smarty Shop. All rights reserved.</p>
     </footer>
 </body>
+{include file="partials/footer.tpl"}
 </html>

@@ -1,0 +1,642 @@
+/* =========================================================
+   FASTCAR - REUSABLE TOPBAR
+   ========================================================= */
+
+:root {
+    --topbar-height: 82px;
+
+    --topbar-blue: #0798e8;
+    --topbar-blue-hover: #078bd4;
+
+    --topbar-text: #24344a;
+    --topbar-muted: #6f7d8e;
+
+    --topbar-border: #e8edf3;
+
+    --topbar-container: 1470px;
+}
+
+
+/* =========================================================
+   TOPBAR
+   ========================================================= */
+
+.topbar-section {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 1000;
+
+    width: 100%;
+    height: var(--topbar-height);
+
+    background:
+        rgba(255, 255, 255, .97);
+
+    border-top:
+        1px solid #f0e5dc;
+
+    border-bottom:
+        1px solid var(--topbar-border);
+
+    box-shadow:
+        0 3px 14px
+        rgba(17, 45, 75, .07);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+
+/*
+   Vì header fixed không chiếm document flow,
+   spacer sẽ giữ đúng khoảng trống phía trên trang.
+*/
+
+.topbar-spacer {
+    width: 100%;
+    height: var(--topbar-height);
+
+    flex: 0 0 var(--topbar-height);
+}
+
+
+/* =========================================================
+   INNER
+   ========================================================= */
+
+.topbar-inner {
+    width:
+        min(
+            var(--topbar-container),
+            calc(100% - 64px)
+        );
+
+    height: 100%;
+
+    margin:
+        0
+        auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 46px;
+}
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.topbar-logo {
+    flex: 0 0 auto;
+
+    min-width: 180px;
+    height: 52px;
+
+    display: inline-flex;
+    align-items: center;
+
+    text-decoration: none;
+}
+
+
+/* Nếu dùng logo ảnh */
+
+.topbar-logo img {
+    display: block;
+
+    width: auto;
+    max-width: 210px;
+    height: 48px;
+
+    object-fit: contain;
+}
+
+
+/* Logo chữ tạm thời */
+
+.topbar-logo-text {
+    color: var(--topbar-blue);
+
+    font-size: 26px;
+    font-weight: 850;
+
+    letter-spacing: .04em;
+}
+
+
+/* =========================================================
+   MAIN NAVIGATION
+   ========================================================= */
+
+.redirect-url {
+    display: flex;
+    align-items: center;
+
+    gap: 38px;
+
+    margin-left: auto;
+}
+
+
+.redirect-url a {
+    position: relative;
+
+    min-height: 44px;
+
+    display: inline-flex;
+    align-items: center;
+
+    color: var(--topbar-text);
+
+    font-size: 16px;
+    font-weight: 650;
+
+    line-height: 1;
+
+    text-decoration: none;
+    white-space: nowrap;
+
+    transition:
+        color .18s ease;
+}
+
+
+.redirect-url a:hover {
+    color: var(--topbar-blue);
+}
+
+
+/* Đường active/hover nhỏ */
+
+.redirect-url a::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 4px;
+
+    height: 2px;
+
+    border-radius: 999px;
+
+    background: var(--topbar-blue);
+
+    transform: scaleX(0);
+    transform-origin: center;
+
+    transition:
+        transform .18s ease;
+}
+
+
+.redirect-url a:hover::after {
+    transform: scaleX(1);
+}
+
+
+/* =========================================================
+   USER AREA
+   ========================================================= */
+
+.user-management {
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+/* Login/Register */
+
+.user-management-btn {
+    min-height: 50px;
+
+    padding:
+        0
+        22px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    border:
+        1px solid #dfe6ee;
+
+    border-radius: 28px;
+
+    background:
+        #f7f9fc;
+
+    color:
+        #26364a;
+
+    font-size: 15px;
+    font-weight: 650;
+
+    line-height: 1;
+
+    text-decoration: none;
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    transition:
+        background .18s ease,
+        border-color .18s ease,
+        color .18s ease,
+        transform .18s ease,
+        box-shadow .18s ease;
+}
+
+
+.user-management-btn:hover {
+    background:
+        #edf6fd;
+
+    border-color:
+        #bee1f6;
+
+    color:
+        var(--topbar-blue);
+}
+
+
+/* Register */
+
+.user-management-btn-primary {
+    padding:
+        0
+        24px;
+
+    border-color:
+        var(--topbar-blue);
+
+    background:
+        var(--topbar-blue);
+
+    color:
+        #ffffff;
+
+    box-shadow:
+        0 5px 14px
+        rgba(0, 145, 230, .26);
+}
+
+
+.user-management-btn-primary:hover {
+    background:
+        var(--topbar-blue-hover);
+
+    border-color:
+        var(--topbar-blue-hover);
+
+    color:
+        #ffffff;
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* =========================================================
+   CURRENT USER
+   ========================================================= */
+
+.admin-entry-link {
+    display: inline-flex;
+    align-items: center;
+
+    color:
+        var(--topbar-text);
+
+    font-size: 14px;
+    font-weight: 700;
+
+    text-decoration: none;
+    white-space: nowrap;
+
+    transition:
+        color .18s ease;
+}
+
+
+.admin-entry-link:hover {
+    color:
+        var(--topbar-blue);
+}
+
+
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+
+.user-settings {
+    position: relative;
+}
+
+
+.user-settings-btn {
+    width: 52px;
+    height: 52px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border:
+        1px solid #dbe4ed;
+
+    border-radius: 12px;
+
+    background:
+        #ffffff;
+
+    color:
+        #26364a;
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+    transition:
+        background .18s ease,
+        border-color .18s ease,
+        color .18s ease;
+}
+
+
+.user-settings-btn:hover,
+.user-settings-btn.is-open {
+    background:
+        #f3f8fd;
+
+    border-color:
+        #b9d7f1;
+
+    color:
+        var(--topbar-blue);
+}
+
+
+.user-settings-btn i {
+    transition:
+        transform .25s ease;
+}
+
+
+.user-settings-btn.is-open i {
+    transform:
+        rotate(60deg);
+}
+
+
+/* =========================================================
+   SETTINGS DROPDOWN
+   ========================================================= */
+
+.user-settings-menu {
+    position: absolute;
+
+    top:
+        calc(100% + 12px);
+
+    right: 0;
+
+    z-index: 1100;
+
+    min-width: 220px;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 8px;
+
+    border:
+        1px solid #dfe7f0;
+
+    border-radius: 14px;
+
+    background:
+        #ffffff;
+
+    box-shadow:
+        0 18px 40px
+        rgba(40, 77, 119, .18);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transform:
+        translateY(-8px)
+        scale(.97);
+
+    transform-origin:
+        top right;
+
+    transition:
+        transform .2s ease,
+        opacity .18s ease,
+        visibility .18s ease;
+}
+
+
+.user-settings.is-open
+.user-settings-menu {
+    opacity: 1;
+
+    visibility: visible;
+    pointer-events: auto;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+.user-settings-menu a {
+    padding:
+        11px
+        12px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    border-radius: 9px;
+
+    color:
+        var(--topbar-text);
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background .15s ease,
+        color .15s ease,
+        transform .15s ease;
+}
+
+
+.user-settings-menu a:hover {
+    background:
+        #eef7fd;
+
+    color:
+        var(--topbar-blue);
+
+    transform:
+        translateX(2px);
+}
+
+
+.user-settings-menu a i {
+    width: 17px;
+
+    text-align: center;
+
+    color:
+        var(--topbar-muted);
+}
+
+
+/* =========================================================
+   LAPTOP
+   ========================================================= */
+
+@media (max-width: 1280px) {
+
+    :root {
+        --topbar-container: 1180px;
+    }
+
+
+    .topbar-inner {
+        gap: 26px;
+    }
+
+
+    .redirect-url {
+        gap: 24px;
+    }
+
+
+    .redirect-url a {
+        font-size: 14px;
+    }
+
+
+    .topbar-logo {
+        min-width: 155px;
+    }
+
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 992px) {
+
+    .topbar-inner {
+        width:
+            calc(100% - 32px);
+    }
+
+
+    .redirect-url {
+        display: none;
+    }
+
+
+    .user-management {
+        margin-left: auto;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 640px) {
+
+    :root {
+        --topbar-height: 68px;
+    }
+
+
+    .topbar-inner {
+        width:
+            calc(100% - 24px);
+
+        gap: 12px;
+    }
+
+
+    .topbar-logo {
+        min-width: 120px;
+        height: 44px;
+    }
+
+
+    .topbar-logo-text {
+        font-size: 20px;
+    }
+
+
+    .topbar-logo img {
+        max-width: 135px;
+        height: 40px;
+    }
+
+
+    .admin-entry-link {
+        max-width: 130px;
+
+        overflow: hidden;
+
+        text-overflow:
+            ellipsis;
+    }
+
+
+    .user-management-btn {
+        min-height: 42px;
+
+        padding:
+            0
+            14px;
+
+        font-size: 13px;
+    }
+
+
+    .user-management-btn-primary {
+        display: none;
+    }
+
+
+    .user-settings-btn {
+        width: 43px;
+        height: 43px;
+    }
+
+}

@@ -3,9 +3,6 @@
 
     var API = {
         brands: '/api/v1/brands',
-        modelsByBrand: function (brandId) {
-            return '/api/v1/brands/' + brandId + '/models';
-        }
     };
 
     var demoVehicles = [
@@ -50,6 +47,7 @@
         return new Intl.NumberFormat('vi-VN').format(value) + ' đ';
     }
 
+    //Lấy logo của mấy cái brands
     function brandLogo(brand) {
         var logoUrl = brand.logo || brand.logo_url || '';
         if (logoUrl) {
@@ -58,6 +56,7 @@
         return escapeHtml((brand.name || '?').trim().charAt(0).toUpperCase());
     }
 
+    //render lên web 
     function renderBrands(brands) {
         var picker = $('#brandPicker');
         picker.innerHTML = '';
@@ -83,16 +82,14 @@
                     el.classList.remove('is-active');
                 });
                 button.classList.add('is-active');
-                loadModels(brand.id);
+                
             });
 
             picker.appendChild(button);
         });
-
-        $('#brandCountText').textContent = 'Xem tất cả ' + brands.length + ' hãng xe';
-        loadModels(brands[0].id);
     }
 
+    //Tải mấy cái hãng xe để load lên trên thanh công cụ
     function loadBrands() {
         getJSON(API.brands)
             .then(function (response) {
@@ -107,33 +104,9 @@
             });
     }
 
-    function loadModels(brandId) {
-        var list = $('#modelQuickList');
-        list.innerHTML = '<span class="model-quick-item">Đang tải dòng xe...</span>';
+    
 
-        getJSON(API.modelsByBrand(brandId))
-            .then(function (response) {
-                var models = response && response.data && Array.isArray(response.data.models)
-                    ? response.data.models
-                    : [];
-
-                list.innerHTML = '';
-                models.slice(0, 7).forEach(function (model) {
-                    var span = document.createElement('span');
-                    span.className = 'model-quick-item';
-                    span.textContent = model.name;
-                    list.appendChild(span);
-                });
-
-                if (!models.length) {
-                    list.innerHTML = '<span class="model-quick-item">Chưa có dòng xe</span>';
-                }
-            })
-            .catch(function () {
-                list.innerHTML = '';
-            });
-    }
-
+    //Chứa mấy cái card xe
     function vehicleCard(vehicle) {
         var tags = vehicle.tags.map(function (tag) {
             return '<span class="vehicle-tag">' + escapeHtml(tag) + '</span>';
@@ -156,7 +129,7 @@
             '</div>' +
         '</article>';
     }
-
+    // Chứa mấy cái card để review xe, testimonial á
     function reviewCard(review) {
         return '<article class="review-card">' +
             '<img class="review-image" src="' + escapeHtml(review.image) + '" alt="' + escapeHtml(review.name) + '">' +

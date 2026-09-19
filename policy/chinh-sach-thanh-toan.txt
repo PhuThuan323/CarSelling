@@ -1,0 +1,35 @@
+1. Đặt Cọc và Giữ Xe
+    1.1. Quy định về đặt cọc
+        Thỏa thuận khoản tiền cọc: Bên mua và bên bán có quyền thương lượng về số tiền đặt cọc, dưới sự giám sát và điều tiết của nền tảng Vinateks.
+        Thời điểm đặt cọc: Ngay khi hai bên đạt được thỏa thuận về mức giá giao dịch sau phiên kết nối trực tuyến. Hoặc ngay tại thời điểm kiểm tra xe trực tiếp.
+    1.2. Hợp đồng đặt cọc
+        Tại thời điểm đặt cọc, hai bên sẽ ký kết hợp đồng đặt cọc. Nội dung hợp đồng bao gồm:
+            Thông tin cá nhân của hai bên giao dịch (họ tên, số CMND/CCCD, địa chỉ, số điện thoại...).
+            Thông tin chi tiết về xe (giấy tờ đăng ký, tình trạng xe, số khung, số máy...).
+            Số tiền đặt cọc.
+            Cam kết thanh toán đủ và hoàn thành giao dịch vào thời điểm, địa điểm cụ thể.
+            Quy định về chi phí liên quan trong quá trình mua bán.
+            Quyền và nghĩa vụ của các bên.
+            Biện pháp xử lý khi phát sinh lỗi hoặc bồi thường.
+
+2. Vai Trò của Vinateks trong Giao Dịch
+Để đảm bảo an toàn tài chính, hạn chế tối đa các tranh chấp liên quan đến thanh toán, và tăng cường sự tin tưởng giữa các bên trong giao dịch, Vinateks đóng vai trò bên trung gian, thu hộ và chi hộ, làm chứng trong giao dịch.
+    2.1. Quy trình thanh toán qua Vinateks
+        Bên mua sẽ thanh toán các khoản tiền vào tài khoản của Vinateks.
+        Vinateks sẽ chuyển tiền cho bên bán ngay sau khi xác minh giao dịch.
+        Đảm bảo số tiền được chuyển giao chính xác, kịp thời.
+    3. Hỗ Trợ Thanh Toán
+        Hình thức linh hoạt:
+        Chuyển khoản ngân hàng
+        Ứng dụng thanh toán được chấp nhận bởi Vinateks
+        Minh bạch phí giao dịch: Vinateks cam kết không có các khoản phí ẩn. Mọi chi phí liên quan đến giao dịch sẽ được công khai rõ ràng trong thỏa thuận.
+
+4. Cam Kết và Quyền Lợi Các Bên
+Quyền lợi bên mua:
+    Được đảm bảo quyền sở hữu xe sau khi hoàn thành các thủ tục thanh toán
+    Hỗ trợ kiểm tra tình trạng pháp lý và kỹ thuật của xe
+Quyền lợi bên bán:
+    Được đảm bảo nhận đầy đủ số tiền sau khi giao xe và hoàn tất các thủ tục
+Cam kết từ Vinateks:
+    Đóng vai trò trung gian giám sát và điều tiết
+    Cung cấp các biện pháp hỗ trợ xử lý các lỗi phát sinh hoặc tranh chấp
