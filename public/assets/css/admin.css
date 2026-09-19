@@ -169,3 +169,64 @@
     .admin-header{flex-direction:column}
     .admin-form-grid{grid-template-columns:1fr}
 }
+
+/* =========================================================
+   PATCH: tách riêng form Hãng xe / Dòng xe / Phiên bản xe
+   Dán file này SAU file CSS admin hiện tại.
+   ========================================================= */
+
+/* Bắt buộc ẩn tuyệt đối form không đúng loại modal */
+.admin-modal form[hidden],
+.admin-form-grid[hidden],
+.admin-form-grid.is-hidden-form,
+form.is-hidden-form {
+    display: none !important;
+}
+
+/* Chỉ form đang mở mới được hiển thị */
+.admin-modal form:not([hidden]) {
+    display: grid;
+}
+
+/* Select bị khóa trong bước chọn hãng -> dòng xe */
+.admin-select:disabled,
+.admin-input:disabled {
+    background: #f4f6f9;
+    color: #8a96a6;
+    cursor: not-allowed;
+}
+
+/* Select hãng xe được JS thêm vào form phiên bản */
+#versionBrandField {
+    min-width: 0;
+}
+
+/* Giữ bố cục 2 cột giống giao diện hiện tại */
+#brandForm,
+#modelForm,
+#versionForm {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px;
+}
+
+/* Field full vẫn chiếm cả hai cột */
+#brandForm .admin-field-full,
+#modelForm .admin-field-full,
+#versionForm .admin-field-full {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 640px) {
+    #brandForm,
+    #modelForm,
+    #versionForm {
+        grid-template-columns: 1fr;
+    }
+
+    #brandForm .admin-field-full,
+    #modelForm .admin-field-full,
+    #versionForm .admin-field-full {
+        grid-column: auto;
+    }
+}
+

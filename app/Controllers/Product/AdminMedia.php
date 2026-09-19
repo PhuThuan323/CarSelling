@@ -1,21 +1,30 @@
-<?php 
+<?php
+
 declare(strict_types=1);
+
 namespace App\Controllers\Product;
 
 use App\Core\JsonResponse;
-use App\Controllers\Service\CloudinaryService;
+use App\Service\CloudinaryService;
 use Throwable;
 
-class AdminMedia{
-    private const MAX_LOGO_BYTES = 5 * 1024 * 1024;
+class AdminMedia
+{
     private CloudinaryService $cloudinary;
-    public function __construct(){
-        $this->cloudinary = new CloudinaryService();
+
+    public function __construct()
+    {
+        $this->cloudinary =
+            new CloudinaryService();
     }
+
     private function requireAdmin(): void
     {
         if (empty($_SESSION['user_id'])) {
-            JsonResponse::error('Unauthenticated', 401);
+            JsonResponse::error(
+                'Unauthenticated',
+                401
+            );
         }
 
         $role =
@@ -24,9 +33,13 @@ class AdminMedia{
             ?? null;
 
         if ($role !== 'admin') {
-            JsonResponse::error('Forbidden', 403);
+            JsonResponse::error(
+                'Forbidden',
+                403
+            );
         }
     }
+
     public function uploadBrandLogo(): void
     {
         $this->requireAdmin();
@@ -36,34 +49,25 @@ class AdminMedia{
             || !is_array($_FILES['logo_file'])
         ) {
             JsonResponse::error(
-                'Vui lòng chọn logo để tải lên.',
+                'Không tìm thấy file logo.',
                 422
             );
         }
 
         $file = $_FILES['logo_file'];
-        $error = (int) ($file['error'] ?? UPLOAD_ERR_NO_FILE);
-
-        if ($error !== UPLOAD_ERR_OK) {
-            JsonResponse::error(
-                'Upload file thất bại. Mã lỗi: ' . $error,
-                422
-            );
-        }
-
-        $size = (int) ($file['size'] ?? 0);
 
         if (
-            $size <= 0
-            || $size > self::MAX_LOGO_BYTES
+            ($file['error'] ?? UPLOAD_ERR_NO_FILE)
+            !== UPLOAD_ERR_OK
         ) {
             JsonResponse::error(
-                'Logo phải nhỏ hơn hoặc bằng 5 MB.',
+                'Upload file thất bại.',
                 422
             );
         }
 
-        $tmpName = (string) ($file['tmp_name'] ?? '');
+        $tmpName =
+            $file['tmp_name'] ?? '';
 
         if (
             $tmpName === ''
@@ -75,8 +79,23 @@ class AdminMedia{
             );
         }
 
-        $finfo = new \finfo(FILEINFO_MIME_TYPE);
-        $mime = $finfo->file($tmpName) ?: '';
+        if (
+            ($file['size'] ?? 0)
+            > 5 * 1024 * 1024
+        ) {
+            JsonResponse::error(
+                'Logo không được vượt quá 5 MB.',
+                422
+            );
+        }
+
+        $finfo =
+            new \finfo(
+                FILEINFO_MIME_TYPE
+            );
+
+        $mime =
+            $finfo->file($tmpName);
 
         $allowed = [
             'image/jpeg',
@@ -84,41 +103,47 @@ class AdminMedia{
             'image/webp',
         ];
 
-        if (!in_array($mime, $allowed, true)) {
+        if (
+            !in_array(
+                $mime,
+                $allowed,
+                true
+            )
+        ) {
             JsonResponse::error(
                 'Chỉ hỗ trợ PNG, JPG và WebP.',
                 422
             );
         }
+
         try {
+
             $upload =
                 $this->cloudinary
-                    ->uploadBrandLogo($tmpName);
-
-            if (empty($upload['secure_url'])) {
-                JsonResponse::error(
-                    'Cloudinary không trả về URL ảnh.',
-                    502
-                );
-            }
+                    ->uploadBrandLogo(
+                        $tmpName
+                    );
 
             JsonResponse::success(
-                ['upload' => $upload],
-                'Brand logo uploaded successfully',
+                [
+                    'upload' => $upload
+                ],
+                'Upload logo thành công',
                 201
             );
 
         } catch (Throwable $e) {
+
             error_log(
-                'Cloudinary upload error: '
+                'Cloudinary error: '
                 . $e->getMessage()
             );
 
             JsonResponse::error(
-                'Không thể tải logo lên Cloudinary.',
+                'Không thể tải logo lên Cloudinary: '
+                . $e->getMessage(),
                 500
             );
         }
     }
-
 }

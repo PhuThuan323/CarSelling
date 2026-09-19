@@ -198,7 +198,9 @@
                         class="admin-btn admin-btn-ghost"
                         id="brandLogoOpen"
                     >
-                        <i class="fa-solid fa-cloud-arrow-up"></i>
+        
+        
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
                         Thêm logo
                     </button>
 
@@ -468,6 +470,6 @@
     >
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
-    <script src="/assets/js/brand-logo-uploader.js"></script>
+   
 
 {/block}
