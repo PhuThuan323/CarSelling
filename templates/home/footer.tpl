@@ -163,15 +163,12 @@
 
             <!-- LIÊN HỆ -->
             <div class="footer-column footer-contact">
-
                 <h3>Liên hệ chúng tôi</h3>
-
                 <a href="tel:84812930689">
                     <i class="fa-solid fa-phone"></i>
                     (84+) 812 930 689
                 </a>
-
-                <!-- THAY LINK ZALO TẠI ĐÂY -->
+                
                 <a
                     href="https://zalo.me/0812930689"
                     target="_blank"
@@ -191,7 +188,6 @@
                     Facebook
                 </a>
 
-                <!-- THAY LINK LINKEDIN TẠI ĐÂY -->
                 <a
                     href="https://www.linkedin.com/in/phuthuan323/"
                     target="_blank"
@@ -201,8 +197,7 @@
                     LinkedIn
                 </a>
 
-                <!-- THAY EMAIL -->
-                <a href="mailto:hello@fastcar.vn">
+                <a href="mailto:phuthuan323@gmail.com">
                     <i class="fa-regular fa-envelope"></i>
                     phuthuan323@gmail.com
                 </a>

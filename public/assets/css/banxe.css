@@ -1,0 +1,354 @@
+.vehicle-photo-card {
+    width: 100%;
+    margin-top: 26px;
+    padding: 28px;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow:
+        0 5px 18px
+        rgba(29, 64, 96, .08);
+}
+
+
+.photo-section-head {
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    gap: 30px;
+}
+
+
+.photo-section-head h2 {
+    margin:
+        5px
+        0
+        7px;
+
+    font-size: 25px;
+}
+
+
+.photo-section-head p {
+    margin: 0;
+
+    color: #718094;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+
+.photo-step {
+    color: #0798e8;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: .08em;
+}
+
+
+.photo-progress-box {
+    flex: 0 0 auto;
+
+    min-width: 110px;
+
+    padding:
+        12px
+        16px;
+
+    border-radius: 10px;
+
+    background: #f1f8fe;
+
+    text-align: center;
+}
+
+
+.photo-progress-box strong {
+    display: block;
+
+    color: #0798e8;
+
+    font-size: 22px;
+}
+
+
+.photo-progress-box span {
+    color: #718094;
+
+    font-size: 11px;
+}
+
+
+.photo-progress {
+    width: 100%;
+    height: 7px;
+
+    margin-top: 18px;
+
+    overflow: hidden;
+
+    border-radius: 999px;
+
+    background: #e7edf3;
+}
+
+
+.photo-progress-bar {
+    width: 0;
+    height: 100%;
+
+    border-radius: inherit;
+
+    background: #0798e8;
+
+    transition:
+        width .25s ease;
+}
+
+
+/* GROUP */
+
+.photo-group {
+    margin-top: 32px;
+}
+
+
+.photo-group + .photo-group {
+    padding-top: 30px;
+
+    border-top:
+        1px solid #e7edf3;
+}
+
+
+.photo-group-head {
+    display: flex;
+
+    align-items: center;
+    justify-content:
+        space-between;
+
+    margin-bottom: 15px;
+}
+
+
+.photo-group-head h3 {
+    margin:
+        0
+        0
+        4px;
+
+    font-size: 17px;
+}
+
+
+.photo-group-head p {
+    margin: 0;
+
+    color: #778497;
+
+    font-size: 12px;
+}
+
+
+.photo-group-count {
+    padding:
+        6px
+        10px;
+
+    border-radius: 999px;
+
+    background:
+        #eef8ff;
+
+    color:
+        #0798e8;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* GRID */
+
+.photo-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+
+.photo-slot {
+    position: relative;
+
+    min-height: 185px;
+
+    overflow: hidden;
+
+    border:
+        1px dashed
+        #b9cadd;
+
+    border-radius: 12px;
+
+    background:
+        #f8fbfd;
+
+    transition:
+        border-color .18s ease,
+        background .18s ease,
+        box-shadow .18s ease;
+}
+
+
+.photo-slot:hover {
+    border-color:
+        #0798e8;
+
+    background:
+        #f2faff;
+}
+
+
+.photo-slot.has-image {
+    border-style: solid;
+
+    background:
+        #ffffff;
+}
+
+
+.photo-preview {
+    width: 100%;
+    height: 135px;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+.photo-empty {
+    min-height: 185px;
+
+    padding: 18px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    cursor: pointer;
+}
+
+
+.photo-empty i {
+    margin-bottom: 10px;
+
+    color: #0798e8;
+
+    font-size: 25px;
+}
+
+
+.photo-empty strong {
+    color: #24374c;
+
+    font-size: 13px;
+}
+
+
+.photo-empty span {
+    margin-top: 5px;
+
+    color: #8794a2;
+
+    font-size: 11px;
+}
+
+
+.photo-actions {
+    padding:
+        9px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 6px;
+}
+
+
+.photo-action {
+    min-height: 31px;
+
+    border:
+        1px solid #dce5ed;
+
+    border-radius: 6px;
+
+    background: #ffffff;
+
+    color: #52667b;
+
+    font-size: 11px;
+
+    cursor: pointer;
+}
+
+
+.photo-action:hover {
+    color: #0798e8;
+
+    border-color:
+        #9dd3f3;
+}
+
+
+.photo-action-delete:hover {
+    color: #d74747;
+
+    border-color:
+        #efbbbb;
+}
+
+
+@media (max-width: 900px) {
+
+    .photo-grid {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+}
+
+
+@media (max-width: 560px) {
+
+    .photo-section-head {
+        flex-direction: column;
+    }
+
+
+    .photo-grid {
+        grid-template-columns: 1fr;
+    }
+
+}

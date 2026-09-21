@@ -26,7 +26,7 @@ use App\Controllers\Product\AdminModelApi;
 use App\Controllers\Product\AdminVehicleVersionApi;
 use App\Controllers\Product\PublicCatalog;
 use App\Controllers\Product\AdminMedia;
-
+use App\Controllers\Valuation\ValuationController'
 $router = new Router();
 $router->get('/',Homepage::class,'index');
 
@@ -86,7 +86,17 @@ $router->put('/api/v1/admin/versions/{id}', AdminVehicleVersionApi::class, 'upda
 $router->delete('/api/v1/admin/versions/{id}', AdminVehicleVersionApi::class, 'destroy');
 $router->get('/api/v1/admin/models/{id}/versions', AdminVehicleVersionApi::class, 'byModel');
 
+//Xem các chính sách 
 $router->get('/policy',App\Controllers\PolicyController::class,'show');
+
+// APi để đánh giá tình trạng xe khi bán
+
+$router->post('/api/v1/valuations/create',ValuationController::class,'createDraft');
+$router->get('/api/v1/valuations/detail',ValuationController::class,'detail');
+$router->post('/api/v1/valuations/images/upload',ValuationController::class,'uploadImage');
+$router->post('/api/v1/valuations/images/replace',ValuationController::class,'replaceImage');
+$router->post('/api/v1/valuations/images/delete',ValuationController::class,;'deleteImage')
+$router->post('/api/v1/valuations/submit',ValuationController::class,'submit');
 
 // Parse URL
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
