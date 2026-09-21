@@ -19,14 +19,17 @@ use App\Controllers\Authentication\Login;
 use App\Controllers\Authentication\Logout;
 use App\Controllers\Authentication\Register;
 use App\Controllers\Authentication\ResetPassword;
-use App\Controllers\WebRender\Homepage;
-use App\Controllers\WebRender\AdminDashboard;
 use App\Controllers\Product\AdminBrandApi;
 use App\Controllers\Product\AdminModelApi;
 use App\Controllers\Product\AdminVehicleVersionApi;
 use App\Controllers\Product\PublicCatalog;
 use App\Controllers\Product\AdminMedia;
-use App\Controllers\Valuation\ValuationController'
+use App\Controllers\Valuation\ValuationController;
+
+use App\Controllers\WebRender\SellCar;
+use App\Controllers\WebRender\Homepage;
+use App\Controllers\WebRender\AdminDashboard;
+
 $router = new Router();
 $router->get('/',Homepage::class,'index');
 
@@ -95,8 +98,9 @@ $router->post('/api/v1/valuations/create',ValuationController::class,'createDraf
 $router->get('/api/v1/valuations/detail',ValuationController::class,'detail');
 $router->post('/api/v1/valuations/images/upload',ValuationController::class,'uploadImage');
 $router->post('/api/v1/valuations/images/replace',ValuationController::class,'replaceImage');
-$router->post('/api/v1/valuations/images/delete',ValuationController::class,;'deleteImage')
+$router->post('/api/v1/valuations/images/delete',ValuationController::class,'deleteImage');
 $router->post('/api/v1/valuations/submit',ValuationController::class,'submit');
+$router->get('/sell-car',SellCar::class,'index');
 
 // Parse URL
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);

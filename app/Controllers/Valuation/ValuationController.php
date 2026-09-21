@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Controllers\Valuation;
 
 use App\Core\JsonResponse;
-use App\Models\ValuationRequest;
-use App\Models\ValuationRequestImage;
+use App\Models\Inspection\ValuationRequest;
+use App\Models\Inspection\ValuationRequestImage;
 use App\Service\CloudinaryService;
 use Throwable;
 

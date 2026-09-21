@@ -1,70 +1,568 @@
+/* =========================================================
+   FASTCAR - SELL / VALUATION PAGE
+   ========================================================= */
+
+:root {
+    --sell-blue: #0798e8;
+    --sell-blue-dark: #087fc2;
+    --sell-blue-soft: #eff9ff;
+
+    --sell-text: #1b3047;
+    --sell-text-dark: #111827;
+    --sell-muted: #64748b;
+
+    --sell-bg: #f3f6f8;
+    --sell-card: #ffffff;
+
+    --sell-border: #dce6ef;
+    --sell-border-blue: #8fd5fb;
+
+    --sell-shadow:
+        0 3px 9px rgba(29, 60, 90, .08);
+
+    --sell-radius: 12px;
+
+    /*
+     * Ảnh mẫu dùng một cột nội dung khá hẹp.
+     * Khoảng 670 - 700px trên desktop Full HD.
+     */
+    --sell-width: 680px;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+
+    background: var(--sell-bg);
+
+    color: var(--sell-text);
+
+    font-family:
+        Inter,
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+.thong-tin-xe {
+    width: 100%;
+
+    min-height: 100vh;
+
+    padding:
+        28px
+        20px
+        70px;
+
+    background: var(--sell-bg);
+}
+
+.header-container {
+    width: min(
+        var(--sell-width),
+        100%
+    );
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   BƯỚC 1 - INTRO CARD
+   ========================================================= */
+
+.header {
+    width: 100%;
+
+    margin:
+        0
+        auto
+        26px;
+
+    overflow: hidden;
+
+    border:
+        1px solid var(--sell-border-blue);
+
+    border-radius:
+        var(--sell-radius);
+
+    background:
+        var(--sell-card);
+
+    box-shadow:
+        var(--sell-shadow);
+}
+
+
+/*
+ * Bạn đang dùng class heaeder-top bị dư chữ e.
+ * CSS hỗ trợ cả hai để không lỗi.
+ */
+.header-top,
+.heaeder-top {
+    padding:
+        20px
+        24px
+        19px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f3fbff 0%,
+            #eef9ff 100%
+        );
+}
+
+
+.buoc-1 {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color:
+        var(--sell-blue);
+
+    font-size: 11px;
+    font-weight: 800;
+
+    line-height: 1.2;
+
+    letter-spacing: .09em;
+
+    text-transform: uppercase;
+}
+
+
+.header h1 {
+    max-width: 590px;
+
+    margin:
+        0
+        0
+        9px;
+
+    color:
+        #101828;
+
+    font-size: 21px;
+    font-weight: 800;
+
+    line-height: 1.22;
+
+    letter-spacing: -.02em;
+}
+
+
+.header h2 {
+    margin: 0;
+
+    color:
+        #536579;
+
+    font-size: 13px;
+    font-weight: 400;
+
+    line-height: 1.55;
+}
+
+
+/* =========================================================
+   3 CỘT: BẠN CUNG CẤP / NHẬN / QUYẾT ĐỊNH
+   ========================================================= */
+
+.thong-tin-cac-buoc {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    width: 100%;
+
+    background:
+        #ffffff;
+
+    border-top:
+        1px solid #d9e7f0;
+}
+
+
+.feature-item,
+.feature-items {
+    min-width: 0;
+
+    padding:
+        20px
+        16px;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 11px;
+
+    border-right:
+        1px solid #e8eef3;
+}
+
+
+.feature-item:last-child,
+.feature-items:last-child {
+    border-right: 0;
+}
+
+
+.icon-wrapper {
+    width: 34px;
+    height: 34px;
+
+    flex: 0 0 34px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 7px;
+
+    background:
+        #eef9ff;
+
+    color:
+        var(--sell-blue);
+
+    font-size: 14px;
+}
+
+
+.text-content {
+    min-width: 0;
+}
+
+
+.text-content h3 {
+    margin:
+        1px
+        0
+        5px;
+
+    color:
+        #111827;
+
+    font-size: 12px;
+    font-weight: 750;
+
+    line-height: 1.3;
+}
+
+
+.text-content p {
+    margin: 0;
+
+    color:
+        #586a7d;
+
+    font-size: 11px;
+
+    line-height: 1.55;
+}
+
+
+/* =========================================================
+   BASIC VEHICLE INFORMATION
+   ========================================================= */
+
+.vehicle-basic-card {
+    width: 100%;
+
+    margin-bottom: 24px;
+
+    overflow: hidden;
+
+    border:
+        1px solid #e8edf2;
+
+    border-radius:
+        var(--sell-radius);
+
+    background:
+        #ffffff;
+
+    box-shadow:
+        0 2px 7px
+        rgba(35, 63, 92, .035);
+}
+
+
+.vehicle-basic-card > h2 {
+    margin: 0;
+
+    padding:
+        18px
+        24px;
+
+    border-bottom:
+        1px solid #e5ebf0;
+
+    color:
+        #223b55;
+
+    font-size: 20px;
+    font-weight: 750;
+
+    line-height: 1.3;
+
+    letter-spacing:
+        -.02em;
+}
+
+
+.vehicle-basic-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap:
+        14px
+        16px;
+
+    padding:
+        20px
+        24px
+        22px;
+}
+
+
+.form-field {
+    min-width: 0;
+}
+
+
+.form-field label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color:
+        #18293b;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    line-height: 1.3;
+}
+
+
+.form-field label span {
+    color:
+        #e34b4b;
+}
+
+
+.form-field select,
+.form-field input {
+    width: 100%;
+    height: 45px;
+
+    padding:
+        0
+        13px;
+
+    border:
+        1px solid #d7e1eb;
+
+    border-radius:
+        8px;
+
+    outline: none;
+
+    background:
+        #ffffff;
+
+    color:
+        #17283a;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    transition:
+        border-color .18s ease,
+        box-shadow .18s ease,
+        background .18s ease;
+}
+
+
+.form-field input::placeholder {
+    color:
+        #a0acb9;
+}
+
+
+.form-field select:focus,
+.form-field input:focus {
+    border-color:
+        #58bdf3;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(7, 152, 232, .11);
+}
+
+
+.form-field select:disabled,
+.form-field input:disabled {
+    background:
+        #f8fafc;
+
+    color:
+        #a0aaba;
+
+    cursor:
+        not-allowed;
+}
+
+
+/*
+ * Số KM nằm một mình ở hàng dưới.
+ * Nếu bạn muốn nó chiếm cả chiều ngang thì giữ rule này.
+ */
+.form-field:last-child {
+    grid-column:
+        1 / -1;
+}
+
+
+/* =========================================================
+   PHOTO CARD
+   ========================================================= */
+
 .vehicle-photo-card {
     width: 100%;
-    margin-top: 26px;
-    padding: 28px;
-    border-radius: 16px;
-    background: #ffffff;
+
+    margin:
+        0
+        0
+        26px;
+
+    padding:
+        22px
+        24px
+        24px;
+
+    border:
+        1px solid #e5ecf2;
+
+    border-radius:
+        var(--sell-radius);
+
+    background:
+        #ffffff;
+
     box-shadow:
-        0 5px 18px
-        rgba(29, 64, 96, .08);
+        0 2px 8px
+        rgba(29, 64, 96, .05);
 }
 
 
 .photo-section-head {
     display: flex;
 
-    justify-content:
-        space-between;
+    align-items: flex-start;
+    justify-content: space-between;
 
-    gap: 30px;
+    gap: 20px;
+}
+
+
+.photo-section-head > div:first-child {
+    min-width: 0;
+}
+
+
+.photo-step {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color:
+        var(--sell-blue);
+
+    font-size: 10px;
+    font-weight: 800;
+
+    line-height: 1.2;
+
+    text-transform: uppercase;
+
+    letter-spacing:
+        .09em;
 }
 
 
 .photo-section-head h2 {
     margin:
-        5px
         0
-        7px;
+        0
+        6px;
 
-    font-size: 25px;
+    color:
+        #182b3f;
+
+    font-size: 19px;
+    font-weight: 750;
+
+    line-height: 1.3;
+
+    text-transform:
+        none;
 }
 
 
 .photo-section-head p {
+    max-width: 480px;
+
     margin: 0;
 
-    color: #718094;
+    color:
+        #708092;
 
-    font-size: 14px;
+    font-size: 11px;
 
-    line-height: 1.5;
+    line-height: 1.55;
 }
 
 
-.photo-step {
-    color: #0798e8;
-
-    font-size: 12px;
-    font-weight: 800;
-
-    text-transform: uppercase;
-
-    letter-spacing: .08em;
-}
-
+/* =========================================================
+   PHOTO PROGRESS
+   ========================================================= */
 
 .photo-progress-box {
-    flex: 0 0 auto;
+    min-width: 88px;
 
-    min-width: 110px;
+    flex:
+        0
+        0
+        auto;
 
     padding:
-        12px
-        16px;
+        10px
+        12px;
 
-    border-radius: 10px;
+    border-radius:
+        9px;
 
-    background: #f1f8fe;
+    background:
+        #eef9ff;
 
     text-align: center;
 }
@@ -73,30 +571,41 @@
 .photo-progress-box strong {
     display: block;
 
-    color: #0798e8;
+    color:
+        var(--sell-blue);
 
-    font-size: 22px;
+    font-size: 18px;
+    font-weight: 800;
+
+    line-height: 1.1;
 }
 
 
 .photo-progress-box span {
-    color: #718094;
+    display: block;
 
-    font-size: 11px;
+    margin-top: 4px;
+
+    color:
+        #65778a;
+
+    font-size: 9px;
 }
 
 
 .photo-progress {
     width: 100%;
-    height: 7px;
+    height: 6px;
 
-    margin-top: 18px;
+    margin-top: 16px;
 
     overflow: hidden;
 
-    border-radius: 999px;
+    border-radius:
+        999px;
 
-    background: #e7edf3;
+    background:
+        #e7edf2;
 }
 
 
@@ -106,25 +615,34 @@
 
     border-radius: inherit;
 
-    background: #0798e8;
+    background:
+        linear-gradient(
+            90deg,
+            #0798e8,
+            #38b8ff
+        );
 
     transition:
         width .25s ease;
 }
 
 
-/* GROUP */
+/* =========================================================
+   PHOTO GROUP
+   ========================================================= */
 
 .photo-group {
-    margin-top: 32px;
+    margin-top: 26px;
 }
 
 
 .photo-group + .photo-group {
-    padding-top: 30px;
+    margin-top: 27px;
+
+    padding-top: 24px;
 
     border-top:
-        1px solid #e7edf3;
+        1px solid #e9eef3;
 }
 
 
@@ -132,10 +650,12 @@
     display: flex;
 
     align-items: center;
-    justify-content:
-        space-between;
+    justify-content: space-between;
 
-    margin-bottom: 15px;
+    gap: 14px;
+
+    margin-bottom:
+        13px;
 }
 
 
@@ -145,61 +665,78 @@
         0
         4px;
 
-    font-size: 17px;
+    color:
+        #1a2c3f;
+
+    font-size: 14px;
+    font-weight: 750;
 }
 
 
 .photo-group-head p {
     margin: 0;
 
-    color: #778497;
+    color:
+        #738294;
 
-    font-size: 12px;
+    font-size: 10px;
+
+    line-height: 1.45;
 }
 
 
 .photo-group-count {
+    flex: 0 0 auto;
+
     padding:
-        6px
+        5px
         10px;
 
-    border-radius: 999px;
+    border-radius:
+        999px;
 
     background:
-        #eef8ff;
+        #eef9ff;
 
     color:
-        #0798e8;
+        var(--sell-blue);
 
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 700;
 }
 
 
-/* GRID */
+/* =========================================================
+   PHOTO GRID
+   ========================================================= */
 
 .photo-grid {
     display: grid;
 
+    /*
+     * Ảnh mẫu có card khá hẹp.
+     * 3 cột nhìn cân đối hơn 4 cột.
+     */
     grid-template-columns:
-        repeat(4, minmax(0, 1fr));
+        repeat(3, minmax(0, 1fr));
 
-    gap: 14px;
+    gap: 11px;
 }
 
 
 .photo-slot {
     position: relative;
 
-    min-height: 185px;
+    min-width: 0;
+    min-height: 145px;
 
     overflow: hidden;
 
     border:
-        1px dashed
-        #b9cadd;
+        1px dashed #b8c8d8;
 
-    border-radius: 12px;
+    border-radius:
+        9px;
 
     background:
         #f8fbfd;
@@ -207,41 +744,48 @@
     transition:
         border-color .18s ease,
         background .18s ease,
-        box-shadow .18s ease;
+        box-shadow .18s ease,
+        transform .18s ease;
 }
 
 
 .photo-slot:hover {
     border-color:
-        #0798e8;
+        #42b2ed;
 
     background:
         #f2faff;
+
+    box-shadow:
+        0 4px 12px
+        rgba(7, 152, 232, .07);
+
+    transform:
+        translateY(-1px);
 }
 
 
 .photo-slot.has-image {
-    border-style: solid;
+    border-style:
+        solid;
+
+    border-color:
+        #d9e5ee;
 
     background:
         #ffffff;
 }
 
 
-.photo-preview {
-    width: 100%;
-    height: 135px;
-
-    display: block;
-
-    object-fit: cover;
-}
-
+/* Upload empty */
 
 .photo-empty {
-    min-height: 185px;
+    width: 100%;
+    min-height: 145px;
 
-    padding: 18px;
+    padding:
+        14px
+        10px;
 
     display: flex;
     flex-direction: column;
@@ -256,99 +800,564 @@
 
 
 .photo-empty i {
-    margin-bottom: 10px;
+    width: 34px;
+    height: 34px;
 
-    color: #0798e8;
+    margin-bottom:
+        8px;
 
-    font-size: 25px;
+    display: grid;
+    place-items: center;
+
+    border-radius:
+        8px;
+
+    background:
+        #eaf7ff;
+
+    color:
+        var(--sell-blue);
+
+    font-size: 16px;
 }
 
 
 .photo-empty strong {
-    color: #24374c;
+    display: block;
 
-    font-size: 13px;
+    color:
+        #293d52;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    line-height: 1.35;
 }
 
 
 .photo-empty span {
-    margin-top: 5px;
+    display: block;
 
-    color: #8794a2;
+    margin-top:
+        4px;
+
+    color:
+        #8896a6;
+
+    font-size: 9px;
+}
+
+
+/* Loading state */
+
+.photo-slot.is-uploading {
+    pointer-events:
+        none;
+
+    opacity:
+        .62;
+}
+
+
+.photo-slot.is-uploading::after {
+    content:
+        "Đang tải...";
+
+    position:
+        absolute;
+
+    inset: 0;
+
+    display: grid;
+    place-items: center;
+
+    background:
+        rgba(255,255,255,.88);
+
+    color:
+        var(--sell-blue);
 
     font-size: 11px;
+    font-weight: 700;
+
+    z-index: 4;
+}
+
+
+/* =========================================================
+   UPLOADED PHOTO
+   ========================================================= */
+
+.photo-preview {
+    width: 100%;
+    height: 106px;
+
+    display: block;
+
+    object-fit: cover;
+
+    background:
+        #edf2f6;
 }
 
 
 .photo-actions {
-    padding:
-        9px;
-
     display: grid;
 
     grid-template-columns:
-        repeat(3, 1fr);
+        repeat(3, minmax(0, 1fr));
 
-    gap: 6px;
+    gap: 5px;
+
+    padding: 7px;
 }
 
 
 .photo-action {
-    min-height: 31px;
+    min-width: 0;
+    min-height: 28px;
+
+    padding:
+        0
+        4px;
 
     border:
         1px solid #dce5ed;
 
-    border-radius: 6px;
+    border-radius:
+        5px;
 
-    background: #ffffff;
+    background:
+        #ffffff;
 
-    color: #52667b;
+    color:
+        #566b80;
 
-    font-size: 11px;
+    font-family:
+        inherit;
+
+    font-size: 9px;
+    font-weight: 650;
 
     cursor: pointer;
+
+    transition:
+        color .15s ease,
+        border-color .15s ease,
+        background .15s ease;
 }
 
 
 .photo-action:hover {
-    color: #0798e8;
-
     border-color:
-        #9dd3f3;
+        #8bcff3;
+
+    background:
+        #f1faff;
+
+    color:
+        var(--sell-blue);
 }
 
 
 .photo-action-delete:hover {
-    color: #d74747;
-
     border-color:
-        #efbbbb;
+        #f1b6b6;
+
+    background:
+        #fff6f6;
+
+    color:
+        #d74747;
 }
 
 
-@media (max-width: 900px) {
+/* =========================================================
+   BOTTOM ACTIONS
+   ========================================================= */
 
-    .photo-grid {
-        grid-template-columns:
-            repeat(
-                2,
-                minmax(0, 1fr)
-            );
+.valuation-actions {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-top:
+        28px;
+
+    padding-top:
+        20px;
+
+    border-top:
+        1px solid #e8edf2;
+}
+
+
+.back-button,
+.continue-button {
+    min-height: 39px;
+
+    padding:
+        0
+        16px;
+
+    border-radius:
+        7px;
+
+    font-family:
+        inherit;
+
+    font-size:
+        11px;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+    transition:
+        background .18s ease,
+        color .18s ease,
+        border-color .18s ease,
+        opacity .18s ease;
+}
+
+
+.back-button {
+    border:
+        1px solid #d7e0e8;
+
+    background:
+        #ffffff;
+
+    color:
+        #708092;
+}
+
+
+.back-button:hover {
+    border-color:
+        #b9c7d4;
+
+    background:
+        #f8fafc;
+
+    color:
+        #394e63;
+}
+
+
+.continue-button {
+    border:
+        1px solid var(--sell-blue);
+
+    background:
+        var(--sell-blue);
+
+    color:
+        #ffffff;
+}
+
+
+.continue-button:hover:not(:disabled) {
+    background:
+        var(--sell-blue-dark);
+
+    border-color:
+        var(--sell-blue-dark);
+}
+
+
+.continue-button:disabled {
+    border-color:
+        #d7e1e9;
+
+    background:
+        #dfe7ed;
+
+    color:
+        #9aa6b2;
+
+    cursor:
+        not-allowed;
+
+    opacity:
+        .85;
+}
+
+
+/* =========================================================
+   OPTIONAL CONSENT BAR
+   Nếu bạn thêm checkbox giống hình mẫu
+   ========================================================= */
+
+.valuation-consent {
+    margin:
+        18px
+        0
+        0;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 8px;
+
+    color:
+        #33485e;
+
+    font-size:
+        10px;
+
+    line-height:
+        1.5;
+}
+
+
+.valuation-consent input {
+    width: 17px;
+    height: 17px;
+
+    margin:
+        0
+        2px
+        0
+        0;
+
+    flex:
+        0
+        0
+        auto;
+
+    accent-color:
+        var(--sell-blue);
+}
+
+
+.valuation-consent a {
+    color:
+        var(--sell-blue);
+
+    text-decoration:
+        none;
+}
+
+
+.valuation-consent a:hover {
+    text-decoration:
+        underline;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    :root {
+        --sell-width: 640px;
+    }
+
+    .thong-tin-xe {
+        padding:
+            22px
+            16px
+            60px;
+    }
+
+    .header-top,
+    .heaeder-top {
+        padding:
+            19px
+            20px;
+    }
+
+    .feature-item,
+    .feature-items {
+        padding:
+            17px
+            12px;
+    }
+
+    .vehicle-basic-grid {
+        padding:
+            18px
+            20px;
+
+        gap:
+            13px;
+    }
+
+    .vehicle-photo-card {
+        padding:
+            20px;
     }
 
 }
 
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
 @media (max-width: 560px) {
 
-    .photo-section-head {
-        flex-direction: column;
+    .thong-tin-xe {
+        padding:
+            16px
+            12px
+            50px;
     }
 
 
+    /* Intro */
+
+    .header {
+        margin-bottom:
+            18px;
+    }
+
+    .header h1 {
+        font-size:
+            18px;
+    }
+
+    .header h2 {
+        font-size:
+            12px;
+    }
+
+
+    /* 3 feature boxes đổi thành dọc */
+
+    .thong-tin-cac-buoc {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .feature-item,
+    .feature-items {
+        border-right:
+            0;
+
+        border-bottom:
+            1px solid #e8eef3;
+    }
+
+    .feature-item:last-child,
+    .feature-items:last-child {
+        border-bottom:
+            0;
+    }
+
+
+    /* Form */
+
+    .vehicle-basic-card > h2 {
+        padding:
+            16px
+            18px;
+
+        font-size:
+            18px;
+        
+    }
+
+    .vehicle-basic-grid {
+        grid-template-columns:
+            1fr;
+
+        padding:
+            17px
+            18px;
+    }
+
+    .form-field:last-child {
+        grid-column:
+            auto;
+    }
+
+
+    /* Photos */
+
+    .vehicle-photo-card {
+        padding:
+            18px
+            16px;
+        
+    }
+
+    .photo-section-head {
+        flex-direction:
+            column;
+    }
+
+    .photo-progress-box {
+        width: 100%;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 7px;
+    }
+
+    .photo-progress-box strong {
+        font-size:
+            16px;
+    }
+
+    .photo-progress-box span {
+        margin:
+            0;
+    }
+
     .photo-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 9px;
+    }
+
+    .photo-slot,
+    .photo-empty {
+        min-height:
+            135px;
+    }
+
+    .photo-preview {
+        height:
+            98px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONE
+   ========================================================= */
+
+@media (max-width: 390px) {
+
+    .photo-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    .photo-slot,
+    .photo-empty {
+        min-height:
+            155px;
+    }
+
+    .photo-preview {
+        height:
+            120px;
     }
 
 }

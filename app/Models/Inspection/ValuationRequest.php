@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
-namespace App\Models\Inspectation;
+namespace App\Models\Inspection;
 use App\Core\Database;
 use PDO;
 class ValuationRequest {
-    private PDO $pdo;
+    private PDO $db;
     public function __construct(){
         $this->db = Database::connection();
     }
-    public function findVersion(int $versionId):?array{
+    public function findVersion( int $versionId): ?array {
         $sql = "
             SELECT
                 vv.*,
@@ -20,25 +20,39 @@ class ValuationRequest {
                 b.id AS brand_id,
                 b.name AS brand_name,
                 b.slug AS brand_slug
+
             FROM vehicle_versions vv
 
             INNER JOIN vehicle_models vm
                 ON vm.id = vv.model_id
                 AND vm.deleted_at IS NULL
-            WHERE vv.id = :id
-              AND vv.deleted_at IS NULL
-              AND vv.status = 'active'
-              AND vm.status = 'active'
-              AND b.status = 'active'
 
-            LIMIT 1";
-        $stmt = $this->db->prepare($sql);
+            INNER JOIN brands b
+                ON b.id = vm.brand_id
+                AND b.deleted_at IS NULL
+
+            WHERE vv.id = :id
+            AND vv.deleted_at IS NULL
+            AND vv.status = 'active'
+            AND vm.status = 'active'
+            AND b.status = 'active'
+
+            LIMIT 1
+        ";
+
+        $stmt =
+            $this->db->prepare($sql);
+
         $stmt->execute([
-            'id' =>$versionId
+            'id' => $versionId
         ]);
-        $row = $stmt->fetch();
+
+        $row =
+            $stmt->fetch();
+
         return $row ?: null;
     }
+
     public function createDraft(int $userId, array $data, array $snapshot): int {
         $sql = "
             INSERT INTO valuation_requests (
@@ -65,7 +79,7 @@ class ValuationRequest {
                 :exterior_color,
                 :interior_color,
                 :license_plate,
-                :registration_province;
+                :registration_province,
                 :owners_count,
                 :seller_note,
                 :vehicle_snapshot,

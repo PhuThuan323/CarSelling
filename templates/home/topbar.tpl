@@ -22,6 +22,10 @@
             <a href="/how-it-works">
                 Cách Thức Hoạt Động
             </a>
+            
+            <a href="/sell-car">
+                Bán Xe
+            </a>
 
             <a href="/cars">
                 Mua Xe
