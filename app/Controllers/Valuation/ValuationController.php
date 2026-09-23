@@ -138,32 +138,6 @@ class ValuationController
         ],
 
 
-        // Pháp lý - 4
-
-        'registration_front' => [
-            'category' => 'legal',
-            'label' => 'Cà vẹt mặt trước',
-            'sort_order' => 310,
-        ],
-
-        'registration_back' => [
-            'category' => 'legal',
-            'label' => 'Cà vẹt mặt sau',
-            'sort_order' => 320,
-        ],
-
-        'inspection_spec' => [
-            'category' => 'legal',
-            'label' => 'Đăng kiểm - thông số',
-            'sort_order' => 330,
-        ],
-
-        'inspection_expiry' => [
-            'category' => 'legal',
-            'label' => 'Đăng kiểm - thời hạn',
-            'sort_order' => 340,
-        ],
-
     ];
 
 

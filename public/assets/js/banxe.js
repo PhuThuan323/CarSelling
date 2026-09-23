@@ -235,13 +235,6 @@
         }
     }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | BRAND → MODEL
-    |--------------------------------------------------------------------------
-    */
-
     brandSelect.addEventListener(
         'change',
         async function () {
@@ -321,13 +314,6 @@
         }
     );
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | MODEL → VERSION → YEARS
-    |--------------------------------------------------------------------------
-    */
-
     modelSelect.addEventListener(
         'change',
         async function () {
@@ -381,13 +367,6 @@
             }
         }
     );
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | YEAR
-    |--------------------------------------------------------------------------
-    */
 
     function buildYears(
         versionRows
@@ -466,13 +445,6 @@
             false;
     }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | YEAR → VERSION
-    |--------------------------------------------------------------------------
-    */
-
     yearSelect.addEventListener(
         'change',
         function () {
@@ -546,12 +518,6 @@
         }
     );
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | CREATE DRAFT
-    |--------------------------------------------------------------------------
-    */
 
     async function ensureDraft()
     {
@@ -643,12 +609,6 @@
         return valuationRequestId;
     }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | PHOTO SLOTS
-    |--------------------------------------------------------------------------
-    */
 
     document
         .querySelectorAll(
@@ -747,13 +707,6 @@
         );
     }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | UPLOAD
-    |--------------------------------------------------------------------------
-    */
-
     async function uploadPhoto(
         slot,
         file
@@ -827,12 +780,6 @@
         }
     }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | RENDER UPLOADED IMAGE
-    |--------------------------------------------------------------------------
-    */
 
     function renderUploadedSlot(
     slot,
@@ -948,12 +895,6 @@
 }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | REPLACE
-    |--------------------------------------------------------------------------
-    */
-
     async function replacePhoto(
         slot,
         file
@@ -1011,13 +952,6 @@
             );
         }
     }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | DELETE
-    |--------------------------------------------------------------------------
-    */
 
     async function deletePhoto(
         slot
@@ -1081,72 +1015,101 @@
     |--------------------------------------------------------------------------
     */
 
-    function updateProgress(
-        progress
-    ) {
-        if (!progress) {
-            return;
-        }
-
-
-        document
-            .getElementById(
-                'photoProgressText'
-            )
-            .textContent =
-                progress.completed
-                + ' / '
-                + progress.required;
-
-
-        document
-            .getElementById(
-                'photoProgressBar'
-            )
-            .style.width =
-                progress.percent
-                + '%';
-
-
-        Object
-            .entries(
-                progress.groups
-                || {}
-            )
-            .forEach(
-                function (
-                    [group, data]
-                ) {
-                    const el =
-                        document
-                            .querySelector(
-                                '[data-group-count="'
-                                + group
-                                + '"]'
-                            );
-
-                    if (el) {
-                        el.textContent =
-                            data.completed;
-                    }
-                }
-            );
-
-
-        if (continueButton) {
-            continueButton.disabled =
-                !progress.complete;
-        }
-
-
-        photosComplete =
-            Boolean(
-                progress.complete
-            );
-
-
-        syncContinueButton();
+    function updateProgress(progress) {
+    if (!progress) {
+        return;
     }
+
+    /*
+     * =====================================================
+     * CHỈ TÍNH NHỮNG Ô ẢNH ĐANG CÓ TRÊN GIAO DIỆN
+     * =====================================================
+     */
+
+    const photoSlots =
+        document.querySelectorAll('.photo-slot');
+
+    const totalPhotos =
+        photoSlots.length;
+
+    const completedPhotos =
+        document.querySelectorAll(
+            '.photo-slot.has-image'
+        ).length;
+
+    const percent =
+        totalPhotos > 0
+            ? Math.round(
+                (completedPhotos / totalPhotos) * 100
+            )
+            : 0;
+
+    const isComplete =
+        totalPhotos > 0
+            && completedPhotos === totalPhotos;
+
+
+    /*
+     * =====================================================
+     * UPDATE SỐ LƯỢNG
+     * =====================================================
+     */
+
+    const progressText =
+        document.getElementById(
+            'photoProgressText'
+        );
+
+    if (progressText) {
+        progressText.textContent =
+            completedPhotos
+            + ' / '
+            + totalPhotos;
+    }
+
+
+    const progressBar =
+        document.getElementById(
+            'photoProgressBar'
+        );
+
+    if (progressBar) {
+        progressBar.style.width =
+            percent + '%';
+    }
+
+
+    Object
+        .entries(
+            progress.groups || {}
+        )
+        .forEach(
+            function ([group, data]) {
+
+                const el =
+                    document.querySelector(
+                        '[data-group-count="'
+                        + group
+                        + '"]'
+                    );
+
+                if (el) {
+                    el.textContent =
+                        data.completed;
+                }
+            }
+        );
+   
+    if (continueButton) {
+        continueButton.disabled =
+            !isComplete;
+    }
+
+    photosComplete =
+        isComplete;
+
+    syncContinueButton();
+}
 
 
     /*
@@ -1420,18 +1383,6 @@
 
             wheel_rear_right:
                 'Bánh sau phải',
-
-            registration_front:
-                'Cà vẹt mặt trước',
-
-            registration_back:
-                'Cà vẹt mặt sau',
-
-            inspection_spec:
-                'Đăng kiểm - thông số',
-
-            inspection_expiry:
-                'Đăng kiểm - thời hạn'
         };
 
         return labels[slot]
@@ -1499,18 +1450,6 @@
 
             wheel_rear_right:
                 'Chụp thẳng bánh sau bên phải, thấy rõ mâm và lốp.',
-
-            registration_front:
-                'Chụp mặt trước cà vẹt, thấy rõ số khung và số máy.',
-
-            registration_back:
-                'Chụp mặt sau cà vẹt, thấy rõ ngày đăng ký.',
-
-            inspection_spec:
-                'Chụp phần thông số kỹ thuật trên giấy đăng kiểm.',
-
-            inspection_expiry:
-                'Chụp phần thời hạn đăng kiểm còn hiệu lực.'
         };
 
         return hints[slot]

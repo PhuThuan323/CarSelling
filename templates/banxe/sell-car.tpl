@@ -167,23 +167,6 @@ link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/
                     <div class="photo-slot" data-slot="wheel_rear_right" data-category="mechanical" data-required="1"> </div>
                 </div>
             </div>
-            <div class="photo-group" data-group="legal">
-                <div class="photo-group-head">
-                    <div>
-                        <h3> 4. Giấy tờ xe </h3>
-                        <p> Có thể che tên, mặt. Nhưng cần nhìn rõ thông tin xe </p>
-                    </div>
-                    <span class="photo-group-count">
-                        <strong data-group-count="legal"> 0 </strong> /4
-                    </span>
-                </div>
-                <div class="photo-grid">
-                    <div class="photo-slot" data-slot="registration_front" data-category="legal" data-required="1"> </div>
-                    <div class="photo-slot" data-slot="registration_back" data-category="legal" data-required="1"> </div>
-                    <div class="photo-slot" data-slot="inspection_expiry" data-category="legal" data-required="1"> </div>
-                    <div class="photo-slot" data-slot="inspection_spec" data-category="legal" data-required="1"> </div>
-                </div>
-            </div>
             <label class="valuation-consent">
                 <input type="checkbox" id="valuationConsent">
                 <span>
