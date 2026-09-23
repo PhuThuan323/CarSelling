@@ -30,10 +30,7 @@
             <a href="/cars">
                 Mua Xe
             </a>
-
-            <a href="/account">
-                Tài Khoản
-            </a>
+            
 
         </nav>
 

@@ -29,6 +29,7 @@ use App\Controllers\Valuation\ValuationController;
 use App\Controllers\WebRender\SellCar;
 use App\Controllers\WebRender\Homepage;
 use App\Controllers\WebRender\AdminDashboard;
+use App\Controllers\WebRender\ContactInfor;
 
 $router = new Router();
 $router->get('/',Homepage::class,'index');
@@ -101,6 +102,7 @@ $router->post('/api/v1/valuations/images/replace',ValuationController::class,'re
 $router->post('/api/v1/valuations/images/delete',ValuationController::class,'deleteImage');
 $router->post('/api/v1/valuations/submit',ValuationController::class,'submit');
 $router->get('/sell-car',SellCar::class,'index');
+$router->get('/sell-car-contact',ContactInfor::class,'index');
 
 // Parse URL
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);

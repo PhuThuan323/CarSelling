@@ -1295,7 +1295,7 @@
                      */
 
                     window.location.href =
-                        '/valuation/result?id='
+                        '/sell-car-contact/'
                         + encodeURIComponent(
                             response.data
                                 .valuation_request_id

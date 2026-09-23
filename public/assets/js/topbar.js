@@ -92,5 +92,27 @@
 
         }
     );
+    document.addEventListener('DOMContentLoaded', function () {
+
+    const currentPath =
+        window.location.pathname.replace(/\/+$/, '') || '/';
+
+    document
+        .querySelectorAll('.redirect-url a')
+        .forEach(function (link) {
+
+            const linkPath =
+                new URL(
+                    link.href,
+                    window.location.origin
+                ).pathname.replace(/\/+$/, '') || '/';
+
+            if (currentPath === linkPath) {
+                link.classList.add('is-active');
+            }
+
+        });
+
+});
 
 })();

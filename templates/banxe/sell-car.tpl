@@ -1,4 +1,4 @@
-link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="../assets/css/banxe.css">
 {include file="../home/topbar.tpl"}
 <div class="thong-tin-xe">
@@ -11,7 +11,7 @@ link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/
             </div>
             <div class="thong-tin-cac-buoc">
                 <div class="feature-item">
-                    <div class="icon-wrapper"> <i class="fa-light fa-tags"></i> </div>   
+                    <div class="icon-wrapper"> <i class="fa-solid fa-tags"></i> </div>   
                     <div class="text-content">
                         <h3> Bạn cung cấp </h3>
                         <p> Hãng xe, phiên bản xe, năm sản xuất, số km, và một số hình ảnh ban đầu theo mẫu</p>
@@ -19,7 +19,7 @@ link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/
                 </div>
                 <div class="feature-item">
                 <div class="icon-wrapper">
-                    <i class="fa-regular fa-money-check-dollar"></i>
+                    <i class="fa-solid fa-money-check-dollar"></i>
                 </div>
                 <div class="text-content">
                     <h3> Bạn nhận </h3>
@@ -28,7 +28,7 @@ link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/
             </div>
             <div class="feature-item">
                 <div class="icon-wrapper">
-                    <i class="fa-regular fa-gavel"></i>
+                    <i class="fa-solid fa-gavel"></i>
                 </div>
                 <div class="text-content">
                     <h3> Bạn quyết định </h3>

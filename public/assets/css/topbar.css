@@ -201,6 +201,14 @@
     transform: scaleX(1);
 }
 
+.redirect-url a.is-active {
+    color: var(--topbar-blue);
+}
+
+.redirect-url a.is-active::after {
+    transform: scaleX(1);
+}
+
 
 /* =========================================================
    USER AREA
@@ -315,12 +323,19 @@
    ========================================================= */
 
 .admin-entry-link {
+    min-height: 50px;
+    padding: 0 18px;
+
     display: inline-flex;
     align-items: center;
+    justify-content: center;
 
-    color:
-        var(--topbar-text);
+    border: 1px solid #dbe4ed;
+    border-radius: 12px;
 
+    background: #ffffff;
+
+    color: var(--topbar-text);
     font-size: 14px;
     font-weight: 700;
 
@@ -328,7 +343,15 @@
     white-space: nowrap;
 
     transition:
+        background .18s ease,
+        border-color .18s ease,
         color .18s ease;
+}
+
+.admin-entry-link:hover {
+    background: #f3f8fd;
+    border-color: #b9d7f1;
+    color: var(--topbar-blue);
 }
 
 
