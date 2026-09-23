@@ -79,4 +79,23 @@ class CloudinaryService
                 ?? null,
         ];
     }
+
+    public function uploadValuationImage(string $filePath):array{
+        $result = $this->cloudinary->uploadApi()->upload($filePath,
+            [
+                'folder'=>'fastcar/valuations',
+                'resource_type'=>'image',
+                'unique_filename'=>true,
+                'overwrite'=>false,
+            ]);
+        return [
+            'secure_url' => $result['secure_url'] ?? '',
+            'public_id' => $result['public_id'] ?? '',
+            'asset_id' => $result['asset_id'] ?? null,
+            'width' => $result['width'] ?? null,
+            'height' => $result['height'] ?? null,
+            'bytes' => $result['bytes'] ?? null,
+            'format' => $result['format'] ?? null,
+        ];
+    }
 }

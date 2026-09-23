@@ -3,13 +3,13 @@
 
     const API = {
         brands:
-            '/vehicle/brands',
+            '/api/v1/brands',
 
         modelsByBrand:
             function (brandId) {
                 return (
-                    '/vehicle/brands/'
-                    + brandId
+                    '/api/v1/brands/'
+                    + encodeURIComponent(brandId)
                     + '/models'
                 );
             },
@@ -17,8 +17,8 @@
         versionsByModel:
             function (modelId) {
                 return (
-                    '/vehicle/models/'
-                    + modelId
+                    '/api/v1/models/'
+                    + encodeURIComponent(modelId)
                     + '/versions'
                 );
             },
@@ -47,6 +47,9 @@
 
     let versions = [];
 
+    let photosComplete =
+        false;
+
 
     /*
     |--------------------------------------------------------------------------
@@ -54,66 +57,71 @@
     |--------------------------------------------------------------------------
     */
 
-    async function request(
+    async function request(url, options = {}) {
+    const response = await fetch(
         url,
-        options = {}
-    ) {
-        const response =
-            await fetch(
-                url,
-                {
-                    credentials:
-                        'same-origin',
+        {
+            credentials: 'same-origin',
 
-                    headers: {
-                        Accept:
-                            'application/json',
+            headers: {
+                Accept: 'application/json',
 
-                        ...(
-                            options.headers
-                            || {}
-                        )
-                    },
+                ...(options.headers || {})
+            },
 
-                    ...options
-                }
-            );
+            ...options
+        }
+    );
 
+    const contentType =
+        response.headers.get('content-type') || '';
 
-        let body = {};
+    const rawBody =
+        await response.text();
 
+    console.log('===== API RESPONSE =====');
+    console.log('URL:', url);
+    console.log('Status:', response.status);
+    console.log('Content-Type:', contentType);
+    console.log('Raw response:', rawBody);
+    console.log('========================');
+
+    let body = {};
+
+    if (rawBody.trim()) {
         try {
-            body =
-                await response.json();
+            body = JSON.parse(rawBody);
         } catch (error) {
-            throw new Error(
-                'Server không trả JSON hợp lệ.'
+            console.error(
+                'JSON parse error:',
+                error
             );
-        }
-
-
-        if (
-            response.status === 401
-        ) {
-            window.location.href =
-                '/auth/login?redirect=/sell-car';
 
             throw new Error(
-                'Bạn cần đăng nhập.'
+                `Server không trả JSON hợp lệ. HTTP ${response.status}. Response: ${rawBody.substring(0, 500)}`
             );
         }
-
-
-        if (!response.ok) {
-            throw new Error(
-                body.message
-                || `HTTP ${response.status}`
-            );
-        }
-
-
-        return body;
     }
+
+    if (response.status === 401) {
+        window.location.href =
+            '/auth/login?redirect=/sell-car';
+
+        throw new Error(
+            'Bạn cần đăng nhập.'
+        );
+    }
+
+    if (!response.ok) {
+        throw new Error(
+            body.message
+            || body.error
+            || `HTTP ${response.status}`
+        );
+    }
+
+    return body;
+}
 
 
     /*
@@ -124,6 +132,9 @@
 
     const brandSelect =
         document.getElementById(
+            'BrandSelect'
+        )
+        || document.getElementById(
             'brandSelect'
         );
 
@@ -152,11 +163,10 @@
             'continueButton'
         );
 
-    const consent = document.getElementById('valuationConsent');
-    if(!consent||!consent.checked){
-        alert("Bạn cần đồng ý với Chính sách bảo mật và quy chế hoạt động");
-        return; 
-    }
+    const consent =
+        document.getElementById(
+            'valuationConsent'
+        );
 
     /*
     |--------------------------------------------------------------------------
@@ -359,12 +369,9 @@
                     response.data?.versions
                     || response.data
                     || [];
-
-
                 buildYears(
                     versions
                 );
-
             } catch (error) {
 
                 alert(
@@ -669,16 +676,29 @@
 
 
         slot.innerHTML = `
-            <label class="photo-empty">
+            <div class="photo-empty">
 
-                <i class="fa-solid fa-camera"></i>
+                <span class="photo-empty-icon">
+                    <i class="fa-solid fa-camera"></i>
+                </span>
 
-                <strong>
+                <strong class="photo-empty-label">
                     ${photoLabel(slotKey)}
                 </strong>
 
-                <span>
-                    Chụp hoặc tải ảnh
+                <span class="photo-empty-hint">
+                    ${photoHint(slotKey)}
+                </span>
+
+                <button
+                    type="button"
+                    class="photo-upload-btn js-pick-photo"
+                >
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                </button>
+
+                <span class="photo-empty-meta">
+                    JPG, PNG, WEBP - tối đa 8MB
                 </span>
 
                 <input
@@ -688,13 +708,25 @@
                     hidden
                 >
 
-            </label>
+            </div>
         `;
 
 
         const input =
             slot.querySelector(
                 'input[type="file"]'
+            );
+
+
+        slot
+            .querySelector(
+                '.js-pick-photo'
+            )
+            .addEventListener(
+                'click',
+                function () {
+                    input.click();
+                }
             );
 
 
@@ -803,127 +835,117 @@
     */
 
     function renderUploadedSlot(
-        slot,
-        image
-    ) {
-        slot.classList.add(
-            'has-image'
+    slot,
+    image
+) {
+    slot.classList.add(
+        'has-image'
+    );
+
+    slot.innerHTML = `
+        <img
+            class="photo-preview"
+            src="${image.image_url}"
+            alt="${photoLabel(image.slot_key)}"
+        >
+
+        <div class="photo-actions">
+
+            <button
+                type="button"
+                class="photo-action js-replace-photo"
+            >
+                <i class="fa-solid fa-rotate"></i>
+                Thay thế
+            </button>
+
+            <button
+                type="button"
+                class="
+                    photo-action
+                    photo-action-delete
+                    js-delete-photo
+                "
+            >
+                <i class="fa-solid fa-trash"></i>
+                Xóa
+            </button>
+
+        </div>
+
+        <input
+            class="replace-photo-input"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            capture="environment"
+            hidden
+        >
+    `;
+
+
+    /*
+     * THAY THẾ
+     */
+
+    const replaceInput =
+        slot.querySelector(
+            '.replace-photo-input'
         );
 
 
-        slot.innerHTML = `
-            <img
-                class="photo-preview"
-                src="${image.image_url}"
-                alt="${photoLabel(
-                    image.slot_key
-                )}"
-            >
+    slot
+        .querySelector(
+            '.js-replace-photo'
+        )
+        .addEventListener(
+            'click',
+            function (event) {
 
-            <div class="photo-actions">
+                event.stopPropagation();
 
-                <button
-                    type="button"
-                    class="photo-action js-view-photo"
-                >
-                    Xem
-                </button>
-
-                <button
-                    type="button"
-                    class="photo-action js-replace-photo"
-                >
-                    Thay
-                </button>
-
-                <button
-                    type="button"
-                    class="
-                        photo-action
-                        photo-action-delete
-                        js-delete-photo
-                    "
-                >
-                    Xóa
-                </button>
-
-            </div>
-
-            <input
-                class="replace-photo-input"
-                type="file"
-                accept="image/jpeg,image/png,image/webp"
-                capture="environment"
-                hidden
-            >
-        `;
-
-
-        slot
-            .querySelector(
-                '.js-view-photo'
-            )
-            .addEventListener(
-                'click',
-                function () {
-
-                    window.open(
-                        image.image_url,
-                        '_blank',
-                        'noopener'
-                    );
-                }
-            );
-
-
-        const replaceInput =
-            slot.querySelector(
-                '.replace-photo-input'
-            );
-
-
-        slot
-            .querySelector(
-                '.js-replace-photo'
-            )
-            .addEventListener(
-                'click',
-                function () {
-                    replaceInput.click();
-                }
-            );
-
-
-        replaceInput.addEventListener(
-            'change',
-            function () {
-
-                if (
-                    this.files
-                    && this.files[0]
-                ) {
-                    replacePhoto(
-                        slot,
-                        this.files[0]
-                    );
-                }
+                replaceInput.click();
             }
         );
 
 
-        slot
-            .querySelector(
-                '.js-delete-photo'
-            )
-            .addEventListener(
-                'click',
-                function () {
-                    deletePhoto(
-                        slot
-                    );
-                }
-            );
-    }
+    replaceInput.addEventListener(
+        'change',
+        function () {
+
+            if (
+                this.files
+                && this.files[0]
+            ) {
+
+                replacePhoto(
+                    slot,
+                    this.files[0]
+                );
+            }
+        }
+    );
+
+
+    /*
+     * XÓA
+     */
+
+    slot
+        .querySelector(
+            '.js-delete-photo'
+        )
+        .addEventListener(
+            'click',
+            function (event) {
+
+                event.stopPropagation();
+
+                deletePhoto(
+                    slot
+                );
+            }
+        );
+}
 
 
     /*
@@ -1028,12 +1050,7 @@
                                 valuation_request_id:
                                     valuationRequestId,
                                 slot_key:
-                                    slot.dataset.slot,
-                                privacy_accepted: 
-                                    consent.checked,
-                                terms_accepted:
-                                    consent.checked
-
+                                    slot.dataset.slot
                             })
                     }
                 );
@@ -1120,6 +1137,43 @@
             continueButton.disabled =
                 !progress.complete;
         }
+
+
+        photosComplete =
+            Boolean(
+                progress.complete
+            );
+
+
+        syncContinueButton();
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | NÚT TIẾP TỤC = ĐỦ ẢNH + ĐÃ ĐỒNG Ý CHÍNH SÁCH
+    |--------------------------------------------------------------------------
+    */
+
+    function syncContinueButton() {
+        if (!continueButton) {
+            return;
+        }
+
+        continueButton.disabled =
+            !(
+                photosComplete
+                && consent
+                && consent.checked
+            );
+    }
+
+
+    if (consent) {
+        consent.addEventListener(
+            'change',
+            syncContinueButton
+        );
     }
 
 
@@ -1218,6 +1272,18 @@
                 if (
                     !valuationRequestId
                 ) {
+                    return;
+                }
+
+
+                if (
+                    !consent
+                    || !consent.checked
+                ) {
+                    alert(
+                        'Bạn cần đồng ý với Chính sách bảo mật và Quy chế hoạt động trước khi gửi định giá.'
+                    );
+
                     return;
                 }
 
@@ -1370,6 +1436,85 @@
 
         return labels[slot]
             || slot;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | HƯỚNG DẪN CHỤP CHO TỪNG Ô ẢNH
+    |--------------------------------------------------------------------------
+    */
+
+    function photoHint(
+        slot
+    ) {
+        const hints = {
+            front_left_45:
+                'Đứng chếch trước bên trái, chụp trọn đầu xe và hông trái.',
+
+            front_right_45:
+                'Đứng chếch trước bên phải, chụp trọn đầu xe và hông phải.',
+
+            rear_left_45:
+                'Đứng chếch sau bên trái, chụp trọn đuôi xe và hông trái.',
+
+            rear_right_45:
+                'Đứng chếch sau bên phải, chụp trọn đuôi xe và hông phải.',
+
+            front:
+                'Chụp thẳng mặt trước xe, thấy rõ biển số và đèn.',
+
+            rear:
+                'Chụp thẳng mặt sau xe, thấy rõ biển số và cốp.',
+
+            roof:
+                'Chụp từ trên cao hoặc nghiêng để thấy toàn bộ nóc xe.',
+
+            odometer:
+                'Bật khóa điện, chụp rõ số km trên đồng hồ (số ODO).',
+
+            cockpit:
+                'Ngồi ghế sau hoặc mở cửa, chụp toàn cảnh táp-lô và vô lăng.',
+
+            driver_seat:
+                'Chụp rõ mặt ghế lái, thấy được độ mòn của da/nỉ.',
+
+            passenger_seat:
+                'Chụp rõ mặt ghế hành khách phía trước.',
+
+            rear_seat_headliner:
+                'Chụp hàng ghế sau và trần xe phía trên.',
+
+            engine_bay:
+                'Mở nắp ca-pô, chụp rõ toàn bộ khoang động cơ.',
+
+            wheel_front_left:
+                'Chụp thẳng bánh trước bên trái, thấy rõ mâm và lốp.',
+
+            wheel_front_right:
+                'Chụp thẳng bánh trước bên phải, thấy rõ mâm và lốp.',
+
+            wheel_rear_left:
+                'Chụp thẳng bánh sau bên trái, thấy rõ mâm và lốp.',
+
+            wheel_rear_right:
+                'Chụp thẳng bánh sau bên phải, thấy rõ mâm và lốp.',
+
+            registration_front:
+                'Chụp mặt trước cà vẹt, thấy rõ số khung và số máy.',
+
+            registration_back:
+                'Chụp mặt sau cà vẹt, thấy rõ ngày đăng ký.',
+
+            inspection_spec:
+                'Chụp phần thông số kỹ thuật trên giấy đăng kiểm.',
+
+            inspection_expiry:
+                'Chụp phần thời hạn đăng kiểm còn hiệu lực.'
+        };
+
+        return hints[slot]
+            || 'Chụp rõ chi tiết theo tên ô ảnh.';
     }
 
 

@@ -17,8 +17,7 @@ link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/
                         <p> Hãng xe, phiên bản xe, năm sản xuất, số km, và một số hình ảnh ban đầu theo mẫu</p>
                     </div>
                 </div>
-            </div>
-            <div class="feature-item">
+                <div class="feature-item">
                 <div class="icon-wrapper">
                     <i class="fa-regular fa-money-check-dollar"></i>
                 </div>
@@ -36,6 +35,8 @@ link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/
                     <p> Có tiếp tục sang bước kiểm định hay không.</p>
                 </div>
             </div>
+            </div>
+            
         </section>
         <section class="vehicle-basic-card">
             <h2> Thông tin xe cơ bản </h2>
@@ -85,6 +86,30 @@ link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/
             </div>
             <div class="photo-progress">
                 <div class="photo-progress-bar" id="photoProgressBar"> </div>
+            </div>
+            <div class="photo-upload-guide">
+                <div class="photo-upload-guide-icon">
+                    <i class="fa-solid fa-circle-question"></i>
+                </div>
+                <div class="photo-upload-guide-body">
+                    <h3> Hướng dẫn tải ảnh xe lên </h3>
+                    <p>
+                        Mỗi ô bên dưới là một vị trí ảnh bắt buộc. Bấm nút
+                        <strong> "Chọn ảnh tải lên" </strong> ngay trong từng ô,
+                        hoặc chụp trực tiếp bằng camera điện thoại.
+                    </p>
+                    <ul>
+                        <li>Chụp ở nơi đủ sáng, không ngược nắng, không dùng đèn flash quá gắt. </li>
+                        <li>Chụp ngang tầm, giữ máy thẳng để không méo thân xe và biển số. </li>
+                        <li>Ảnh rõ nét, không bị che bởi tay hoặc vật khác. </li>
+                        <li>Định dạng JPG, PNG, WEBP - dung lượng tối đa 8MB mỗi ảnh. </li>
+                        <li>Sau khi tải lên, bạn có thể xem lại, <strong> Thay </strong> hoặc <strong> Xóa </strong> ảnh trong từng ô. </li>
+                    </ul>
+                    <p class="photo-upload-guide-note">
+                        Thanh tiến độ ở trên chỉ chuyển sang màu đầy khi bạn đã tải đủ
+                        <strong> 21 ảnh bắt buộc </strong>.
+                    </p>
+                </div>
             </div>
             <div class="photo-group" data-group="exterior">
                 <div class="photo-group-head">
