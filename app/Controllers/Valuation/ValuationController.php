@@ -19,11 +19,6 @@ class ValuationController
     private CloudinaryService $cloudinary;
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | 21 SLOT BẮT BUỘC
-    |--------------------------------------------------------------------------
-    */
 
     private const REQUIRED_SLOTS = [
 
@@ -223,13 +218,6 @@ class ValuationController
             true
         );
     }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | CREATE DRAFT
-    |--------------------------------------------------------------------------
-    */
 
     public function createDraft(): void
     {
@@ -480,12 +468,6 @@ class ValuationController
     }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | DETAIL + PROGRESS
-    |--------------------------------------------------------------------------
-    */
-
     public function detail(): void
     {
         $userId =
@@ -536,13 +518,6 @@ class ValuationController
             'photo_progress' => $progress,
         ]);
     }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | UPLOAD MỚI
-    |--------------------------------------------------------------------------
-    */
 
     public function uploadImage(): void
     {
@@ -817,13 +792,6 @@ class ValuationController
         }
     }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | REPLACE
-    |--------------------------------------------------------------------------
-    */
-
     public function replaceImage(): void
     {
         $userId =
@@ -1041,6 +1009,109 @@ class ValuationController
     |--------------------------------------------------------------------------
     */
 
+    public function completePhotos(): void
+{
+    $userId =
+        $this->requireUser();
+
+    $data =
+        $this->requestData();
+
+
+    $requestId =
+        (int) (
+            $data['valuation_request_id']
+            ?? 0
+        );
+
+
+    $privacyAccepted =
+        filter_var(
+            $data['privacy_accepted']
+            ?? false,
+            FILTER_VALIDATE_BOOLEAN
+        );
+
+
+    $termsAccepted =
+        filter_var(
+            $data['terms_accepted']
+            ?? false,
+            FILTER_VALIDATE_BOOLEAN
+        );
+
+
+    $request =
+        $this->ownedEditableRequest(
+            $requestId,
+            $userId
+        );
+
+
+    if (
+        !$privacyAccepted ||
+        !$termsAccepted
+    ) {
+
+        JsonResponse::error(
+            'Bạn cần đồng ý Chính sách bảo mật và Quy chế hoạt động.',
+            422
+        );
+    }
+
+
+    $progress =
+        $this->photoProgress(
+            $requestId
+        );
+
+
+    if (!$progress['complete']) {
+
+        JsonResponse::error(
+            'Bạn chưa tải đầy đủ ảnh bắt buộc.',
+            422,
+            [
+                'photo_progress'
+                    => $progress
+            ]
+        );
+    }
+
+
+    $this->requests
+        ->setConsents(
+            $requestId,
+            true,
+            true
+        );
+
+
+    $this->requests
+        ->markContactPending(
+            $requestId
+        );
+
+
+    JsonResponse::success(
+        [
+            'valuation_request_id'
+                => $requestId,
+
+            'reference_code'
+                => $request[
+                    'reference_code'
+                ],
+
+            'status'
+                => 'contact_pending',
+
+            'photo_progress'
+                => $progress,
+        ],
+        'Hình ảnh đã được lưu. Vui lòng nhập thông tin liên hệ.'
+    );
+}
     public function deleteImage(): void
     {
         $userId =

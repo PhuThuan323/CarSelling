@@ -2,6 +2,60 @@
 
 {block name="content"}
 
+    {* ====================== KPI WORKFLOW ====================== *}
+    <section class="admin-panel">
+        <div class="admin-panel-head">
+            <div>
+                <h2>Tổng quan hồ sơ bán xe</h2>
+                <p>Theo dõi luồng: khách gửi hồ sơ → admin phân công → staff thẩm định → admin chốt giá → khách phản hồi.</p>
+            </div>
+        </div>
+
+        <div class="kpi-grid">
+            <a class="kpi-card" href="/admin/inspections">
+                <span class="kpi-icon"><i class="fa-solid fa-inbox"></i></span>
+                <strong>{$kpis.ready_for_estimate|default:0}</strong>
+                <span>Chờ tiếp nhận</span>
+            </a>
+
+            <a class="kpi-card" href="/admin/inspections">
+                <span class="kpi-icon"><i class="fa-solid fa-user-clock"></i></span>
+                <strong>{$kpis.inspection_pending|default:0}</strong>
+                <span>Chưa phân công</span>
+            </a>
+
+            <a class="kpi-card" href="/admin/inspections">
+                <span class="kpi-icon"><i class="fa-solid fa-screwdriver-wrench"></i></span>
+                <strong>{$kpis.inspection_in_progress|default:0}</strong>
+                <span>Đang Inspection</span>
+            </a>
+
+            <a class="kpi-card is-warning" href="/admin/inspections/review">
+                <span class="kpi-icon"><i class="fa-solid fa-clipboard-check"></i></span>
+                <strong>{$kpis.inspection_completed|default:0}</strong>
+                <span>Chờ duyệt kết quả</span>
+            </a>
+
+            <a class="kpi-card" href="/admin/inspections">
+                <span class="kpi-icon"><i class="fa-solid fa-tags"></i></span>
+                <strong>{$kpis.estimated|default:0}</strong>
+                <span>Đã gửi giá khách</span>
+            </a>
+
+            <a class="kpi-card is-success" href="/admin/inspections">
+                <span class="kpi-icon"><i class="fa-solid fa-handshake"></i></span>
+                <strong>{$kpis.accepted|default:0}</strong>
+                <span>Khách đồng ý bán</span>
+            </a>
+
+            <a class="kpi-card is-danger" href="/admin/inspections">
+                <span class="kpi-icon"><i class="fa-solid fa-ban"></i></span>
+                <strong>{$kpis.cancelled|default:0}</strong>
+                <span>Khách không đồng ý</span>
+            </a>
+        </div>
+    </section>
+
     {* ====================== HÃNG XE ====================== *}
     <section class="admin-panel" id="panel-brands">
         <div class="admin-panel-head">

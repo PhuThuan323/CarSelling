@@ -53,4 +53,62 @@ class Auth
         }
         return $user;
     }
+
+    /**
+     * Bat buoc dang nhap voi role=staff (nhan vien inspection).
+     * Admin duoc phep xem vi co toan quyen.
+     */
+    public static function requireStaff(bool $api = true): array
+    {
+        $user = self::user();
+        if (!$user) {
+            if ($api) JsonResponse::error('Vui lòng đăng nhập.', 401);
+            header('Location: /auth/login');
+            exit;
+        }
+
+        $role = $user['role'] ?? '';
+
+        if (!in_array($role, ['staff', 'admin'], true)) {
+            if ($api) JsonResponse::error('Bạn không có quyền truy cập khu vực inspection.', 403);
+            http_response_code(403);
+            echo '403 - Bạn không có quyền truy cập khu vực inspection. <a href="/">Về trang chủ</a>';
+            exit;
+        }
+
+        header('Cache-Control: no-store');
+
+        if ($api && !in_array($_SERVER['REQUEST_METHOD'] ?? 'GET', ['GET', 'HEAD'], true)) {
+            $token = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? $_POST['csrf_token'] ?? '';
+            if (!is_string($token) || !hash_equals(self::csrfToken(), $token)) {
+                JsonResponse::error('Phiên bảo mật không hợp lệ. Vui lòng tải lại trang.', 419);
+            }
+        }
+
+        return $user;
+    }
+
+    /**
+     * Bat buoc dang nhap (moi role).
+     */
+    public static function requireLogin(bool $api = true): array
+    {
+        $user = self::user();
+        if (!$user) {
+            if ($api) JsonResponse::error('Vui lòng đăng nhập.', 401);
+            header('Location: /auth/login');
+            exit;
+        }
+
+        header('Cache-Control: no-store');
+
+        if ($api && !in_array($_SERVER['REQUEST_METHOD'] ?? 'GET', ['GET', 'HEAD'], true)) {
+            $token = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? $_POST['csrf_token'] ?? '';
+            if (!is_string($token) || !hash_equals(self::csrfToken(), $token)) {
+                JsonResponse::error('Phiên bảo mật không hợp lệ. Vui lòng tải lại trang.', 419);
+            }
+        }
+
+        return $user;
+    }
 }

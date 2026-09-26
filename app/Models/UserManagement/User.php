@@ -22,7 +22,13 @@ class User {
     }
     public function create(array $data): bool {
         $stmt = $this->db->prepare("INSERT INTO users (name, email, password, role, status) VALUES (:name, :email, :password, :role, :status)");
-        $stmt->execute([':name' => $data['name'], ':email' => $data['email'], ':password' => $data['password'], ':role'=>$role??'customer', ':status' => $status??'active']);
+        $stmt->execute([
+            ':name' => $data['name'],
+            ':email' => $data['email'],
+            ':password' => $data['password'],
+            ':role' => $data['role'] ?? 'customer',
+            ':status' => $data['status'] ?? 'active',
+        ]);
         return (int) $this->db->lastInsertId();
     }
     public function update(int $id, array $data): bool {
@@ -38,5 +44,39 @@ class User {
         $stmt->execute([':google_id' => $googleId]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         return $user ?: null;
+    }
+
+    /**
+     * Danh sach nhan vien inspection (role=staff) dang active.
+     */
+    public function findActiveStaff(): array {
+        $stmt = $this->db->prepare("
+            SELECT id, name, email, phone, status
+            FROM users
+            WHERE role = 'staff'
+              AND status = 'active'
+            ORDER BY name ASC
+        ");
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function findActiveStaffById(int $id): ?array {
+        $stmt = $this->db->prepare("
+            SELECT id, name, email, phone, status, role
+            FROM users
+            WHERE id = :id
+              AND role = 'staff'
+              AND status = 'active'
+            LIMIT 1
+        ");
+
+        $stmt->execute(['id' => $id]);
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $row ?: null;
     }
 }

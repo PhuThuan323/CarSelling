@@ -230,3 +230,181 @@ form.is-hidden-form {
     }
 }
 
+/* ============================================================
+   INSPECTION WORKFLOW
+   Dùng cho: sidebar badge, KPI, danh sách, chi tiết, form thẩm định
+   ============================================================ */
+
+/* ---------- Sidebar: menu con + badge số lượng ---------- */
+.admin-nav-sub{padding-left:34px;font-size:12.5px;font-weight:500;color:rgba(255,255,255,.68)}
+.admin-nav-sub::before{content:"";width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.35)}
+
+.admin-nav-badge{
+    margin-left:auto;
+    min-width:22px;padding:1px 7px;
+    border-radius:999px;
+    background:#2f80ed;color:#fff;
+    font-size:11px;font-weight:700;text-align:center;
+}
+.admin-nav-badge.is-warning{background:#e0a325}
+
+/* ---------- KPI grid ---------- */
+.kpi-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(158px,1fr));
+    gap:12px;
+    margin-bottom:6px;
+}
+
+.kpi-card{
+    display:flex;flex-direction:column;gap:4px;
+    padding:16px;
+    border:1px solid var(--admin-line);
+    border-radius:14px;
+    background:var(--admin-panel);
+    text-decoration:none;color:inherit;
+    transition:.16s;
+}
+a.kpi-card:hover{border-color:var(--admin-blue);box-shadow:var(--admin-shadow);transform:translateY(-2px)}
+.kpi-card strong{font-size:26px;line-height:1.1;color:var(--admin-ink)}
+.kpi-card span:last-child{font-size:12px;font-weight:600;color:var(--admin-muted)}
+.kpi-icon{
+    width:34px;height:34px;display:grid;place-items:center;
+    border-radius:10px;background:#eaf2fe;color:var(--admin-blue);
+    font-size:14px;margin-bottom:6px;
+}
+.kpi-card.is-warning .kpi-icon{background:#fdf3e0;color:#c98a12}
+.kpi-card.is-success .kpi-icon{background:#e7f6ee;color:var(--admin-green)}
+.kpi-card.is-danger .kpi-icon{background:#fdecec;color:var(--admin-red)}
+
+/* ---------- Trạng thái rỗng ---------- */
+.admin-empty{
+    display:flex;flex-direction:column;align-items:center;gap:8px;
+    padding:52px 20px;text-align:center;
+    border:1px dashed var(--admin-line);border-radius:14px;
+    background:#fbfdff;
+}
+.admin-empty i{font-size:26px;color:#b7c6d8}
+.admin-empty strong{font-size:15px}
+.admin-empty span{font-size:13px;color:var(--admin-muted)}
+
+/* ---------- Danh sách dạng card (duyệt / nhiệm vụ) ---------- */
+.review-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+
+.review-card{
+    display:flex;flex-direction:column;gap:12px;
+    padding:18px;
+    border:1px solid var(--admin-line);border-radius:14px;
+    background:var(--admin-panel);
+}
+.review-card header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.review-card header strong{display:block;font-size:11px;letter-spacing:.08em;color:var(--admin-muted)}
+.review-card header h3{font-size:15px;line-height:1.35}
+.review-card .admin-btn{justify-content:center}
+
+/* ---------- Lưới 2 cột thông tin ---------- */
+.inspection-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+
+.inspection-card{
+    padding:18px;
+    border:1px solid var(--admin-line);border-radius:14px;
+    background:var(--admin-panel);
+    margin-top:14px;
+}
+.inspection-card.is-action{border-color:#bfd8f7;background:#f7fbff}
+.inspection-card h3{
+    display:flex;align-items:center;gap:8px;
+    font-size:14px;margin-bottom:12px;
+}
+.inspection-card h3 i{color:var(--admin-blue)}
+
+.inspection-subtitle{
+    display:flex;align-items:center;gap:7px;
+    margin:20px 0 10px;
+    padding-top:14px;
+    border-top:1px solid var(--admin-line);
+    font-size:13px;font-weight:700;color:var(--admin-ink);
+}
+.inspection-subtitle i{color:var(--admin-blue)}
+
+/* ---------- Danh sách thuộc tính dạng dt/dd ---------- */
+.inspection-facts{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-size:13px}
+.inspection-facts dt{color:var(--admin-muted);font-weight:600;white-space:nowrap}
+.inspection-facts dd{color:var(--admin-ink)}
+
+/* ---------- Khối ghi chú / nhận xét ---------- */
+.inspection-note{
+    margin-top:12px;padding:12px 14px;
+    border-left:3px solid var(--admin-blue);
+    border-radius:0 10px 10px 0;
+    background:#f6faff;
+    font-size:13px;
+}
+.inspection-note strong{display:block;margin-bottom:5px;font-size:12px;color:var(--admin-muted)}
+.inspection-note p{line-height:1.6;white-space:pre-line}
+
+/* ---------- Range giá ---------- */
+.inspection-range{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    flex-wrap:wrap;
+    margin-top:14px;padding:14px 16px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#eef6ff 0%,#f7fbff 100%);
+    border:1px solid #cfe3fb;
+}
+.inspection-range span{font-size:12px;font-weight:600;color:var(--admin-muted)}
+.inspection-range strong{font-size:17px;color:var(--admin-blue-dark)}
+
+/* ---------- Pill trạng thái ---------- */
+.admin-pill{
+    display:inline-block;
+    padding:3px 10px;border-radius:999px;
+    background:#eef2f7;color:var(--admin-muted);
+    font-size:11px;font-weight:700;
+}
+.admin-pill.is-ok{background:#e7f6ee;color:var(--admin-green)}
+.admin-pill.is-bad{background:#fdecec;color:var(--admin-red)}
+
+.admin-muted{display:block;color:var(--admin-muted);font-size:12px;font-weight:500}
+small.admin-muted{display:block}
+
+/* ---------- Timeline lịch sử trạng thái ---------- */
+.inspection-timeline{list-style:none;display:flex;flex-direction:column;gap:0}
+.inspection-timeline li{
+    position:relative;
+    display:flex;gap:12px;
+    padding:0 0 16px 4px;
+}
+.inspection-timeline li:not(:last-child)::before{
+    content:"";position:absolute;left:7px;top:14px;bottom:0;
+    width:2px;background:var(--admin-line);
+}
+.inspection-timeline-dot{
+    position:relative;z-index:1;
+    flex:0 0 12px;width:12px;height:12px;margin-top:3px;
+    border-radius:50%;background:#fff;
+    border:2px solid var(--admin-blue);
+}
+.inspection-timeline strong{display:block;font-size:13px}
+.inspection-timeline small{color:var(--admin-muted);font-size:11.5px}
+.inspection-timeline p{margin-top:4px;font-size:12.5px;color:var(--admin-muted);line-height:1.5}
+
+/* ---------- Form đánh giá tình trạng xe ---------- */
+.rating-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:12px;
+}
+.rating-field{display:flex;flex-direction:column;gap:6px}
+.rating-field label{font-size:12px;font-weight:600;color:var(--admin-muted)}
+
+.admin-btn-sm{padding:6px 12px;font-size:12px}
+.admin-field-full{grid-column:1/-1}
+
+/* ---------- Responsive ---------- */
+@media (max-width:900px){
+    .admin-shell{grid-template-columns:1fr}
+    .review-list{grid-template-columns:1fr}
+    .inspection-facts{grid-template-columns:1fr;gap:3px 0}
+    .inspection-facts dt{margin-top:8px}
+}

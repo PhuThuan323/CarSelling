@@ -20,8 +20,59 @@
         </div>
 
         <nav class="admin-nav">
+            <p class="admin-nav-title">Tổng quan</p>
+            <a
+                class="admin-nav-item{if isset($active_menu) && $active_menu eq 'dashboard'} is-active{/if}"
+                href="/admin"
+            >
+                <i class="fa-solid fa-gauge"></i> Dashboard
+            </a>
+
+            <p class="admin-nav-title">Bán xe</p>
+            <a class="admin-nav-item" href="/admin/inspections">
+                <i class="fa-solid fa-file-invoice"></i> Hồ sơ bán xe
+            </a>
+
+            <p class="admin-nav-title">Inspection</p>
+            <a
+                class="admin-nav-item{if isset($active_menu) && $active_menu eq 'inspections'} is-active{/if}"
+                href="/admin/inspections"
+            >
+                <i class="fa-solid fa-clipboard-check"></i> Xe chờ Inspection
+                {if isset($inspection_counts.all) && $inspection_counts.all > 0}
+                    <span class="admin-nav-badge">{$inspection_counts.all}</span>
+                {/if}
+            </a>
+            <a class="admin-nav-item admin-nav-sub" href="/admin/inspections">
+                Chưa phân công
+                {if isset($inspection_counts.unassigned) && $inspection_counts.unassigned > 0}
+                    <span class="admin-nav-badge">{$inspection_counts.unassigned}</span>
+                {/if}
+            </a>
+            <a class="admin-nav-item admin-nav-sub" href="/admin/inspections">
+                Đã phân công
+                {if isset($inspection_counts.assigned) && $inspection_counts.assigned > 0}
+                    <span class="admin-nav-badge">{$inspection_counts.assigned}</span>
+                {/if}
+            </a>
+            <a class="admin-nav-item admin-nav-sub" href="/admin/inspections">
+                Đang Inspection
+                {if isset($inspection_counts.in_progress) && $inspection_counts.in_progress > 0}
+                    <span class="admin-nav-badge">{$inspection_counts.in_progress}</span>
+                {/if}
+            </a>
+            <a
+                class="admin-nav-item admin-nav-sub{if isset($active_menu) && $active_menu eq 'inspection_review'} is-active{/if}"
+                href="/admin/inspections/review"
+            >
+                Chờ duyệt kết quả
+                {if isset($inspection_counts.review) && $inspection_counts.review > 0}
+                    <span class="admin-nav-badge is-warning">{$inspection_counts.review}</span>
+                {/if}
+            </a>
+
             <p class="admin-nav-title">Danh mục xe</p>
-            <button type="button" class="admin-nav-item is-active" data-section="brands">
+            <button type="button" class="admin-nav-item" data-section="brands">
                 <i class="fa-solid fa-tags"></i> Hãng xe
             </button>
             <button type="button" class="admin-nav-item" data-section="models">

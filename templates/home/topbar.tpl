@@ -86,6 +86,11 @@
                             Tài khoản của tôi
                         </a>
 
+                        <a href="/my-selling-cars">
+                            <i class="fa-solid fa-car"></i>
+                            Xe bạn đã đăng bán
+                        </a>
+
 
                         <a href="/auth/logout">
                             <i class="fa-solid fa-right-from-bracket"></i>

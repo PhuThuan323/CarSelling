@@ -80,7 +80,7 @@
                     <p> Vui lòng cung cấp đầy đủ các hình ảnh bắt buộc. Bạn có thể xem trước, thay ảnh hoặc xóa ảnh trước khi gửi định giá. </p>
                 </div>
                 <div class="photo-progress-box">
-                    <strong id="photoProgressText"> 0/21 </strong>
+                    <strong id="photoProgressText"> 0/17 </strong>
                     <span> Ảnh bắt buộc </span>
                 </div>
             </div>

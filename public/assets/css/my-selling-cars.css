@@ -1,0 +1,522 @@
+/* ============================================================
+   FastCar - Trang khách hàng: xe đã đăng bán & kết quả định giá
+   ============================================================ */
+
+:root {
+  --my-ink: #17263a;
+  --my-muted: #6d7c90;
+  --my-line: #e3eaf3;
+  --my-blue: #2f80ed;
+  --my-blue-dark: #1d65bd;
+  --my-green: #1f9d63;
+  --my-red: #dc3f45;
+  --my-amber: #c98a12;
+  --my-radius: 14px;
+}
+
+body.has-modal {
+  overflow: hidden;
+}
+
+.mycars {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 28px 20px 60px;
+  color: var(--my-ink);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.mycars-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  color: var(--my-muted);
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.mycars-back:hover {
+  color: var(--my-blue);
+}
+
+.mycars-head {
+  margin-bottom: 22px;
+}
+.mycars-head h1 {
+  font-size: 26px;
+  line-height: 1.25;
+  margin-bottom: 6px;
+}
+.mycars-head p {
+  color: var(--my-muted);
+  font-size: 14px;
+}
+
+.mydetail-status {
+  margin-top: 12px;
+}
+
+/* ---------- Trạng thái ---------- */
+.mycar-status {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #eef2f7;
+  color: var(--my-muted);
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.mycar-status.estimated {
+  background: #eaf2fe;
+  color: var(--my-blue-dark);
+}
+.mycar-status.accepted {
+  background: #e7f6ee;
+  color: var(--my-green);
+}
+.mycar-status.cancelled,
+.mycar-status.rejected {
+  background: #fdecec;
+  color: var(--my-red);
+}
+.mycar-status.inspection_requested,
+.mycar-status.inspection_assigned,
+.mycar-status.inspection_in_progress,
+.mycar-status.inspection_completed,
+.mycar-status.estimating {
+  background: #fdf3e0;
+  color: var(--my-amber);
+}
+
+/* ---------- Danh sách xe ---------- */
+.mycars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+.mycar-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+  border: 1px solid var(--my-line);
+  border-radius: var(--my-radius);
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(30, 68, 116, 0.05);
+}
+.mycar-card header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.mycar-card header strong {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--my-muted);
+}
+.mycar-card header h2 {
+  font-size: 16px;
+  line-height: 1.35;
+  margin-top: 2px;
+}
+
+.mycar-facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 14px;
+  font-size: 13px;
+}
+.mycar-facts dt {
+  color: var(--my-muted);
+  font-weight: 600;
+}
+.mycar-facts dd {
+  color: var(--my-ink);
+}
+
+.mycar-price {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 12px 14px;
+  border: 1px solid #cfe3fb;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #eef6ff 0%, #f7fbff 100%);
+}
+.mycar-price span {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--my-muted);
+}
+.mycar-price strong {
+  font-size: 16px;
+  color: var(--my-blue-dark);
+}
+
+/* ---------- Nút ---------- */
+.mycars-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+  font-family: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.16s;
+}
+.mycars-btn-primary {
+  background: var(--my-blue);
+  color: #fff;
+}
+.mycars-btn-primary:hover {
+  background: var(--my-blue-dark);
+}
+.mycars-btn-ghost {
+  background: #fff;
+  color: var(--my-muted);
+  border-color: var(--my-line);
+}
+.mycars-btn-ghost:hover {
+  border-color: #b9c8da;
+  color: var(--my-ink);
+}
+.mycars-btn-danger {
+  background: var(--my-red);
+  color: #fff;
+}
+.mycars-btn-danger:hover {
+  background: #b93238;
+}
+.mycars-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.mycars-btn-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+/* ---------- Khối rỗng ---------- */
+.mycars-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 60px 24px;
+  text-align: center;
+  border: 1px dashed var(--my-line);
+  border-radius: var(--my-radius);
+  background: #fbfdff;
+}
+.mycars-empty i {
+  font-size: 30px;
+  color: #b7c6d8;
+}
+.mycars-empty strong {
+  font-size: 16px;
+}
+.mycars-empty span {
+  font-size: 13.5px;
+  color: var(--my-muted);
+}
+.mycars-empty .mycars-btn {
+  margin-top: 8px;
+}
+
+/* ---------- Card chi tiết ---------- */
+.mydetail-card {
+  padding: 22px;
+  margin-bottom: 16px;
+  border: 1px solid var(--my-line);
+  border-radius: var(--my-radius);
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(30, 68, 116, 0.05);
+}
+.mydetail-card h2 {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 16px;
+  margin-bottom: 14px;
+}
+.mydetail-card h2 i {
+  color: var(--my-blue);
+}
+
+.mydetail-facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 9px 18px;
+  font-size: 13.5px;
+}
+.mydetail-facts dt {
+  color: var(--my-muted);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.mydetail-facts dd {
+  color: var(--my-ink);
+}
+
+/* ---------- Đánh giá tình trạng ---------- */
+.mydetail-ratings {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+.mydetail-rating {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 11px 14px;
+  border: 1px solid var(--my-line);
+  border-radius: 10px;
+  background: #fbfdff;
+  font-size: 13px;
+}
+.mydetail-rating span {
+  color: var(--my-muted);
+  font-weight: 600;
+}
+.mydetail-rating strong {
+  color: var(--my-ink);
+}
+
+/* ---------- Giá đề xuất + feedback ---------- */
+.mydetail-offer {
+  border-color: #cfe3fb;
+  background: linear-gradient(180deg, #f7fbff 0%, #fff 100%);
+}
+
+.mydetail-price {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px 20px;
+  border: 1px solid #cfe3fb;
+  border-radius: 12px;
+  background: #eef6ff;
+  text-align: center;
+}
+.mydetail-price strong {
+  font-size: 26px;
+  color: var(--my-blue-dark);
+  line-height: 1.2;
+}
+.mydetail-price small {
+  font-size: 12px;
+  color: var(--my-muted);
+}
+
+.mydetail-feedback {
+  margin-top: 18px;
+}
+.mydetail-feedback h3 {
+  font-size: 13px;
+  color: var(--my-muted);
+  margin-bottom: 8px;
+}
+.mydetail-feedback p {
+  padding: 14px 16px;
+  border-left: 3px solid var(--my-blue);
+  border-radius: 0 10px 10px 0;
+  background: #f6faff;
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-line;
+}
+
+/* ---------- Khu vực phản hồi ---------- */
+.mydetail-answer {
+  border-color: #bfd8f7;
+  background: #f7fbff;
+}
+.mydetail-answer h2 {
+  font-size: 17px;
+  margin-bottom: 16px;
+}
+
+/* ---------- Đang chờ ---------- */
+.mydetail-waiting {
+  text-align: center;
+  padding: 44px 24px;
+}
+.mydetail-waiting i {
+  font-size: 30px;
+  color: var(--my-amber);
+  margin-bottom: 12px;
+  display: block;
+}
+.mydetail-waiting h2 {
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.mydetail-waiting p {
+  max-width: 520px;
+  margin: 0 auto;
+  color: var(--my-muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+.mydetail-waiting.is-error i {
+  color: var(--my-red);
+}
+
+/* ---------- Timeline ---------- */
+.mydetail-timeline {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+.mydetail-timeline li {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  padding: 0 0 18px 4px;
+}
+.mydetail-timeline li:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 15px;
+  bottom: 0;
+  width: 2px;
+  background: var(--my-line);
+}
+.mydetail-timeline-dot {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 12px;
+  width: 12px;
+  height: 12px;
+  margin-top: 3px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--my-blue);
+}
+.mydetail-timeline strong {
+  display: block;
+  font-size: 13.5px;
+}
+.mydetail-timeline small {
+  color: var(--my-muted);
+  font-size: 12px;
+}
+.mydetail-timeline p {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--my-muted);
+  line-height: 1.55;
+}
+
+/* ---------- Modal xác nhận ---------- */
+.mycars-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 39, 69, 0.55);
+}
+.mycars-modal[hidden] {
+  display: none;
+}
+
+.mycars-modal-card {
+  width: 100%;
+  max-width: 440px;
+  padding: 28px 26px;
+  border-radius: 18px;
+  background: #fff;
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(15, 39, 69, 0.28);
+  animation: mycarsPop 0.18s ease-out;
+}
+@keyframes mycarsPop {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.mycars-modal-icon {
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 16px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 22px;
+}
+.mycars-modal-icon.is-warning {
+  background: #fdf3e0;
+  color: var(--my-amber);
+}
+.mycars-modal-icon.is-success {
+  background: #e7f6ee;
+  color: var(--my-green);
+}
+
+.mycars-modal-card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+.mycars-modal-card p {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--my-muted);
+  margin-bottom: 20px;
+}
+.mycars-modal-card .mycars-btn-row {
+  justify-content: center;
+}
+.mycars-modal-card .mycars-btn {
+  flex: 1;
+  min-width: 140px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  .mycars {
+    padding: 20px 14px 44px;
+  }
+  .mycars-head h1 {
+    font-size: 21px;
+  }
+  .mycars-grid {
+    grid-template-columns: 1fr;
+  }
+  .mydetail-facts {
+    grid-template-columns: 1fr;
+    gap: 3px 0;
+  }
+  .mydetail-facts dt {
+    margin-top: 8px;
+  }
+  .mydetail-price strong {
+    font-size: 21px;
+  }
+  .mycars-modal-card .mycars-btn {
+    flex: 1 1 100%;
+  }
+}
