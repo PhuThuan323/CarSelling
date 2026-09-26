@@ -29,13 +29,16 @@
             </a>
 
             <p class="admin-nav-title">Bán xe</p>
-            <a class="admin-nav-item" href="/admin/inspections">
+            <a
+                class="admin-nav-item{if isset($active_menu) && $active_menu eq 'requests'} is-active{/if}"
+                href="/admin/requests"
+            >
                 <i class="fa-solid fa-file-invoice"></i> Hồ sơ bán xe
             </a>
 
             <p class="admin-nav-title">Inspection</p>
             <a
-                class="admin-nav-item{if isset($active_menu) && $active_menu eq 'inspections'} is-active{/if}"
+                class="admin-nav-item{if isset($active_menu) && $active_menu eq 'inspections' && (!isset($active_group) || $active_group eq 'all')} is-active{/if}"
                 href="/admin/inspections"
             >
                 <i class="fa-solid fa-clipboard-check"></i> Xe chờ Inspection
@@ -43,19 +46,28 @@
                     <span class="admin-nav-badge">{$inspection_counts.all}</span>
                 {/if}
             </a>
-            <a class="admin-nav-item admin-nav-sub" href="/admin/inspections">
+            <a
+                class="admin-nav-item admin-nav-sub{if isset($active_group) && $active_group eq 'unassigned'} is-active{/if}"
+                href="/admin/inspections?group=unassigned"
+            >
                 Chưa phân công
                 {if isset($inspection_counts.unassigned) && $inspection_counts.unassigned > 0}
                     <span class="admin-nav-badge">{$inspection_counts.unassigned}</span>
                 {/if}
             </a>
-            <a class="admin-nav-item admin-nav-sub" href="/admin/inspections">
+            <a
+                class="admin-nav-item admin-nav-sub{if isset($active_group) && $active_group eq 'assigned'} is-active{/if}"
+                href="/admin/inspections?group=assigned"
+            >
                 Đã phân công
                 {if isset($inspection_counts.assigned) && $inspection_counts.assigned > 0}
                     <span class="admin-nav-badge">{$inspection_counts.assigned}</span>
                 {/if}
             </a>
-            <a class="admin-nav-item admin-nav-sub" href="/admin/inspections">
+            <a
+                class="admin-nav-item admin-nav-sub{if isset($active_group) && $active_group eq 'in_progress'} is-active{/if}"
+                href="/admin/inspections?group=in_progress"
+            >
                 Đang Inspection
                 {if isset($inspection_counts.in_progress) && $inspection_counts.in_progress > 0}
                     <span class="admin-nav-badge">{$inspection_counts.in_progress}</span>
@@ -72,15 +84,26 @@
             </a>
 
             <p class="admin-nav-title">Danh mục xe</p>
-            <button type="button" class="admin-nav-item" data-section="brands">
+            <a class="admin-nav-item" href="/admin#brands">
                 <i class="fa-solid fa-tags"></i> Hãng xe
-            </button>
-            <button type="button" class="admin-nav-item" data-section="models">
+            </a>
+            <a class="admin-nav-item" href="/admin#models">
                 <i class="fa-solid fa-car-side"></i> Dòng xe
-            </button>
-            <button type="button" class="admin-nav-item" data-section="versions">
+            </a>
+            <a class="admin-nav-item" href="/admin#versions">
                 <i class="fa-solid fa-layer-group"></i> Phiên bản xe
-            </button>
+            </a>
+
+            <p class="admin-nav-title">Nhân sự</p>
+            <a
+                class="admin-nav-item{if isset($active_menu) && $active_menu eq 'staff'} is-active{/if}"
+                href="/admin/staff"
+            >
+                <i class="fa-solid fa-users-gear"></i> Nhân viên Inspection
+                {if isset($staff_counts.staff) && $staff_counts.staff > 0}
+                    <span class="admin-nav-badge">{$staff_counts.staff}</span>
+                {/if}
+            </a>
 
             <p class="admin-nav-title">Khác</p>
             <a class="admin-nav-item" href="/"><i class="fa-solid fa-store"></i> Xem trang khách hàng</a>
@@ -101,8 +124,8 @@
     <main class="admin-main">
         <header class="admin-header">
             <div>
-                <h1>Dashboard quản trị</h1>
-                <p>Sản phẩm thêm hoặc sửa ở đây sẽ hiển thị ngay cho khách hàng khi trạng thái là <strong>active</strong>.</p>
+                <h1>{if isset($screen_title)}{$screen_title|escape}{else}Dashboard quản trị{/if}</h1>
+                <p>{if isset($screen_subtitle)}{$screen_subtitle|escape}{else}Sản phẩm thêm hoặc sửa ở đây sẽ hiển thị ngay cho khách hàng khi trạng thái là <strong>active</strong>.{/if}</p>
             </div>
             <span class="admin-header-badge"><i class="fa-solid fa-shield-halved"></i> Xin chào, {$admin_user.name|escape}</span>
         </header>

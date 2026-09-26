@@ -79,4 +79,135 @@ class User {
 
         return $row ?: null;
     }
+
+    /**
+     * Danh sach nguoi dung cho trang quan ly nhan su.
+     *
+     * @param string|null $roleFilter   'customer' | 'staff' | 'admin' | null
+     * @param string|null $statusFilter 'active' | 'inactive' | 'blocked' | null
+     * @param string|null $keyword      tim theo ten / email / so dien thoai
+     */
+    public function findAllForAdmin(
+        ?string $roleFilter = null,
+        ?string $statusFilter = null,
+        ?string $keyword = null,
+        int $limit = 300
+    ): array {
+        $limit = max(1, min($limit, 500));
+
+        $conditions = [];
+
+        $params = [];
+
+        if ($roleFilter !== null && $roleFilter !== '') {
+            $conditions[] = 'role = :role';
+            $params['role'] = $roleFilter;
+        }
+
+        if ($statusFilter !== null && $statusFilter !== '') {
+            $conditions[] = 'status = :status';
+            $params['status'] = $statusFilter;
+        }
+
+        if ($keyword !== null && trim($keyword) !== '') {
+            $conditions[] = '(
+                name LIKE :kw
+                OR email LIKE :kw
+                OR phone LIKE :kw
+            )';
+            $params['kw'] = '%' . trim($keyword) . '%';
+        }
+
+        $where = $conditions === []
+            ? ''
+            : 'WHERE ' . implode(' AND ', $conditions);
+
+        $stmt = $this->db->prepare("
+            SELECT id, name, email, phone, role, status, last_login_at
+            FROM users
+            {$where}
+            ORDER BY
+                FIELD(role, 'admin', 'staff', 'customer'),
+                name ASC
+            LIMIT {$limit}
+        ");
+
+        $stmt->execute($params);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Dem so nguoi dung theo tung role.
+     *
+     * @return array<string,int>
+     */
+    public function countByRole(): array
+    {
+        $stmt = $this->db->query("
+            SELECT role, COUNT(*) AS total
+            FROM users
+            GROUP BY role
+        ");
+
+        $counts = [];
+
+        foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            $counts[(string) $row['role']] = (int) $row['total'];
+        }
+
+        return $counts;
+    }
+
+    /**
+     * Doi role cua nguoi dung.
+     */
+    public function updateRole(int $id, string $role): bool
+    {
+        $stmt = $this->db->prepare("
+            UPDATE users
+            SET role = :role
+            WHERE id = :id
+        ");
+
+        $stmt->execute(['id' => $id, 'role' => $role]);
+
+        return $stmt->rowCount() > 0;
+    }
+
+    /**
+     * Doi trang thai tai khoan.
+     */
+    public function updateStatus(int $id, string $status): bool
+    {
+        $stmt = $this->db->prepare("
+            UPDATE users
+            SET status = :status
+            WHERE id = :id
+        ");
+
+        $stmt->execute(['id' => $id, 'status' => $status]);
+
+        return $stmt->rowCount() > 0;
+    }
+
+    /**
+     * Dem so ho so inspection dang mo cua mot nhan vien
+     * (dung de canh bao khi thu hoi quyen staff).
+     */
+    public function countOpenInspections(int $staffUserId): int
+    {
+        $stmt = $this->db->prepare("
+            SELECT COUNT(*) AS total
+            FROM valuation_inspection_assignments
+            WHERE staff_user_id = :staff_id
+              AND status IN ('assigned', 'accepted', 'in_progress')
+        ");
+
+        $stmt->execute(['staff_id' => $staffUserId]);
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return (int) ($row['total'] ?? 0);
+    }
 }

@@ -102,7 +102,7 @@
         {/if}
 
         {* ==================== FORM KẾT QUẢ ==================== *}
-        {if $assignment.status eq 'accepted' || $assignment.status eq 'in_progress'}
+        {if $assignment.status eq 'accepted' or $assignment.status eq 'in_progress'}
             <form id="resultForm" class="inspection-card">
                 <h3><i class="fa-solid fa-clipboard-list"></i> Phiếu đánh giá tình trạng xe</h3>
 

@@ -1032,6 +1032,21 @@
     versionStatus.addEventListener("change", renderVersions);
   }
 
+  // Trang danh muc chi ton tai o /admin; cac trang admin khac khong co panel nay.
+  var catalogRoot = document.getElementById("panel-brands");
+
+  if (!catalogRoot) {
+    // Trang khac: khong goi API danh muc, nhung van giu nut bam hoat dong.
+    return;
+  }
+
+  // Mo dung tab danh muc theo hash tren URL: /admin#models
+  var initialSection = (window.location.hash || "").replace("#", "");
+
+  if (["brands", "models", "versions"].indexOf(initialSection) !== -1) {
+    currentSection = initialSection;
+  }
+
   ensureVersionBrandSelect();
   forceFormVisibility("__none__");
   switchSection(currentSection);

@@ -81,6 +81,16 @@
                         {/if}
 
 
+                        {if $current_user.role eq 'staff'}
+
+                            <a href="/staff/inspections">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                                Trang nhân viên Inspection
+                            </a>
+
+                        {/if}
+
+
                         <a href="/account">
                             <i class="fa-solid fa-user"></i>
                             Tài khoản của tôi

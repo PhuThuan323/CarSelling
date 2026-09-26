@@ -144,7 +144,11 @@ class Login
 
     private function redirectPathFor(array $user): string
     {
-        return ($user['role'] ?? '') === 'admin' ? '/admin' : '/';
+        return match ($user['role'] ?? '') {
+            'admin' => '/admin',
+            'staff' => '/staff/inspections',
+            default => '/',
+        };
     }
 
     // Hàm gọi api đăng nhập

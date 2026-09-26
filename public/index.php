@@ -39,12 +39,21 @@ use App\Controllers\WebRender\AdminInspection;
 use App\Controllers\WebRender\ContactInfor;
 use App\Controllers\WebRender\MySellingCar;
 use App\Controllers\WebRender\StaffInspection;
+use App\Controllers\WebRender\AdminRequests;
+use App\Controllers\WebRender\AdminStaff;
+use App\Controllers\UserManagement\AdminStaffController;
 
 $router = new Router();
 $router->get('/',Homepage::class,'index');
 
 // Trang quản trị (chỉ tài khoản có role=admin trong bảng users)
 $router->get('/admin', AdminDashboard::class, 'index');
+
+// Danh sách toàn bộ hồ sơ bán xe
+$router->get('/admin/requests', AdminRequests::class, 'index');
+
+// Quản lý nhân sự & phân quyền
+$router->get('/admin/staff', AdminStaff::class, 'index');
 
 // Khu vực Inspection của Admin
 $router->get('/admin/inspections', AdminInspection::class, 'index');
@@ -137,6 +146,11 @@ $router->get('/api/v1/admin/inspections/{id}',AdminInspectionController::class,'
 $router->post('/api/v1/admin/inspections/{id}/request',AdminInspectionController::class,'requestInspection');
 $router->post('/api/v1/admin/inspections/{id}/assign',AdminInspectionController::class,'assignStaff');
 $router->post('/api/v1/admin/inspections/{id}/approve',AdminInspectionController::class,'approve');
+
+// API quản lý nhân sự & phân quyền (admin)
+$router->get('/api/v1/admin/users',AdminStaffController::class,'index');
+$router->post('/api/v1/admin/users/{id}/role',AdminStaffController::class,'updateRole');
+$router->post('/api/v1/admin/users/{id}/status',AdminStaffController::class,'updateStatus');
 
 // API workflow inspection (staff)
 $router->get('/api/v1/staff/inspections',StaffInspectionController::class,'index');

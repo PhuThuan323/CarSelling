@@ -54,7 +54,7 @@
     </section>
 
     {* ===================== KẾT QUẢ ĐỊNH GIÁ ===================== *}
-    {if $status eq 'estimated' || $status eq 'accepted' || $status eq 'cancelled'}
+    {if $status eq 'estimated' or $status eq 'accepted' or $status eq 'cancelled'}
 
         {if $rating_rows|@count > 0}
             <section class="mydetail-card">
@@ -116,7 +116,7 @@
             </section>
         {/if}
 
-    {elseif $status eq 'ready_for_estimate' || $status eq 'inspection_requested' || $status eq 'inspection_assigned' || $status eq 'inspection_in_progress' || $status eq 'inspection_completed' || $status eq 'estimating' %}
+    {elseif $status eq 'ready_for_estimate' or $status eq 'inspection_requested' or $status eq 'inspection_assigned' or $status eq 'inspection_in_progress' or $status eq 'inspection_completed' or $status eq 'estimating'}
 
         <section class="mydetail-card mydetail-waiting">
             <i class="fa-solid fa-hourglass-half"></i>

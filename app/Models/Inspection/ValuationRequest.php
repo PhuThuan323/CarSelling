@@ -307,14 +307,14 @@ class ValuationRequest {
 
         return $stmt->rowCount() > 0;
     }
-    public function findAllByUser(int $userId):array{
-        $stmt=$this->db->prepare("
-            SELECT  id, reference_code, vehicle_version_id, manufacture_year, odometer_km, vehicle_snapshot, status, estimated_price_min, estimated_price_max, submitted_at, created_at, updated_at
+    public function findAllByUser(int $userId): array {
+        $stmt = $this->db->prepare("
+            SELECT  id, reference_code, vehicle_version_id, manufacture_year, odometer_km, vehicle_snapshot, status, estimated_min_price, estimated_max_price, submitted_at, created_at, updated_at
             FROM valuation_requests
             WHERE user_id = :user_id
             ORDER BY created_at DESC
         ");
-        $stmt->execute(['user_id'=>$userId]);
+        $stmt->execute(['user_id' => $userId]);
         $rows = $stmt->fetchAll();
         foreach($rows as &$row){
             if(!empty($row['vehicle_snapshot'])){
@@ -514,6 +514,7 @@ class ValuationRequest {
                 r.vehicle_snapshot,
                 r.estimated_min_price,
                 r.estimated_max_price,
+                r.cancellation_reason,
                 r.submitted_at,
                 r.created_at,
                 c.full_name AS contact_name,
@@ -583,8 +584,7 @@ class ValuationRequest {
 
         $stmt->execute(['request_id' => $requestId]);
 
-        return $stmt->fetchAll();
-    }
+        return $stmt->fetchAll();    }
 
     private function decodeSnapshot(array $row): array
     {
@@ -597,5 +597,110 @@ class ValuationRequest {
         }
 
         return $row;
+    }
+
+    /**
+     * Toan bo ho so ban xe, moi trang thai.
+     * Dung cho trang "Ho so ban xe" cua admin.
+     *
+     * @param string|null $statusFilter loc theo 1 trang thai cu the
+     */
+    public function findAllRequests(?string $statusFilter = null, int $limit = 200): array
+    {
+        $limit = max(1, min($limit, 500));
+
+        $statusCondition = '';
+
+        $params = [];
+
+        if ($statusFilter !== null && $statusFilter !== '') {
+            $statusCondition = 'WHERE r.status = :status';
+            $params['status'] = $statusFilter;
+        }
+
+        $stmt = $this->db->prepare("
+            SELECT
+                r.id,
+                r.reference_code,
+                r.status,
+                r.manufacture_year,
+                r.odometer_km,
+                r.license_plate,
+                r.exterior_color,
+                r.vehicle_snapshot,
+                r.estimated_min_price,
+                r.estimated_max_price,
+                r.cancellation_reason,
+                r.submitted_at,
+                r.created_at,
+                c.full_name AS contact_name,
+                c.phone AS contact_phone,
+                a.id AS assignment_id,
+                a.status AS assignment_status,
+                a.scheduled_at,
+                a.staff_user_id,
+                su.name AS staff_name,
+                res.id AS result_id,
+                res.suggested_price_min,
+                res.suggested_price_max,
+                res.submitted_at AS result_submitted_at
+            FROM valuation_requests r
+            LEFT JOIN valuation_request_contacts c
+                ON c.valuation_request_id = r.id
+            LEFT JOIN valuation_inspection_assignments a
+                ON a.id = (
+                    SELECT a2.id
+                    FROM valuation_inspection_assignments a2
+                    WHERE a2.valuation_request_id = r.id
+                      AND a2.status <> 'cancelled'
+                    ORDER BY a2.assigned_at DESC, a2.id DESC
+                    LIMIT 1
+                )
+            LEFT JOIN users su
+                ON su.id = a.staff_user_id
+            LEFT JOIN valuation_inspection_results res
+                ON res.id = (
+                    SELECT r2.id
+                    FROM valuation_inspection_results r2
+                    WHERE r2.valuation_request_id = r.id
+                    ORDER BY r2.submitted_at DESC, r2.id DESC
+                    LIMIT 1
+                )
+            {$statusCondition}
+            ORDER BY r.created_at DESC, r.id DESC
+            LIMIT {$limit}
+        ");
+
+        $stmt->execute($params);
+
+        $rows = $stmt->fetchAll();
+
+        foreach ($rows as &$row) {
+            $row = $this->decodeSnapshot($row);
+        }
+
+        unset($row);
+
+        return $rows;
+    }
+
+    /**
+     * Dem so ho so theo tung trang thai (cho badge/filter).
+     */
+    public function countByStatus(): array
+    {
+        $stmt = $this->db->query("
+            SELECT status, COUNT(*) AS total
+            FROM valuation_requests
+            GROUP BY status
+        ");
+
+        $counts = [];
+
+        foreach ($stmt->fetchAll() as $row) {
+            $counts[(string) $row['status']] = (int) $row['total'];
+        }
+
+        return $counts;
     }
 }

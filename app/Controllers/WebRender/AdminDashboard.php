@@ -7,6 +7,7 @@ namespace App\Controllers\WebRender;
 use App\Core\Auth;
 use App\Core\View;
 use App\Models\Inspection\ValuationRequest;
+use App\Models\UserManagement\User;
 
 class AdminDashboard
 {
@@ -28,6 +29,7 @@ class AdminDashboard
         $this->view->assign('csrf_token', Auth::csrfToken());
         $this->view->assign('active_menu', 'dashboard');
         $this->view->assign('inspection_counts', $this->inspectionCounts());
+        $this->view->assign('staff_counts', (new User())->countByRole());
         $this->view->assign('kpis', $this->kpis());
         $this->view->display('admin/dashboard');
     }

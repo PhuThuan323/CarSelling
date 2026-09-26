@@ -248,6 +248,63 @@ form.is-hidden-form {
 }
 .admin-nav-badge.is-warning{background:#e0a325}
 
+/* ---------- Tab lọc theo nhóm trạng thái ---------- */
+.admin-tabs{
+    display:flex;flex-wrap:wrap;gap:8px;
+    margin:0 0 16px;
+    padding-bottom:14px;
+    border-bottom:1px solid var(--admin-line);
+}
+
+.admin-tab{
+    display:inline-flex;align-items:center;gap:7px;
+    padding:7px 13px;
+    border:1px solid var(--admin-line);
+    border-radius:999px;
+    background:#fff;
+    color:var(--admin-muted);
+    font-size:12.5px;font-weight:600;
+    text-decoration:none;
+    transition:background .15s,color .15s,border-color .15s;
+}
+.admin-tab:hover{border-color:#b9d4f5;color:#2f80ed}
+.admin-tab.is-active{background:#2f80ed;border-color:#2f80ed;color:#fff}
+
+.admin-tab-count{
+    min-width:20px;padding:0 6px;
+    border-radius:999px;
+    background:#eef3fa;color:#5b6b7f;
+    font-size:11px;font-weight:700;text-align:center;
+}
+.admin-tab.is-active .admin-tab-count{background:rgba(255,255,255,.25);color:#fff}
+
+/* ---------- Quản lý nhân sự ---------- */
+.staff-user{display:flex;align-items:center;gap:10px}
+
+.staff-avatar{
+    flex:0 0 auto;
+    width:34px;height:34px;
+    border-radius:50%;
+    background:#e8f1fd;color:#2f80ed;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:14px;
+}
+
+.staff-actions{display:flex;flex-wrap:wrap;gap:6px}
+
+.staff-warn{
+    display:inline-flex;align-items:center;gap:5px;
+    padding:3px 9px;border-radius:999px;
+    background:#fdf3e2;color:#a5701a;
+    font-size:11.5px;font-weight:600;
+}
+
+.admin-pill.is-staff{background:#e8f1fd;color:#2f80ed}
+.admin-pill.is-admin{background:#efe7fb;color:#7b4bd8}
+.admin-pill.is-active{background:#e6f6ec;color:#1f8f4e}
+.admin-pill.is-danger{background:#fdeaea;color:#c0392b}
+.admin-pill.is-muted{background:#eef1f5;color:#6b7a8d}
+
 /* ---------- KPI grid ---------- */
 .kpi-grid{
     display:grid;
@@ -287,6 +344,9 @@ a.kpi-card:hover{border-color:var(--admin-blue);box-shadow:var(--admin-shadow);t
 .admin-empty i{font-size:26px;color:#b7c6d8}
 .admin-empty strong{font-size:15px}
 .admin-empty span{font-size:13px;color:var(--admin-muted)}
+
+/* display:flex ở trên sẽ đè lên [hidden] mặc định của trình duyệt. */
+.admin-empty[hidden]{display:none}
 
 /* ---------- Danh sách dạng card (duyệt / nhiệm vụ) ---------- */
 .review-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}

@@ -10,21 +10,24 @@
             </div>
         </div>
 
-        {* Tab loc nhanh theo nhom trang thai *}
-        {if isset($groups) && $groups|@count > 0}
+        {* Tab loc theo nhom trang thai *}
+        {if isset($filters) && $filters|@count > 0}
             <div class="admin-tabs">
-                {foreach $groups as $group}
-                    {if $group.key eq 'all'}
-                        {assign var="groupUrl" value="/admin/inspections"}
+                {foreach $filters as $tab}
+                    {if $tab.key eq 'all'}
+                        {assign var="tabUrl" value="/admin/requests"}
                     {else}
-                        {assign var="groupUrl" value="/admin/inspections?group=`$group.key`"}
+                        {assign var="tabUrl" value="/admin/requests?filter=`$tab.key`"}
                     {/if}
 
                     <a
-                        class="admin-tab{if $group.is_active} is-active{/if}"
-                        href="{$groupUrl}"
+                        class="admin-tab{if $tab.is_active} is-active{/if}"
+                        href="{$tabUrl}"
                     >
-                        {$group.label|escape}
+                        {$tab.label|escape}
+                        {if $tab.total > 0}
+                            <span class="admin-tab-count">{$tab.total}</span>
+                        {/if}
                     </a>
                 {/foreach}
             </div>
@@ -32,9 +35,9 @@
 
         {if $items|@count == 0}
             <div class="admin-empty">
-                <i class="fa-solid fa-clipboard-check"></i>
-                <strong>Chưa có hồ sơ nào trong luồng Inspection</strong>
-                <span>Hồ sơ sẽ xuất hiện ở đây sau khi khách gửi đăng bán xe.</span>
+                <i class="fa-solid fa-file-invoice"></i>
+                <strong>Chưa có hồ sơ nào</strong>
+                <span>Hồ sơ sẽ xuất hiện ở đây khi khách gửi đăng bán xe.</span>
             </div>
         {else}
             <div class="admin-table-wrap">
@@ -46,8 +49,7 @@
                             <th>Khách hàng</th>
                             <th>Trạng thái</th>
                             <th>Nhân viên</th>
-                            <th>Lịch inspection</th>
-                            <th>Range staff</th>
+                            <th>Giá gửi khách</th>
                             <th>Hành động</th>
                         </tr>
                     </thead>
@@ -56,11 +58,11 @@
                             <tr>
                                 <td>
                                     <strong>{$item.reference_code|escape}</strong>
-                                    {if $item.submitted_at}
-                                        <small class="admin-muted">
-                                            {$item.submitted_at|date_format:"%d/%m/%Y"}
-                                        </small>
-                                    {/if}
+                                    <small class="admin-muted">
+                                        {if $item.created_at}
+                                            {$item.created_at|date_format:"%d/%m/%Y"}
+                                        {/if}
+                                    </small>
                                 </td>
                                 <td>
                                     {assign var="snap" value=$item.vehicle_snapshot}
@@ -84,33 +86,35 @@
                                         <small class="admin-muted">{$item.contact_phone|escape}</small>
                                     {/if}
                                 </td>
-                                <td><span class="admin-pill">{$item.status|escape}</span></td>
+                                <td>
+                                    <span class="admin-pill status-{$item.status|escape}">
+                                        {$item.status_label|escape}
+                                    </span>
+                                    {if isset($item.cancellation_reason) && $item.cancellation_reason eq 'customer_declined_offer'}
+                                        <small class="admin-muted">Khách không đồng ý giá</small>
+                                    {/if}
+                                </td>
                                 <td>
                                     {if $item.staff_name}
                                         {$item.staff_name|escape}
                                     {else}
-                                        <span class="admin-muted">Chưa phân công</span>
+                                        <span class="admin-muted">—</span>
                                     {/if}
                                 </td>
                                 <td>
-                                    {if $item.scheduled_at}
-                                        {$item.scheduled_at|date_format:"%d/%m/%Y %H:%M"}
+                                    {if $item.estimated_min_price && $item.estimated_max_price}
+                                        <strong>
+                                            {$item.estimated_min_price|number_format:0:",":"."}
+                                            -
+                                            {$item.estimated_max_price|number_format:0:",":"."} đ
+                                        </strong>
                                     {else}
                                         <span class="admin-muted">—</span>
                                     {/if}
                                 </td>
                                 <td>
-                                    {if $item.suggested_price_min && $item.suggested_price_max}
-                                        {$item.suggested_price_min|number_format:0:",":"."}
-                                        -
-                                        {$item.suggested_price_max|number_format:0:",":"."}
-                                    {else}
-                                        <span class="admin-muted">—</span>
-                                    {/if}
-                                </td>
-                                <td>
-                                    <a class="admin-btn admin-btn-primary admin-btn-sm" href="/admin/inspections/{$item.id}">
-                                        <i class="fa-solid fa-arrow-right"></i> Xử lý
+                                    <a class="admin-btn admin-btn-ghost" href="/admin/inspections/{$item.id}">
+                                        <i class="fa-solid fa-eye"></i> Xem
                                     </a>
                                 </td>
                             </tr>

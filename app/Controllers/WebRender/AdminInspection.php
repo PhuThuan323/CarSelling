@@ -44,31 +44,83 @@ class AdminInspection
         $this->users = new User();
     }
 
-    public function index(): void
-    {
-        $user = Auth::requireAdmin(false);
-
-        $items = $this->requests->findByStatuses(
-            [
+    /**
+     * Cac nhom loc cho sidebar/menu phu. Dung chung key voi API.
+     */
+    private const GROUPS = [
+        'all' => [
+            'label' => 'Tất cả xe chờ Inspection',
+            'statuses' => [
                 'inspection_requested',
                 'inspection_assigned',
                 'inspection_in_progress',
                 'inspection_completed',
-            ]
-        );
+            ],
+        ],
+        'unassigned' => [
+            'label' => 'Chưa phân công',
+            'statuses' => ['inspection_requested'],
+        ],
+        'assigned' => [
+            'label' => 'Đã phân công',
+            'statuses' => ['inspection_assigned'],
+        ],
+        'in_progress' => [
+            'label' => 'Đang Inspection',
+            'statuses' => ['inspection_in_progress'],
+        ],
+        'review' => [
+            'label' => 'Chờ duyệt kết quả',
+            'statuses' => ['inspection_completed'],
+        ],
+    ];
+
+    public function index(): void
+    {
+        $user = Auth::requireAdmin(false);
+
+        $group = trim((string) ($_GET['group'] ?? ''));
+
+        if ($group === '' || !isset(self::GROUPS[$group])) {
+            $group = 'all';
+        }
+
+        $meta = self::GROUPS[$group];
+
+        $items = $this->requests->findByStatuses($meta['statuses']);
 
         $this->assignCommon($user);
 
-        $this->view->assign('page_title', 'Xe chờ Inspection - CarSelling');
-        $this->view->assign('screen_title', 'Xe chờ Inspection');
+        $this->view->assign('page_title', $meta['label'] . ' - CarSelling');
+        $this->view->assign('screen_title', $meta['label']);
         $this->view->assign(
             'screen_subtitle',
             'Tiếp nhận hồ sơ, phân công nhân viên và theo dõi tiến độ thẩm định.'
         );
         $this->view->assign('active_menu', 'inspections');
+        $this->view->assign('active_group', $group);
+        $this->view->assign('groups', $this->groupTabs($group));
         $this->view->assign('items', $items);
 
         $this->view->display('admin/inspections');
+    }
+
+    /**
+     * Danh sach nhom kem trang thai active de render thanh tab.
+     */
+    private function groupTabs(string $activeGroup): array
+    {
+        $tabs = [];
+
+        foreach (self::GROUPS as $key => $meta) {
+            $tabs[] = [
+                'key' => $key,
+                'label' => $meta['label'],
+                'is_active' => $key === $activeGroup,
+            ];
+        }
+
+        return $tabs;
     }
 
     public function review(): void
@@ -114,6 +166,15 @@ class AdminInspection
                 . ($request['reference_code'] ?? ('#' . $requestId))
                 . ' - CarSelling'
         );
+        $this->view->assign(
+            'screen_title',
+            'Inspection '
+                . ($request['reference_code'] ?? ('#' . $requestId))
+        );
+        $this->view->assign(
+            'screen_subtitle',
+            'Phân công nhân viên, xem kết quả thẩm định và chốt giá gửi khách.'
+        );
         $this->view->assign('active_menu', 'inspections');
         $this->view->assign('request', $request);
         $this->view->assign(
@@ -155,6 +216,38 @@ class AdminInspection
     {
         $this->view->assign('admin_user', $user);
         $this->view->assign('csrf_token', Auth::csrfToken());
+        $this->view->assign('inspection_counts', $this->inspectionCounts());
+        $this->view->assign('staff_counts', $this->staffCounts());
+    }
+
+    /**
+     * So luong theo role de hien badge "Nhan vien Inspection".
+     */
+    private function staffCounts(): array
+    {
+        return (new User())->countByRole();
+    }
+
+    /**
+     * So luong ho so theo tung nhom de hien badge tren sidebar.
+     */
+    private function inspectionCounts(): array
+    {
+        $count = fn (array $statuses): int
+            => count($this->requests->findByStatuses($statuses, 500));
+
+        $unassigned = $count(['inspection_requested']);
+        $assigned = $count(['inspection_assigned']);
+        $inProgress = $count(['inspection_in_progress']);
+        $review = $count(['inspection_completed']);
+
+        return [
+            'unassigned' => $unassigned,
+            'assigned' => $assigned,
+            'in_progress' => $inProgress,
+            'review' => $review,
+            'all' => $unassigned + $assigned + $inProgress + $review,
+        ];
     }
 
     /**

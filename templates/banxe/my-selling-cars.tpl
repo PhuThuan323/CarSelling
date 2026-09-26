@@ -63,13 +63,13 @@
                         </dd>
                     </dl>
 
-                    {if $car.status eq 'estimated' && $car.estimated_price_min}
+                    {if $car.status eq 'estimated' && $car.estimated_min_price}
                         <div class="mycar-price">
                             <span>Giá FastCar đề xuất</span>
                             <strong>
-                                {$car.estimated_price_min|number_format:0:",":"."} đ
+                                {$car.estimated_min_price|number_format:0:",":"."} đ
                                 -
-                                {$car.estimated_price_max|number_format:0:",":"."} đ
+                                {$car.estimated_max_price|number_format:0:",":"."} đ
                             </strong>
                         </div>
                     {/if}
