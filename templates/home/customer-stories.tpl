@@ -132,6 +132,54 @@
 
         </div>
 
+        {* Khoi keu goi o cuoi trang, ngay truoc footer *}
+        <div class="stories-final-cta">
+
+            <h2>
+                Chiếc xe của bạn cũng có<br>
+                thể là câu chuyện tiếp theo
+            </h2>
+
+            <p>
+                Kiểm tra giá thị trường miễn phí, xem người mua trả giá rồi mới quyết định bán.
+            </p>
+
+            <a href="/sell-car" class="stories-final-cta-btn">
+
+                <span class="stories-final-cta-icon">
+                    <i class="fa-solid fa-car-side"></i>
+                </span>
+
+                <span class="stories-final-cta-copy">
+                    <strong>Xem giá xe của tôi</strong>
+                    <span>Kiểm tra giá thị trường miễn phí trước khi quyết định bán</span>
+                </span>
+
+                <i class="fa-solid fa-chevron-right"></i>
+
+            </a>
+
+            <div class="stories-final-perks">
+
+                <span>
+                    <i class="fa-solid fa-check"></i>
+                    Miễn phí 100%
+                </span>
+
+                <span>
+                    <i class="fa-solid fa-check"></i>
+                    Không bắt buộc bán
+                </span>
+
+                <span>
+                    <i class="fa-solid fa-check"></i>
+                    Không lộ thông tin xe
+                </span>
+
+            </div>
+
+        </div>
+
     </section>
 
     {include file="home/footer.tpl"}

@@ -153,7 +153,22 @@
 }
 
 .story-confirm-card {
-  width: min(460px, 100%);
+    width: min(460px, 100%);
+}
+
+/* 3 o thong so noi btat nam cung mot hang trong form admin */
+.admin-inline-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 10px;
+}
+
+@media (max-width: 900px) {
+    .admin-inline-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .story-confirm-text {
@@ -482,7 +497,7 @@
 
 .story-detail {
   min-height: 100vh;
-  padding: 40px 0 72px;
+  padding: 34px 0 72px;
 
   background: #f6f9fc;
   color: var(--story-ink);
@@ -491,7 +506,7 @@
 }
 
 .story-detail-container {
-  width: min(820px, calc(100% - 40px));
+  width: min(940px, calc(100% - 40px));
   margin: 0 auto;
 }
 
@@ -500,7 +515,7 @@
   align-items: center;
   gap: 8px;
 
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 
   color: var(--story-blue);
 
@@ -514,83 +529,398 @@
   color: var(--story-blue-dark);
 }
 
-.story-detail-card {
-  overflow: hidden;
+/* ---------- Hero: 2 cot ---------- */
 
-  border: 1px solid var(--story-border);
-  border-radius: 18px;
+.story-detail-hero {
+  display: grid;
+
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+
+  gap: 34px;
+
+  align-items: start;
+}
+
+.story-detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.story-detail-tag {
+  padding: 5px 11px;
+
+  border-radius: 999px;
+
+  background: #e6f1fb;
+
+  color: #2f6fa8;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.story-detail-city {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  color: #8a97a7;
+
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.story-detail-title {
+  margin: 16px 0 0;
+
+  color: #14395f;
+
+  font-size: clamp(28px, 3.6vw, 40px);
+  font-weight: 800;
+
+  line-height: 1.22;
+
+  letter-spacing: -0.035em;
+}
+
+.story-detail-excerpt {
+  margin: 14px 0 0;
+
+  color: #5d6f83;
+
+  font-size: 15px;
+
+  line-height: 1.7;
+}
+
+/* ---------- 3 o thong so noi bat ---------- */
+
+.story-detail-highlights {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+
+  gap: 12px;
+
+  margin-top: 22px;
+}
+
+.story-highlight {
+  padding: 13px 16px;
+
+  border: 1px solid #e2ebf5;
+  border-radius: 13px;
 
   background: #fff;
 
-  box-shadow: 0 12px 34px rgba(25, 55, 90, 0.09);
+  box-shadow: 0 4px 12px rgba(25, 55, 90, 0.05);
 }
 
-.story-detail-cover {
+.story-highlight span {
+  display: block;
+
+  color: #8a97a7;
+
+  font-size: 11.5px;
+}
+
+.story-highlight strong {
+  display: block;
+
+  margin-top: 5px;
+
+  color: var(--story-blue);
+
+  font-size: 19px;
+  font-weight: 800;
+
+  letter-spacing: -0.02em;
+}
+
+/* ---------- Hop CTA xanh ---------- */
+
+.story-detail-cta-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  margin-top: 18px;
+  padding: 14px 18px;
+
+  border-radius: 14px;
+
+  background: linear-gradient(90deg, #0b8fdd 0%, #0a6fc4 100%);
+
+  color: #fff;
+
+  text-decoration: none;
+
+  box-shadow: 0 12px 26px rgba(10, 111, 196, 0.24);
+
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+
+.story-detail-cta-banner:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 16px 32px rgba(10, 111, 196, 0.3);
+}
+
+.story-detail-cta-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+
+  width: 40px;
+  height: 40px;
+
+  border-radius: 11px;
+
+  background: rgba(255, 255, 255, 0.18);
+
+  font-size: 16px;
+}
+
+.story-detail-cta-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.story-detail-cta-copy strong {
+  display: block;
+
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.story-detail-cta-copy span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: rgba(255, 255, 255, 0.86);
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* ---------- 3 gach dau dong cam ket ---------- */
+
+.story-detail-perks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+
+  margin-top: 16px;
+}
+
+.story-detail-perks span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  color: #6b7c8f;
+
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.story-detail-perks i {
+  color: #1fae74;
+
+  font-size: 12px;
+}
+
+/* ---------- Anh lon ben phai ---------- */
+
+.story-detail-photo {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.story-detail-hero-image {
   width: 100%;
 
-  max-height: 420px;
+  aspect-ratio: 4 / 3;
 
   display: block;
 
   object-fit: cover;
 
-  background: #eaf1f8;
+  border-radius: 16px;
+
+  background: #e7eef6;
+
+  box-shadow: 0 14px 34px rgba(25, 55, 90, 0.14);
 }
 
+.story-detail-hero-image.is-empty {
+  display: grid;
+  place-items: center;
+
+  color: #a8b7c8;
+
+  font-size: 30px;
+}
+
+.story-detail-hero-caption {
+  color: #98a5b4;
+
+  font-size: 11.5px;
+
+  text-align: center;
+}
+
+/* ---------- 4 o cam ket ---------- */
+
+.story-detail-commitments {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+
+  gap: 12px;
+
+  margin-top: 30px;
+}
+
+.story-commitment {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  padding: 13px 15px;
+
+  border: 1px solid #e2ebf5;
+  border-radius: 13px;
+
+  background: #fff;
+}
+
+.story-commitment i {
+  margin-top: 2px;
+
+  color: #3f8fd6;
+
+  font-size: 15px;
+}
+
+.story-commitment strong {
+  display: block;
+
+  color: #24466b;
+
+  font-size: 12.5px;
+}
+
+.story-commitment span {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #7d8b9c;
+
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+/* ---------- Than bai chi tiet ---------- */
+
 .story-detail-body {
-  padding: 30px 34px 36px;
+  margin-top: 34px;
+  padding: 32px 0 0;
+
+  border-top: 1px solid #e4ecf5;
 }
 
 .story-detail-badge {
   display: inline-block;
 
-  padding: 5px 11px;
-
-  border-radius: 999px;
-
-  background: #eaf6ff;
-
-  color: #268ad1;
+  color: #2f6fa8;
 
   font-size: 11px;
-  font-weight: 700;
-}
-
-.story-detail-title {
-  margin: 14px 0 0;
-
-  color: #14456f;
-
-  font-size: clamp(24px, 3.4vw, 34px);
   font-weight: 800;
 
-  line-height: 1.28;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.story-detail-heading {
+  margin: 10px 0 0;
+
+  color: #14395f;
+
+  font-size: clamp(25px, 3vw, 34px);
+  font-weight: 800;
 
   letter-spacing: -0.03em;
 }
 
-.story-detail-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 14px;
+.story-detail-lead {
+  margin-top: 14px;
 
-  margin-top: 16px;
-  padding-bottom: 20px;
+  color: #55697e;
 
-  border-bottom: 1px solid #e8eef6;
+  font-size: 15px;
 
-  color: #7b8a9c;
+  line-height: 1.8;
 
-  font-size: 12.5px;
+  white-space: pre-line;
 }
 
-.story-detail-meta strong {
-  color: #33475f;
+.story-detail-problems-title {
+  margin-top: 24px;
+
+  color: #2d4b6b;
+
+  font-size: 14.5px;
+  font-weight: 700;
+}
+
+.story-detail-problems {
+  display: grid;
+
+  gap: 10px;
+
+  margin: 14px 0 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.story-detail-problems li {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+
+  padding: 14px 16px;
+
+  border-radius: 12px;
+
+  background: #fdf1f0;
+
+  color: #8d5148;
+
+  font-size: 13.5px;
+
+  line-height: 1.6;
+}
+
+.story-detail-problems i {
+  margin-top: 2px;
+
+  color: #dd7a6c;
+
+  font-size: 14px;
 }
 
 .story-detail-content {
-  margin-top: 22px;
+  margin-top: 26px;
 
   color: #3f5670;
 
@@ -617,7 +947,7 @@
   line-height: 1.7;
 }
 
-.story-detail-cta {
+.story-detail-footer-cta {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -633,7 +963,7 @@
   background: #f8fbff;
 }
 
-.story-detail-cta strong {
+.story-detail-footer-cta strong {
   display: block;
 
   color: #1c3f63;
@@ -641,13 +971,13 @@
   font-size: 14.5px;
 }
 
-.story-detail-cta span {
+.story-detail-footer-cta span {
   color: var(--story-muted);
 
   font-size: 12.5px;
 }
 
-.story-detail-cta a {
+.story-detail-footer-cta a {
   padding: 11px 20px;
 
   border-radius: 11px;
@@ -662,7 +992,7 @@
   text-decoration: none;
 }
 
-.story-detail-cta a:hover {
+.story-detail-footer-cta a:hover {
   background: var(--story-blue-dark);
 }
 
@@ -683,10 +1013,165 @@
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 }
 
-@media (max-width: 640px) {
-  .story-detail-body {
-    padding: 22px 20px 26px;
+@media (max-width: 900px) {
+  .story-detail-hero {
+    grid-template-columns: 1fr;
+
+    gap: 24px;
   }
+
+  .story-detail-photo {
+    order: -1;
+  }
+}
+
+/* ---------- Khoi keu goi cuoi trang danh sach ---------- */
+
+.stories-final-cta {
+  margin-top: 52px;
+  padding: 42px 24px;
+
+  border: 1px solid #e2ebf5;
+  border-radius: 20px;
+
+  background: #fff;
+
+  text-align: center;
+}
+
+.stories-final-cta h2 {
+  margin: 0;
+
+  color: #12263f;
+
+  font-size: clamp(24px, 3.2vw, 38px);
+  font-weight: 800;
+
+  line-height: 1.28;
+
+  letter-spacing: -0.035em;
+}
+
+.stories-final-cta p {
+  max-width: 620px;
+  margin: 14px auto 0;
+
+  color: #6a7c90;
+
+  font-size: 14.5px;
+
+  line-height: 1.7;
+}
+
+.stories-final-cta-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  width: min(470px, 100%);
+  margin: 24px auto 0;
+  padding: 14px 20px;
+
+  border-radius: 15px;
+
+  background: #0d9be5;
+
+  color: #fff;
+
+  text-align: left;
+  text-decoration: none;
+
+  box-shadow: 0 14px 30px rgba(13, 155, 229, 0.28);
+
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+
+.stories-final-cta-btn:hover {
+  background: #0a86c8;
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 18px 36px rgba(13, 155, 229, 0.34);
+}
+
+.stories-final-cta-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+
+  width: 42px;
+  height: 42px;
+
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.2);
+
+  font-size: 17px;
+}
+
+.stories-final-cta-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.stories-final-cta-copy strong {
+  display: block;
+
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.stories-final-cta-copy span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: rgba(255, 255, 255, 0.9);
+
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.stories-final-perks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 20px;
+
+  margin-top: 18px;
+}
+
+.stories-final-perks span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  color: #6b7c8f;
+
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.stories-final-perks i {
+  color: #1fae74;
+
+  font-size: 12px;
+}
+
+@media (max-width: 640px) {
+  .stories-final-cta {
+    margin-top: 36px;
+    padding: 30px 18px;
+  }
+
+  .stories-final-cta-btn {
+    gap: 12px;
+
+    padding: 13px 16px;
+  }
+}
+
+@media (max-width: 640px) {
 
   .stories-container,
   .story-detail-container {
@@ -695,5 +1180,9 @@
 
   .story-admin-list {
     grid-template-columns: 1fr;
+  }
+
+  .story-detail-highlights {
+    grid-template-columns: 1fr 1fr;
   }
 }

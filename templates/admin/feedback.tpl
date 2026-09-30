@@ -78,25 +78,62 @@
 
                 <div class="admin-field admin-field-full">
                     <label for="storyTitle">Tiêu đề câu chuyện *</label>
-                    <input type="text" class="admin-input" id="storyTitle" name="title" maxlength="160"
-                        placeholder="Ví dụ: Đã chọn được chiếc xe phù hợp trong ngày" required>
+                    <input type="text" class="admin-input" id="storyTitle" name="title"
+                        maxlength="160" placeholder="Ví dụ: Bán VinFast Lux A2.0 2022 được 575 triệu trong 1 ngày" required>
                 </div>
 
                 <div class="admin-field admin-field-full">
-                    <label for="storyImage">Ảnh (đường dẫn hoặc link https)</label>
-                    <input type="text" class="admin-input" id="storyImage" name="image"
-                        placeholder="Ví dụ: https://... hoặc /assets/img/testimonials/AnhPhat.png">
-                </div>
-
-                <div class="admin-field admin-field-full">
-                    <label for="storyExcerpt">Mô tả ngắn (hiển thị ở trang chủ)</label>
+                    <label for="storyExcerpt">Mô tả ngắn (hiển thị ở trang chủ và danh sách)</label>
                     <textarea class="admin-textarea" id="storyExcerpt" name="excerpt" rows="2"
                         placeholder="Bỏ trống sẽ tự lấy 200 ký tự đầu của câu chuyện."></textarea>
                 </div>
 
                 <div class="admin-field admin-field-full">
-                    <label for="storyContent">Nội dung câu chuyện *</label>
-                    <textarea class="admin-textarea" id="storyContent" name="story" rows="10"
+                    <label for="storySummary">Đoạn mở đầu trang chi tiết</label>
+                    <textarea class="admin-textarea" id="storySummary" name="summary" rows="3"
+                        placeholder="Ví dụ: Anh Phát chuẩn bị định cư nước ngoài nên cần bán lại chiếc VinFast Lux A2.0 2022. Bỏ trống sẽ dùng mô tả ngắn."></textarea>
+                    <small class="admin-muted">Hiển thị ngay dưới tiêu đề lớn ở đầu trang chi tiết.</small>
+                </div>
+
+                <div class="admin-field admin-field-full">
+                    <label for="storyImage">Ảnh thẻ (danh sách, trang chủ)</label>
+                    <input type="text" class="admin-input" id="storyImage" name="image"
+                        placeholder="Ví dụ: https://... hoặc /assets/img/testimonials/AnhPhat.png">
+                </div>
+
+                <div class="admin-field admin-field-full">
+                    <label for="storyStoryImage">Ảnh lớn đầu trang chi tiết (ảnh đồng xe)</label>
+                    <input type="text" class="admin-input" id="storyStoryImage" name="story_image"
+                        placeholder="Bỏ trống sẽ dùng lại ảnh thẻ ở trên.">
+                </div>
+
+                <div class="admin-field admin-field-full">
+                    <label>Thông số nổi bật (hiển thị thành 3 ô ở đầu trang chi tiết)</label>
+
+                    <div class="admin-inline-grid">
+                        <input type="text" class="admin-input" id="storyHighlightPrice" name="highlight_price"
+                            maxlength="40" placeholder="Giá chốt bán — Ví dụ: 575 triệu">
+
+                        <input type="text" class="admin-input" id="storyHighlightTime" name="highlight_time"
+                            maxlength="40" placeholder="Thời gian bán — Ví dụ: 1 ngày">
+
+                        <input type="text" class="admin-input" id="storyHighlightFee" name="highlight_fee"
+                            maxlength="40" placeholder="Phí dịch vụ — Ví dụ: 1%">
+                    </div>
+
+                    <small class="admin-muted">Ô nào để trống sẽ không hiển thị.</small>
+                </div>
+
+                <div class="admin-field admin-field-full">
+                    <label for="storyProblems">Những vấn đề khách gặp phải (mỗi dòng một ý)</label>
+                    <textarea class="admin-textarea" id="storyProblems" name="problems" rows="3"
+                        placeholder="Chuẩn bị đi cứ nước ngoài nên cần hoàn tất việc bán xe trong thời gian ngắn.&#10;Mới bắt đầu tham khảo các phương án bán xe trên thị trường."></textarea>
+                    <small class="admin-muted">Tối đa 8 dòng. Để trống sẽ ẩn cả khối này.</small>
+                </div>
+
+                <div class="admin-field admin-field-full">
+                    <label for="storyContent">Nội dung câu chuyện đầy đủ *</label>
+                    <textarea class="admin-textarea" id="storyContent" name="story" rows="8"
                         placeholder="Kể lại trải nghiệm thực tế của khách hàng với FastCar..." required></textarea>
                 </div>
 

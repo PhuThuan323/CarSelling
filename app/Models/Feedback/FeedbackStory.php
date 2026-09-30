@@ -29,6 +29,14 @@ class FeedbackStory
 
     private const MAX_IMAGE = 500;
 
+    private const MAX_SUMMARY = 500;
+
+    private const MAX_PROBLEM = 200;
+
+    private const MAX_SHORT = 40;
+
+    private const MAX_PROBLEMS = 8;
+
     private string $filePath;
 
     public function __construct()
@@ -201,6 +209,14 @@ class FeedbackStory
                 'excerpt' => (string) ($item['excerpt'] ?? ''),
                 'story' => (string) ($item['story'] ?? ''),
                 'image' => (string) ($item['image'] ?? ''),
+                'story_image' => (string) ($item['story_image'] ?? ''),
+                'summary' => (string) ($item['summary'] ?? ''),
+                'highlight_price' => (string) ($item['highlight_price'] ?? ''),
+                'highlight_time' => (string) ($item['highlight_time'] ?? ''),
+                'highlight_fee' => (string) ($item['highlight_fee'] ?? ''),
+                'problems' => is_array($item['problems'] ?? null)
+                    ? array_values(array_map('strval', $item['problems']))
+                    : [],
                 'status' => ($item['status'] ?? 'active') === 'hidden' ? 'hidden' : 'active',
                 'created_at' => (int) ($item['created_at'] ?? 0),
             ];
@@ -278,6 +294,12 @@ class FeedbackStory
             $excerpt = $this->excerptFrom($story, 200);
         }
 
+        // Doan mo ta ngan gon o dau trang chi tiet (neu admin de trong thi lay excerpt).
+        $summary = $this->textarea($payload['summary'] ?? '', self::MAX_SUMMARY);
+
+        // Danh sach "nhung van de khach gap phai" - gui len dang mang hoac chuoi cach dong.
+        $problems = $this->problems($payload['problems'] ?? []);
+
         $slugSource = trim((string) ($payload['slug'] ?? ''));
 
         if ($slugSource === '') {
@@ -296,6 +318,12 @@ class FeedbackStory
             'excerpt' => $excerpt,
             'story' => $story,
             'image' => $this->image($payload['image'] ?? ''),
+            'story_image' => $this->image($payload['story_image'] ?? ''),
+            'summary' => $summary === '' ? $excerpt : $summary,
+            'highlight_price' => $this->text($payload['highlight_price'] ?? '', self::MAX_SHORT),
+            'highlight_time' => $this->text($payload['highlight_time'] ?? '', self::MAX_SHORT),
+            'highlight_fee' => $this->text($payload['highlight_fee'] ?? '', self::MAX_SHORT),
+            'problems' => $problems,
             'status' => $status,
         ];
     }
@@ -346,6 +374,43 @@ class FeedbackStory
         }
 
         return rtrim(mb_substr($oneLine, 0, $limit)) . '…';
+    }
+
+    /**
+     * Danh sach "nhung van de khach hang gap phai" hien o dau trang chi tiet.
+     * Chap nhan ca mang lan chuoi nhieu dong.
+     *
+     * @return array<int, string>
+     */
+    private function problems(mixed $value): array
+    {
+        if (is_string($value)) {
+            $value = preg_split('/\r\n|\r|\n/', $value) ?: [];
+        }
+
+        if (!is_array($value)) {
+            return [];
+        }
+
+        $problems = [];
+
+        foreach ($value as $item) {
+            if (!is_scalar($item)) {
+                continue;
+            }
+
+            $text = $this->text($item, self::MAX_PROBLEM);
+
+            if ($text !== '') {
+                $problems[] = $text;
+            }
+
+            if (count($problems) >= self::MAX_PROBLEMS) {
+                break;
+            }
+        }
+
+        return $problems;
     }
 
     private function text(mixed $value, int $limit): string

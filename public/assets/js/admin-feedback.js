@@ -287,8 +287,22 @@
       author_name: byId("storyAuthor").value.trim(),
       location: byId("storyLocation").value.trim(),
       title: byId("storyTitle").value.trim(),
-      image: byId("storyImage").value.trim(),
       excerpt: byId("storyExcerpt").value.trim(),
+      summary: byId("storySummary").value.trim(),
+      image: byId("storyImage").value.trim(),
+      story_image: byId("storyStoryImage").value.trim(),
+      highlight_price: byId("storyHighlightPrice").value.trim(),
+      highlight_time: byId("storyHighlightTime").value.trim(),
+      highlight_fee: byId("storyHighlightFee").value.trim(),
+      // Moi dong la mot van de khach hang gap phai.
+      problems: byId("storyProblems")
+        .value.split("\n")
+        .map(function (line) {
+          return line.trim();
+        })
+        .filter(function (line) {
+          return line !== "";
+        }),
       story: byId("storyContent").value.trim(),
       status: byId("storyStatus").value,
     };
