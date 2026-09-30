@@ -48,37 +48,6 @@
     },
   ];
 
-  var demoReviews = [
-    {
-      name: "Anh Nam",
-      title: "Đã chọn chiếc xe phù hợp trong ngày",
-      text: "Thông tin xe rõ ràng, tư vấn dễ hiểu và quy trình xem xe thuận tiện.",
-      image:
-        "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=700&q=80",
-    },
-    {
-      name: "Anh Minh",
-      title: "Xe thực tế đúng với thông tin đăng",
-      text: "Mình yên tâm hơn vì được kiểm tra xe trực tiếp và xem đầy đủ thông tin trước khi quyết định.",
-      image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=700&q=80",
-    },
-    {
-      name: "Anh Tuấn",
-      title: "Giá bán rõ ràng, tư vấn nhanh",
-      text: "Quá trình trao đổi nhanh gọn, các thông tin cần thiết được trình bày khá minh bạch.",
-      image:
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=700&q=80",
-    },
-    {
-      name: "Chị Hằng",
-      title: "Trải nghiệm mua xe thuận tiện",
-      text: "Từ lúc xem thông tin đến khi đặt lịch xem xe đều dễ thao tác và tiết kiệm thời gian.",
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=700&q=80",
-    },
-  ];
-
   function escapeHtml(value) {
     return String(value == null ? "" : value)
       .replace(/&/g, "&amp;")
@@ -216,37 +185,14 @@
       "</article>"
     );
   }
-  // Chứa mấy cái card để review xe, testimonial á
-  function reviewCard(review) {
-    return (
-      '<article class="review-card">' +
-      '<img class="review-image" src="' +
-      escapeHtml(review.image) +
-      '" alt="' +
-      escapeHtml(review.name) +
-      '">' +
-      '<div class="review-body">' +
-      '<span class="review-badge">' +
-      escapeHtml(review.name) +
-      "</span>" +
-      '<h3 class="review-title">' +
-      escapeHtml(review.title) +
-      "</h3>" +
-      '<p class="review-text">' +
-      escapeHtml(review.text) +
-      "</p>" +
-      '<a href="#" class="review-link">Đọc câu chuyện đầy đủ →</a>' +
-      "</div>" +
-      "</article>"
-    );
-  }
+  // Chứa mấy cái card để review xe, testimonial á.
+  // Nội dung do admin quản lý (Server render sẵn trong template).
 
   function init() {
     loadBrands();
     $("#featuredVehicleGrid").innerHTML = demoVehicles
       .map(vehicleCard)
       .join("");
-    $("#reviewGrid").innerHTML = demoReviews.map(reviewCard).join("");
   }
 
   if (document.readyState === "loading") {

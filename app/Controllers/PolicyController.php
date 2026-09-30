@@ -12,6 +12,7 @@ class PolicyController
     {
         $this->view = new View();
     }
+ 
 
     public function show(): void
     {

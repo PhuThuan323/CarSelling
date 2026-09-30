@@ -1,0 +1,50 @@
+{
+  "1": {
+    "id": 1,
+    "slug": "da-chon-duoc-chiec-xe-phu-hop-trong-ngay",
+    "author_name": "Anh Nam",
+    "location": "TP.HCM · Mazda CX-5",
+    "title": "Đã chọn được chiếc xe phù hợp trong ngày",
+    "excerpt": "Thông tin xe rõ ràng, tư vấn dễ hiểu và quy trình xem xe thuận tiện.",
+    "story": "Tôi tìm xe cho gia đình từ khá lâu nhưng chưa chốt được chiếc nào phù hợp.\n\nKhi biết đến FastCar, điều tôi thích nhất là mọi thông tin về xe đều được ghi rõ: số km, đời xe, tình trạng đã qua kiểm tra. Nhờ vậy tôi không mất thời gian đi xem những chiếc xe không đúng nhu cầu.\n\nChỉ trong một ngày, tôi đã xem được chiếc Mazda CX-5 ưng ý và hoàn tất thủ tục. Đội ngũ tư vấn nhiệt tình, giải thích rõ ràng từng bước nên tôi cảm thấy rất yên tâm.",
+    "image": "/assets/img/testimonials/AnhPhat.png",
+    "status": "active",
+    "created_at": 1759104000
+  },
+  "2": {
+    "id": 2,
+    "slug": "xe-thuc-te-dung-voi-thong-tin-dang",
+    "author_name": "Anh Minh",
+    "location": "Hà Nội · Toyota Camry",
+    "title": "Xe thực tế đúng với thông tin đăng",
+    "excerpt": "Mình yên tâm hơn vì được kiểm tra xe trực tiếp và xem đầy đủ thông tin trước khi quyết định.",
+    "story": "Điều tôi lo nhất khi mua xe cũ là tình trạng xe không giống như quảng cáo. Ở FastCar thì ngược lại: chiếc xe tôi xem thực tế đúng với mô tả, các vết xước nhỏ đều được ghi chú từ trước.\n\nQuy trình kiểm tra minh bạch, nhân viên không giục tôi quyết định. Tôi được xem kỹ, hỏi kỹ và so sánh với xe khác trong cùng tầm giá. Sau khi chốt, thủ tục giấy tờ được hỗ trợ khá nhanh.",
+    "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80",
+    "status": "active",
+    "created_at": 1759017600
+  },
+  "3": {
+    "id": 3,
+    "slug": "gia-ban-ro-rang-tu-van-nhanh",
+    "author_name": "Anh Tuấn",
+    "location": "Đà Nẵng · Bán xe Honda CR-V",
+    "title": "Giá bán rõ ràng, tư vấn nhanh",
+    "excerpt": "Quá trình trao đổi nhanh gọn, các thông tin cần thiết được trình bày khá minh bạch.",
+    "story": "Tôi đăng bán chiếc Honda CR-V của gia đình và nhận được phản hồi trong ngày.\n\nCác bước từ gửi thông tin xe, đặt lịch kiểm tra đến khi nhận báo giá đều được thông báo rõ ràng qua từng mốc. Tôi không phải gọi hỏi lại nhiều lần.\n\nMức giá FastCar đưa ra hợp lý so với mặt bằng chung, và tôi cũng được giải thích vì sao có con số đó dựa trên tình trạng xe thực tế.",
+    "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80",
+    "status": "active",
+    "created_at": 1758931200
+  },
+  "4": {
+    "id": 4,
+    "slug": "trai-nghiem-mua-xe-thuan-tien",
+    "author_name": "Chị Hằng",
+    "location": "TP.HCM · Kia Seltos",
+    "title": "Trải nghiệm mua xe thuận tiện",
+    "excerpt": "Từ lúc xem thông tin đến khi đặt lịch xem xe đều dễ thao tác và tiết kiệm thời gian.",
+    "story": "Tôi bận rộn nên rất cần một quy trình gọn gàng. Trên FastCar, tôi xem được hình ảnh, thông số và tình trạng xe ngay tại nhà.\n\nViệc đặt lịch xem xe chỉ mất vài phút, bạn tư vấn còn nhắc lịch trước giờ hẹn. Đến nơi thì xe đã sẵn sàng để xem, không phải chờ đợi.\n\nSau khi mua, tôi vẫn nhận được hỗ trợ khi cần hỏi về thủ tục sang tên. Trải nghiệm tổng thể rất đáng để giới thiệu cho bạn bè.",
+    "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80",
+    "status": "active",
+    "created_at": 1758844800
+  }
+}

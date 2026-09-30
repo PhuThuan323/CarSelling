@@ -41,7 +41,10 @@ use App\Controllers\WebRender\MySellingCar;
 use App\Controllers\WebRender\StaffInspection;
 use App\Controllers\WebRender\AdminRequests;
 use App\Controllers\WebRender\AdminStaff;
+use App\Controllers\WebRender\AdminFeedback;
+use App\Controllers\WebRender\CustomerStory;
 use App\Controllers\UserManagement\AdminStaffController;
+use App\Controllers\Feedback\FeedbackController;
 
 $router = new Router();
 $router->get('/',Homepage::class,'index');
@@ -54,6 +57,16 @@ $router->get('/admin/requests', AdminRequests::class, 'index');
 
 // Quản lý nhân sự & phân quyền
 $router->get('/admin/staff', AdminStaff::class, 'index');
+
+// Câu chuyện khách hàng (testimonial) - lưu file JSON, không dùng database
+$router->get('/admin/feedback', AdminFeedback::class, 'index');
+$router->get('/api/v1/admin/feedback-stories', FeedbackController::class, 'index');
+$router->post('/api/v1/admin/feedback-stories', FeedbackController::class, 'store');
+$router->delete('/api/v1/admin/feedback-stories/{id}', FeedbackController::class, 'destroy');
+
+// Trang khách hàng xem câu chuyện
+$router->get('/customer-stories', CustomerStory::class, 'index');
+$router->get('/customer-stories/{slug}', CustomerStory::class, 'detail');
 
 // Khu vực Inspection của Admin
 $router->get('/admin/inspections', AdminInspection::class, 'index');

@@ -105,6 +105,14 @@
                 {/if}
             </a>
 
+            <p class="admin-nav-title">Nội dung trang chủ</p>
+            <a
+                class="admin-nav-item{if isset($active_menu) && $active_menu eq 'feedback'} is-active{/if}"
+                href="/admin/feedback"
+            >
+                <i class="fa-solid fa-comment-dots"></i> Câu chuyện khách hàng
+            </a>
+
             <p class="admin-nav-title">Khác</p>
             <a class="admin-nav-item" href="/"><i class="fa-solid fa-store"></i> Xem trang khách hàng</a>
             <a class="admin-nav-item" href="/auth/logout"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a>

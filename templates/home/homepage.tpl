@@ -66,7 +66,56 @@
                 <h2>Khách hàng thật, xe thật, giá thật</h2>
                 <p>Những trải nghiệm thực tế giúp khách hàng dễ dàng đưa ra lựa chọn phù hợp hơn.</p>
             </div>
-            <div class="review-grid" id="reviewGrid"></div>
+
+            <div class="review-grid" id="reviewGrid">
+                {foreach $stories as $story}
+                    <article class="review-card">
+
+                        {if $story.image ne ''}
+                            <img
+                                class="review-image"
+                                src="{$story.image|escape}"
+                                alt="{$story.author_name|escape}"
+                                loading="lazy"
+                            >
+                        {/if}
+
+                        <div class="review-body">
+
+                            <span class="review-badge">
+                                {$story.author_name|escape}
+                            </span>
+
+                            <h3 class="review-title">
+                                {$story.title|escape}
+                            </h3>
+
+                            <p class="review-text">
+                                {$story.excerpt|escape}
+                            </p>
+
+                            <a
+                                href="/customer-stories/{$story.slug|escape:'url'}"
+                                class="review-link"
+                            >
+                                Đọc câu chuyện đầy đủ →
+                            </a>
+
+                        </div>
+
+                    </article>
+                {foreachelse}
+                    <div class="review-empty">
+                        Câu chuyện khách hàng đang được cập nhật.
+                    </div>
+                {/foreach}
+            </div>
+
+            <div class="reviews-more">
+                <a href="/customer-stories" class="reviews-more-btn">
+                    Xem tất cả câu chuyện →
+                </a>
+            </div>
         </div>
     </section>
 </main>
