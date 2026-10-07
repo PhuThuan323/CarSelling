@@ -36,6 +36,13 @@
                 <i class="fa-solid fa-file-invoice"></i> Hồ sơ bán xe
             </a>
 
+            <a
+                class="admin-nav-item{if isset($active_menu) && $active_menu eq 'auctions'} is-active{/if}"
+                href="/admin/auctions"
+            >
+                <i class="fa-solid fa-gavel"></i> Phiên đấu giá
+            </a>
+
             <p class="admin-nav-title">Inspection</p>
             <a
                 class="admin-nav-item{if isset($active_menu) && $active_menu eq 'inspections' && (!isset($active_group) || $active_group eq 'all')} is-active{/if}"

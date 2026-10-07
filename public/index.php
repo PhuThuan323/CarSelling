@@ -46,6 +46,10 @@ use App\Controllers\WebRender\CustomerStory;
 use App\Controllers\UserManagement\AdminStaffController;
 use App\Controllers\Feedback\FeedbackController;
 
+use App\Controllers\Auction\AuctionApi;
+use App\Controllers\Auction\AdminAuctionApi;
+use App\Controllers\WebRender\AuctionPage;
+
 $router = new Router();
 $router->get('/',Homepage::class,'index');
 
@@ -148,6 +152,27 @@ $router->post('/api/v1/valuations/contact',ValuationContactController::class,'sa
 $router->get('/sell-car-success/{id}',SellCarSuccess::class,'index');
 $router->get('/my-selling-cars',MySellingCar::class,'index');
 $router->get('/my-selling-cars/{id}',MySellingCar::class,'detail');
+
+// ===== Đấu giá xe =====
+// Trang khách hàng
+$router->get('/cars', AuctionPage::class, 'index');
+$router->get('/cars/{id}', AuctionPage::class, 'detail');
+$router->get('/my-auctions', AuctionPage::class, 'myAuctions');
+
+// API đấu giá (khách hàng)
+$router->get('/api/v1/auctions', AuctionApi::class, 'index');
+$router->get('/api/v1/auctions/{id}', AuctionApi::class, 'show');
+$router->post('/api/v1/auctions/{id}/bid', AuctionApi::class, 'bid');
+$router->get('/api/v1/my-auctions', AuctionApi::class, 'myAuctions');
+$router->post('/api/v1/auctions/{id}/pay', AuctionApi::class, 'markReadyToPay');
+
+// Khu vực quản trị đấu giá (admin)
+$router->get('/admin/auctions', App\Controllers\WebRender\AdminAuction::class, 'index');
+$router->get('/api/v1/admin/auctions', AdminAuctionApi::class, 'index');
+$router->post('/api/v1/admin/auctions', AdminAuctionApi::class, 'store');
+$router->get('/api/v1/admin/auctions/{id}', AdminAuctionApi::class, 'show');
+$router->post('/api/v1/admin/auctions/{id}/payment', AdminAuctionApi::class, 'updatePayment');
+$router->post('/api/v1/admin/auctions/{id}/cancel', AdminAuctionApi::class, 'cancel');
 
 // Khách hàng phản hồi kết quả định giá
 $router->post('/api/v1/valuations/accept-offer',CustomerOfferController::class,'accept');

@@ -121,6 +121,7 @@
         <section class="mydetail-card mydetail-waiting">
             <i class="fa-solid fa-hourglass-half"></i>
             <h2>FastCar đang thẩm định xe của bạn</h2>
+            
             <p>
                 Chuyên viên của chúng tôi đang kiểm tra và đánh giá tình trạng xe.
                 Kết quả định giá sẽ được gửi tới bạn trong thời gian sớm nhất.

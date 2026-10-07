@@ -1,0 +1,17 @@
+4 bước bán xe qua FastCar
+
+1. Nhập thông tin xe
+Cho Fastcar biết mẫu xe, đời xe, phiên bản và số km để nhận khoảng giá tham khảo ban đầu.
+
+2. Kiểm định và hoàn thiện hồ sơ
+Fastcar ghi nhận tình trạng xe, chụp ảnh và bổ sung thông tin cần thiết cho hồ sơ.
+Kiểm định xe để bán là miễn phí. Trước khi xác nhận, hãy kiểm tra thười gian và địa điểm hẹn.
+Đặt lịch kiểm định chưa có ý nghĩa là bạn đồng ý bán xe. 
+
+3. Xem kết quả phiên đấu giá. 
+Khi phiên kết thúc, bạn xem kết quả được ghi nhận trên FastCar.
+Bạn vẫn có thể từ chối bán nếu mức giá chưa phù hợp.
+
+4. Quyết định hoàn tất và giao dịch
+Trước khi đồng ý bán, hãy kiểm tra giá cuối cùng, các khoản phí, số tiền dự kiến nhận và lịch thanh toán từ phía FastCar.
+Nếu đồng ý, FastCar hướng dẫn và hỗ trợ các bước giấy tờ, thanh toán và bàn giao xe. 

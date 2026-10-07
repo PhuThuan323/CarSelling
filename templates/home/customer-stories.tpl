@@ -83,7 +83,7 @@
                                 <p class="story-card-text">
                                     {$story.excerpt|escape}
                                 </p>
-
+                                
                                 <div class="story-card-foot">
 
                                     <span class="story-card-author">
@@ -101,7 +101,7 @@
                         </a>
 
                     {/foreach}
-
+                    
                 </div>
 
                 {if $page_count > 1}

@@ -101,6 +101,11 @@
                             Xe bạn đã đăng bán
                         </a>
 
+                        <a href="/my-auctions">
+                            <i class="fa-solid fa-trophy"></i>
+                            Xe đã đấu giá thành công
+                        </a>
+
 
                         <a href="/auth/logout">
                             <i class="fa-solid fa-right-from-bracket"></i>
